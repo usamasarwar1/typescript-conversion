@@ -1,7 +1,7 @@
 import { pagination } from "../utilities/pagination";
 import advertisementService from "../services/advertisement/advertisementService";
-import { Promotions as PromotionsD } from "bb-data-model";
-const { promotionModel } = PromotionsD;
+import * as Promotions from "../model/promotion";
+const { promotionModel } = Promotions;
 import mongoose from "mongoose";
 
 const getUserAdvertisementPromotionsByType = async (PromotionData: {

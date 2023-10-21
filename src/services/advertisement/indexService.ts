@@ -2,14 +2,14 @@ import { errors } from "../../utilities/error";
 import advertisement_service from "./advertisementService";
 import { pagination } from "../../utilities/pagination";
 import mongoose, { Types } from "mongoose";
-import { AdvertisementSchema } from "bb-data-model";
+import * as AdvertisementSchema from "../../model/advertisement";
 import {
   // advertisementInfo,
   advertisementFollowInfo,
   advertisementFavouriteInfo,
 } from "../../utilities/common/advertisement_label";
 
-const { AdvertisementModel, advertisementFavouritesFollowersModel } =
+const { advertisementModel, advertisementFavouritesFollowersModel } =
   AdvertisementSchema;
 
 async function validateAdvertisement(
@@ -108,7 +108,7 @@ async function followUnfollowAdvertisement(advertisementData: {
           {
             $pull: { followers: userId },
             followers_count:
-              existingFollowAdvertisement.followers_count === 0
+              existingFollowAdvertisement?.followers_count === 0
                 ? 0
                 : existingFollowAdvertisement.followers_count - 1,
           },

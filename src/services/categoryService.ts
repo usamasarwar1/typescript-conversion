@@ -1,6 +1,5 @@
 // import logger from "../../utils/logger";
-import logger from "logger";
-import { Category } from "bb-data-model";
+import * as Category from "../model/category";
 const { categoryModel } = Category;
 
 // Define the function to validate categories.
@@ -35,11 +34,11 @@ const validCategory = async (categoryId: string | string[]) => {
     const category = await categoryModel.findOne({ _id: categoryId }).lean();
     return category;
   } catch (error: any) {
-    logger.get("app_log").error({
-      level: "error",
-      message: error.message,
-      metadata: error.stack,
-    });
+    // logger.get("app_log").error({
+    //   level: "error",
+    //   message: error.message,
+    //   metadata: error.stack,
+    // });
     throw error;
   }
 };

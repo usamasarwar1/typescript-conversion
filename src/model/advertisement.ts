@@ -118,7 +118,7 @@ const advertisementSchema: Schema<IAdvertisement> = new Schema<IAdvertisement>(
   },
 );
 
-const AdvertisementModel = mongoose.model<IAdvertisement>(
+const advertisementModel = mongoose.model<IAdvertisement>(
   model_name.ADVERTISEMENT,
   advertisementSchema,
 );
@@ -170,4 +170,4 @@ const advertisementFavouritesFollowersModel =
     advertisementFavouritesFollowersSchema,
   );
 
-export { AdvertisementModel, advertisementFavouritesFollowersModel };
+export { advertisementModel, advertisementFavouritesFollowersModel };

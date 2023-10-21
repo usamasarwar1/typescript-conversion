@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { AdvertisementSchema } from "bb-data-model";
+import * as AdvertisementSchema  from "../../model/advertisement";
 const { advertisementModel, advertisementFavouritesFollowersModel } =
   AdvertisementSchema;
 import { pagination } from "../../utilities/pagination";

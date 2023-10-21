@@ -1,7 +1,7 @@
 import { pagination } from "../utilities/pagination";
 import advertisementService from "../services/advertisement/advertisementService";
 // Import your EBanners model and any necessary modules here.
-import { EBanners } from "bb-data-model";
+import * as EBanners  from "../model/ebanner";
 const { ebannerModel } = EBanners;
 
 const getUserAdvertisementEbannersByType = async (ebannerData: any) => {

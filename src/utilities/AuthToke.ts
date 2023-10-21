@@ -1,4 +1,4 @@
-import { UsersModels } from "bb-data-model";
+import  * as UsersModels  from "../model/user";
 const { userLogoutModel } = UsersModels;
 
 import { defaultServerResponse } from "../utilities/common/response";
