@@ -16,10 +16,10 @@ const categoryFollowOrUnfollow = async (
     const { category_ids } = categoryFollow;
     const { is_follow } = query;
     const user = await user_service.getVerifiedUser({ userId });
-    const valid_category_ids = await category_service.validCategory(
+    const valid_category_ids: any = await category_service.validCategory(
       category_ids,
     );
-    const alreadyFollowedCategory = await userCategoryModel.find({
+    const alreadyFollowedCategory: any = await userCategoryModel.find({
       user_id: user._id,
       category_id: { $in: valid_category_ids },
     });
@@ -62,7 +62,7 @@ const categoryFollowOrUnfollow = async (
           },
         };
       } else {
-        alreadyFollowedCategory = alreadyFollowedCategory.map((Category) =>
+        alreadyFollowedCategory = alreadyFollowedCategory.map((Category: any) =>
           Category.category_id.toString(),
         );
         valid_category_ids = valid_category_ids.map((id: any) => id.toString());

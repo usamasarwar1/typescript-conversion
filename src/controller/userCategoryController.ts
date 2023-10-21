@@ -6,8 +6,8 @@ import user_category_service from "../services/userCategoryServices";
 import { success } from "../utilities/success";
 
 const categoryFollowOrUnfollow = async (
-  request: Request,
-  response: Response,
+  request: any,
+  response: any,
   next: NextFunction,
 ) => {
   const newResponse: any = { ...defaultServerResponse };
@@ -31,8 +31,8 @@ const categoryFollowOrUnfollow = async (
 };
 
 const getFollowCategory = async (
-  request: Request,
-  response: Response,
+  request: any,
+  response: any,
   next: NextFunction,
 ) => {
   const newResponse: any = { ...defaultServerResponse };

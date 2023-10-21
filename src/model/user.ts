@@ -151,7 +151,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc, ret) {
+      transform: function (doc: any, ret: any) {
         delete ret.__v;
         delete ret.password;
         return ret;
@@ -169,7 +169,7 @@ const userLogoutSchema: Schema<IUserLogout> = new Schema<IUserLogout>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc, ret) {
+      transform: function (doc: any, ret: any) {
         delete ret.__v;
         return ret;
       },
@@ -200,7 +200,7 @@ const notificationSettingsSchema: Schema<INotificationSettings> =
     {
       timestamps: true,
       toObject: {
-        transform: function (doc, ret) {
+        transform: function (doc: any, ret: any) {
           delete ret.__v;
           return ret;
         },

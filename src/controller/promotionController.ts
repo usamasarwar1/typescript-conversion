@@ -9,8 +9,8 @@ import advertisementService from "../services/advertisement/advertisementService
 import { promotionInfo } from "../utilities/common/promotion_label";
 
 const getUserFollowedAdvertisementPromotions = async (
-  request: Request,
-  response: Response,
+  request: any,
+  response: any,
 ) => {
   const newResponse: any = { ...defaultServerResponse };
   try {
@@ -38,7 +38,7 @@ const getUserFollowedAdvertisementPromotions = async (
   response.status(newResponse.status).send(newResponse);
 };
 
-const getOwner = async (request: Request, response: Response) => {
+const getOwner = async (request: any, response: any) => {
   const newResponse: any = { ...defaultServerResponse };
   try {
     const advertisementId = promotion_service.getAdvertisementId(
@@ -65,7 +65,7 @@ const getOwner = async (request: Request, response: Response) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const getFollowerList = async (request: Request, response: Response) => {
+const getFollowerList = async (request: any, response: any) => {
   const newResponse: any = { ...defaultServerResponse };
   try {
     const advertisementId = promotion_service.getAdvertisementId(

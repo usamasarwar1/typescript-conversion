@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express from "express";
 import { validateToken } from "../utilities/AuthToke";
 import { validateManagementQuery } from "../utilities/validation/index";
 import {
@@ -9,7 +9,7 @@ import {
 
 import user_advertisement_controller from "../controller/userAdvertisementController";
 
-const user_advertisement_router: Router = express.Router();
+const user_advertisement_router = express.Router();
 
 user_advertisement_router.post(
   "/follow/:advertisementId",

@@ -4,11 +4,7 @@ import { advertisementFollowInfo } from "../utilities/common/advertisement_label
 import { success } from "../utilities/success";
 import advertisementService from "../services/advertisement/advertisementService";
 
-const getOwner = async (
-  request: Request,
-  response: Response,
-  next: NextFunction,
-) => {
+const getOwner = async (request: any, response: any, next: NextFunction) => {
   const newResponse: any = { ...defaultServerResponse };
   try {
     const ownerDetails = await advertisementService.getOwner({
@@ -26,8 +22,8 @@ const getOwner = async (
 };
 
 const getFollowerList = async (
-  request: Request,
-  response: Response,
+  request: any,
+  response: any,
   next: NextFunction,
 ) => {
   const newResponse: any = { ...defaultServerResponse };

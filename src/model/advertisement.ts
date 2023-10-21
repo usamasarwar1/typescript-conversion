@@ -110,7 +110,7 @@ const advertisementSchema: Schema<IAdvertisement> = new Schema<IAdvertisement>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc, ret, options) {
+      transform: function (doc: any, ret: any, options: any) {
         delete ret.__v;
         return ret;
       },

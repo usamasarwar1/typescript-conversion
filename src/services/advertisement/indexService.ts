@@ -16,7 +16,7 @@ async function validateAdvertisement(
   advertisement_id: Types.ObjectId,
   userId: Types.ObjectId,
 ) {
-  let advertisement = await AdvertisementModel.findOne(
+  let advertisement = await advertisementModel.findOne(
     {
       _id: advertisement_id,
       is_deleted: false,
@@ -51,16 +51,16 @@ async function followUnfollowAdvertisement(advertisementData: {
   try {
     const { query, userId, advertisement_id } = advertisementData;
     let { is_follow } = query;
-    let followerDetail;
+    let followerDetail: any;
     is_follow = is_follow ? is_follow : "true";
 
     await validateAdvertisement(advertisement_id, userId);
 
-    let existingFollowAdvertisement =
+    let existingFollowAdvertisement: any =
       await advertisementFavouritesFollowersModel
         .findOne({ advertisement_id })
         .lean();
-    let alreadyFollowedUserIds;
+    let alreadyFollowedUserIds: any;
 
     if (existingFollowAdvertisement) {
       alreadyFollowedUserIds = existingFollowAdvertisement.followers.map(
@@ -147,16 +147,16 @@ async function setFavouritesAdvertisementById(advertisementData: {
     const { query, userId, advertisement_id } = advertisementData;
     let { is_favourite } = query;
     is_favourite = is_favourite ? is_favourite : "true";
-    let favouritesDetail;
+    let favouritesDetail: any;
 
     // await ValidateOnlyAdvertisement(advertisement_id);
     await advertisement_id;
 
-    let existingFavouriteAdvertisement =
+    let existingFavouriteAdvertisement: any =
       await advertisementFavouritesFollowersModel
         .findOne({ advertisement_id })
         .lean();
-    let alreadyFavouriteUserIds;
+    let alreadyFavouriteUserIds: any;
 
     if (existingFavouriteAdvertisement) {
       alreadyFavouriteUserIds = existingFavouriteAdvertisement.favourites.map(
@@ -254,7 +254,7 @@ const getAdvertisementFollowFavoriteList = async (advertisementData: {
 
     let match = [],
       filter = [];
-    let skip, limit, paginationObject, dataCount;
+    let skip, limit, paginationObject, dataCount: any;
 
     if (type === "favourite_list") {
       match.push({

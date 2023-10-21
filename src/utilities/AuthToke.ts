@@ -1,4 +1,4 @@
-import  * as UsersModels  from "../model/user";
+import * as UsersModels from "../model/user";
 const { userLogoutModel } = UsersModels;
 
 import { defaultServerResponse } from "../utilities/common/response";
@@ -10,11 +10,7 @@ import { getTokenFromRequest, verifyJwtToken } from "../utilities/jwt";
 
 import { Request, Response, NextFunction } from "express";
 
-const validateToken = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const validateToken = async (req: any, res: any, next: any) => {
   let response: any = { ...defaultServerResponse };
   try {
     if (!req.headers.authorization) {
@@ -24,7 +20,7 @@ const validateToken = async (
         messages: requestValidationMessage.TOKEN_MISSING,
       });
     }
-    let token: any = await getTokenFromRequest(req.headers.authorization);
+    let token = await getTokenFromRequest(req.headers.authorization);
     if (!token) {
       // todo: check status code
       throw JSON.stringify({

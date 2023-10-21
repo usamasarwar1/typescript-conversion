@@ -80,7 +80,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc, ret, options) {
+      transform: function (doc: any, ret: any, options: any) {
         delete ret._id;
         delete ret.__v;
         return ret;

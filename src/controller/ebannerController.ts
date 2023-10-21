@@ -9,8 +9,8 @@ import advertisementService from "../services/advertisement/advertisementService
 import ebanner_service from "../services/ebannerService";
 
 const userFollowedAdvertisementsEbanners = async (
-  request: Request,
-  response: Response,
+  request: any,
+  response: any,
 ) => {
   const newResponse: any = { ...defaultServerResponse };
   try {
@@ -32,7 +32,7 @@ const userFollowedAdvertisementsEbanners = async (
   response.status(newResponse.status).send(newResponse);
 };
 
-const getOwner = async (request: Request, response: Response) => {
+const getOwner = async (request: any, response: any) => {
   const newResponse: any = { ...defaultServerResponse };
   try {
     const advertisementId = ebanner_service.getAdvertisementId(
@@ -59,7 +59,7 @@ const getOwner = async (request: Request, response: Response) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const getFollowerList = async (request: Request, response: Response) => {
+const getFollowerList = async (request: any, response: any) => {
   const newResponse: any = { ...defaultServerResponse };
   try {
     const advertisementId: any = ebanner_service.getAdvertisementId(

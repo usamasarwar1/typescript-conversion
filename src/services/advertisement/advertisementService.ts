@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import * as AdvertisementSchema  from "../../model/advertisement";
+import * as AdvertisementSchema from "../../model/advertisement";
 const { advertisementModel, advertisementFavouritesFollowersModel } =
   AdvertisementSchema;
 import { pagination } from "../../utilities/pagination";
@@ -409,8 +409,8 @@ const getFollowerList = async (advertisementData: any) => {
   try {
     let { advertisementId, query } = advertisementData;
     let { is_pagination, page_index, page_size } = query;
-    let match = [],
-      filter = [];
+    let match = [];
+    let filter: any = [];
     let skip, limit, paginationObject, projectData;
     advertisementId = new mongoose.Types.ObjectId(advertisementId);
 

@@ -1,8 +1,8 @@
-import express, { Router } from "express";
+import express from "express";
 import { validateToken } from "../utilities/AuthToke";
 import promotion_controller from "../controller/promotionController";
 
-const promotionRouter: Router = express.Router();
+const promotionRouter = express.Router();
 
 promotionRouter.get(
   "/followed",

@@ -6,7 +6,7 @@ const { categoryModel } = Category;
 const validCategory = async (categoryId: string | string[]) => {
   try {
     if (Array.isArray(categoryId)) {
-      const inputCategoryId: string[] = [];
+      const inputCategoryId: any = [];
       categoryId.forEach((category) => {
         if (!inputCategoryId.includes(category)) {
           inputCategoryId.push(category);

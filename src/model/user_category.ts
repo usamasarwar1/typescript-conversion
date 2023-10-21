@@ -24,7 +24,7 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc, ret) {
+      transform: function (doc: any, ret: any) {
         delete ret.__v;
         return ret;
       },
