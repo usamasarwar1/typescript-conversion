@@ -16,10 +16,10 @@ const categoryFollowOrUnfollow = async (
     const { category_ids } = categoryFollow;
     const { is_follow } = query;
     const user = await user_service.getVerifiedUser({ userId });
-    const valid_category_ids: any = await category_service.validCategory(
+    let valid_category_ids: any = await category_service.validCategory(
       category_ids,
     );
-    const alreadyFollowedCategory: any = await userCategoryModel.find({
+    let alreadyFollowedCategory: any = await userCategoryModel.find({
       user_id: user._id,
       category_id: { $in: valid_category_ids },
     });

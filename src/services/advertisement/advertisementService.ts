@@ -421,13 +421,13 @@ const getFollowerList = async (advertisementData: any) => {
     if (is_pagination === "true") {
       projectData = await advertisementFavouritesFollowersModel
         .find({ advertisement_id: advertisementId })
-        .project({ favourites_count: 1 })
+        .select('favourites_count')
         .lean();
 
       let paginationDetails = pagination(
         page_index,
         page_size,
-        projectData.favourites_count,
+        (projectData as any).favourites_count,
       );
 
       skip = paginationDetails.skip;

@@ -70,11 +70,11 @@ const getAdvertisementId = async (promotionId: any) => {
 
     let projectData = await promotionModel
       .find({ _id: promotionId })
-      .project({ advertisement_id: 1 })
+      .select('advertisement_id')
       .lean();
 
     if (projectData) {
-      return projectData.advertisement_id;
+      return (projectData as any).advertisement_id;
     }
 
     return null;
