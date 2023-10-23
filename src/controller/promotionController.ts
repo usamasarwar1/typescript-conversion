@@ -7,14 +7,22 @@ import { errors } from "../utilities/error";
 import { advertisementFollowInfo } from "../utilities/common/advertisement_label";
 import advertisementService from "../services/advertisement/advertisementService";
 import { promotionInfo } from "../utilities/common/promotion_label";
+interface NewResponse {
+  status: number;
+  message: string;
+  body: string | any;
+}
+interface CustomRequest extends Request {
+  token: string; // Define the type of the 'token' property
+}
 
 const getUserFollowedAdvertisementPromotions = async (
-  request: any,
-  response: any,
+  request: Request,
+  response: Response,
 ) => {
-  const newResponse: any = { ...defaultServerResponse };
+  const newResponse: NewResponse = { ...defaultServerResponse };
   try {
-    const decodedData = await decode((request as any).token);
+    const decodedData = await decode((request as CustomRequest).token);
     const userAdvertisementPromotionsDetail =
       await promotion_service.getUserAdvertisementPromotionsByType({
         // query: request.query,
@@ -38,8 +46,8 @@ const getUserFollowedAdvertisementPromotions = async (
   response.status(newResponse.status).send(newResponse);
 };
 
-const getOwner = async (request: any, response: any) => {
-  const newResponse: any = { ...defaultServerResponse };
+const getOwner = async (request: Request | any, response: Response) => {
+  const newResponse: NewResponse = { ...defaultServerResponse };
   try {
     const advertisementId = promotion_service.getAdvertisementId(
       request.params.advertisementId,
@@ -65,8 +73,8 @@ const getOwner = async (request: any, response: any) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const getFollowerList = async (request: any, response: any) => {
-  const newResponse: any = { ...defaultServerResponse };
+const getFollowerList = async (request: Request | any, response: Response) => {
+  const newResponse: NewResponse = { ...defaultServerResponse };
   try {
     const advertisementId = promotion_service.getAdvertisementId(
       request.params.advertisementId,

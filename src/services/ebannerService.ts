@@ -1,43 +1,41 @@
 import { pagination } from "../utilities/pagination";
 import advertisementService from "../services/advertisement/advertisementService";
-// Import your EBanners model and any necessary modules here.
-import * as EBanners  from "../model/ebanner";
+import * as EBanners from "../model/ebanner";
 const { ebannerModel } = EBanners;
 
-const getUserAdvertisementEbannersByType = async (ebannerData: any) => {
+const getUserAdvertisementEbannersByType = async (ebannerData: {
+  query: {
+    is_pagination: string;
+    page_index: number;
+    page_size: number;
+  };
+  userId: string | undefined;
+  type: "FOLLOWEDADVERTISEMENT" | "FAVOURITESADVERTISEMENT" | string;
+}): Promise<any> => {
   try {
     const { query, userId, type } = ebannerData;
-
     let { is_pagination, page_index, page_size } = query;
+    let match: any[] = [];
+    let advertisementIds: string[] = [];
 
-    let match = [];
-    let advertisementIds;
-
-    if (type === "FOLLOWEDADVERTISEMENT") {
+    if (
+      type === "FOLLOWEDADVERTISEMENT" ||
+      type === "FAVOURITESADVERTISEMENT"
+    ) {
+      // Use appropriate logic to fetch advertisement IDs based on the type.
       advertisementIds =
         await advertisementService.getUserAdvertisementIdsByUserId({
           userId,
           type,
         });
-    } else if (type === "FAVOURITESADVERTISEMENT") {
-      advertisementIds =
-        await advertisementService.getUserAdvertisementIdsByUserId({
-          userId,
-          type,
-        });
-    } else advertisementIds = [];
+    }
 
     match.push({
       $match: { advertisement_id: { $in: advertisementIds }, is_live: true },
     });
 
     if (is_pagination === "true") {
-      // Import your EBanners model and replace `ebannerModel` with the actual model.
-      // let dataCount = await ebannerModel
-      //   .find({ advertisement_id: advertisementIds, is_live: true })
-      //   .count()
-      //   .lean();
-
+      // Replace this logic with your actual data count logic.
       let dataCount = 0; // Replace with your data count logic.
 
       let { skip, limit, paginationObject } = pagination(
@@ -70,7 +68,8 @@ const getAdvertisementId = async (ebannerId: any) => {
     // Ensure that 'mongoose' is properly imported and configured.
     // ebannerId = mongoose.Types.ObjectId(ebannerId);
 
-    // Import your EBanners model and replace `ebannerModel` with the actual model.
+    // Replace this logic with your actual query to fetch advertisement_id based on ebannerId.
+    // For example:
     // let projectData = await ebannerModel
     //   .find({ _id: ebannerId })
     //   .project({ advertisement_id: 1 })
@@ -86,13 +85,18 @@ const getAdvertisementId = async (ebannerId: any) => {
 
 // Continue with the rest of your code.
 
-async function getEbannerDetailsByMatch(matchData: any) {
+async function getEbannerDetailsByMatch(matchData: {
+  match: any[];
+  userId: string | undefined;
+}) {
   // Ensure that 'mongoose' is properly imported and configured.
   let { match, userId } = matchData;
   try {
     // Replace 'ebannerModel' with the actual model you are using.
+    // Return your data based on the provided match conditions.
+    // For example:
     // return ebannerModel.aggregate([
-    // ... (rest of your aggregation pipeline)
+    //   // ... (rest of your aggregation pipeline)
     // ]);
 
     // Update your aggregation pipeline according to your model.

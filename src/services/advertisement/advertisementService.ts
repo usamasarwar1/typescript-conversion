@@ -3,8 +3,29 @@ import * as AdvertisementSchema from "../../model/advertisement";
 const { advertisementModel, advertisementFavouritesFollowersModel } =
   AdvertisementSchema;
 import { pagination } from "../../utilities/pagination";
+interface AdvertisementData {
+  match: [];
+  filter: [];
+  userId: mongoose.Types.ObjectId;
+}
 
-const getFollowFaviouriteDetails = async (advertisementData: any) => {
+interface AdvertisementIdQuery {
+  advertisementId: mongoose.Types.ObjectId | any;
+  query: {
+    is_pagination: string | any;
+    page_index: number | any;
+    page_size: number | any;
+  };
+}
+
+interface UserAdvertisementData {
+  userId: mongoose.Types.ObjectId | any;
+  type: string;
+}
+
+const getFollowFaviouriteDetails = async (
+  advertisementData: AdvertisementData,
+) => {
   try {
     let { match = [], filter = [], userId } = advertisementData;
     let advertisementDetails =
@@ -357,7 +378,7 @@ const getFollowFaviouriteDetails = async (advertisementData: any) => {
   }
 };
 
-const getOwner = async (advertisementId: any) => {
+const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
   try {
     advertisementId = new mongoose.Types.ObjectId(advertisementId);
 
@@ -405,12 +426,12 @@ const getOwner = async (advertisementId: any) => {
   }
 };
 
-const getFollowerList = async (advertisementData: any) => {
+const getFollowerList = async (advertisementData: AdvertisementIdQuery) => {
   try {
     let { advertisementId, query } = advertisementData;
     let { is_pagination, page_index, page_size } = query;
     let match = [];
-    let filter: any = [];
+    let filter: any[] = [];
     let skip, limit, paginationObject, projectData;
     advertisementId = new mongoose.Types.ObjectId(advertisementId);
 
@@ -421,7 +442,7 @@ const getFollowerList = async (advertisementData: any) => {
     if (is_pagination === "true") {
       projectData = await advertisementFavouritesFollowersModel
         .find({ advertisement_id: advertisementId })
-        .select('favourites_count')
+        .select("favourites_count")
         .lean();
 
       let paginationDetails = pagination(
@@ -497,7 +518,7 @@ const getFollowerList = async (advertisementData: any) => {
   }
 };
 
-const getUserAdvertisementIdsByUserId = async (data: any) => {
+const getUserAdvertisementIdsByUserId = async (data: UserAdvertisementData) => {
   try {
     let { userId, type } = data;
 

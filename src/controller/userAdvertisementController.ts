@@ -8,9 +8,21 @@ import { decode } from "../utilities/jwt";
 import advertisementService from "../services/advertisement/indexService";
 import promotion_service from "../services/promotionService";
 import ebanner_service from "../services/ebannerService";
+import { Request, Response } from "express";
 
-const followUnfollowAdvertisementById = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+interface NewResponse {
+  status: number;
+  message: string;
+  body: string | any;
+}
+interface CustomRequest extends Request {
+  token: string; // Define the type of the 'token' property
+}
+const followUnfollowAdvertisementById = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFollowAdvertisement =
@@ -30,8 +42,11 @@ const followUnfollowAdvertisementById = async (request: any, response: any) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const setFavouriteAdvertisementById = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+const setFavouriteAdvertisementById = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisement =
@@ -51,8 +66,11 @@ const setFavouriteAdvertisementById = async (request: any, response: any) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const getAdvertisementFollowList = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+const getAdvertisementFollowList = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFollowedAdvertisement =
@@ -73,8 +91,11 @@ const getAdvertisementFollowList = async (request: any, response: any) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const getAdvertisementFavoriteList = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+const getAdvertisementFavoriteList = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisement =
@@ -96,10 +117,10 @@ const getAdvertisementFavoriteList = async (request: any, response: any) => {
 };
 
 const getFavoritesAdvertisementPromotionList = async (
-  request: any,
-  response: any,
+  request: Request | any,
+  response: Response,
 ) => {
-  let newResponse: any = defaultServerResponse;
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisementPrmotions =
@@ -123,10 +144,10 @@ const getFavoritesAdvertisementPromotionList = async (
 };
 
 const getFavoritesAdvertisementEbannerList = async (
-  request: any,
-  response: any,
+  request: Request | any,
+  response: Response,
 ) => {
-  let newResponse: any = defaultServerResponse;
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisementEbanners =

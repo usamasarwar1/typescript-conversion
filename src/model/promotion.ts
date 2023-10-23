@@ -5,9 +5,9 @@ import model_name from "./model_name";
 const ObjectId = Types.ObjectId;
 
 interface IPromotion extends Document {
-  user_id: any;
+  user_id: Types.ObjectId | any;
   category_ids: Types.ObjectId[];
-  advertisement_id: any;
+  advertisement_id: Types.ObjectId | any;
   by: string;
   start_date: Date;
   end_date: Date;
@@ -80,7 +80,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any, options: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret._id;
         delete ret.__v;
         return ret;

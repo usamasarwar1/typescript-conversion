@@ -5,14 +5,23 @@ import { decode } from "../utilities/jwt";
 import user_category_service from "../services/userCategoryServices";
 import { success } from "../utilities/success";
 
+interface NewResponse {
+  status: number;
+  message: string;
+  body: string | any;
+}
+
+interface CustomRequest extends Request {
+  token: string; // Define the type of the 'token' property
+}
 const categoryFollowOrUnfollow = async (
-  request: any,
-  response: any,
+  request: Request | any,
+  response: Response,
   next: NextFunction,
 ) => {
-  const newResponse: any = { ...defaultServerResponse };
+  const newResponse: NewResponse = { ...defaultServerResponse };
   try {
-    const decodedData = await decode((request as any).token);
+    const decodedData = await decode((request as CustomRequest).token);
     const followedCategory: any =
       await user_category_service.categoryFollowOrUnfollow(
         decodedData["id"],
@@ -31,13 +40,13 @@ const categoryFollowOrUnfollow = async (
 };
 
 const getFollowCategory = async (
-  request: any,
-  response: any,
+  request: Request,
+  response: Response,
   next: NextFunction,
 ) => {
-  const newResponse: any = { ...defaultServerResponse };
+  const newResponse: NewResponse = { ...defaultServerResponse };
   try {
-    const decodedData = await decode((request as any).token);
+    const decodedData = await decode((request as CustomRequest).token);
     const userId = request.query.user_id
       ? request.query.user_id
       : decodedData["id"];

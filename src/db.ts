@@ -5,7 +5,7 @@ dotenv.config({ path: "./.env" });
 const DB_URL: any = process.env.DATABASE_URL;
 console.log("DB_URL", process.env.DATABASE_URL);
 
-const dbConnect = async (): Promise<any> => {
+const dbConnect = async () => {
   await mongoose
     .connect(DB_URL, {})
 

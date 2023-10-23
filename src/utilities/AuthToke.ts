@@ -9,8 +9,14 @@ import { errors } from "../utilities/error";
 import { getTokenFromRequest, verifyJwtToken } from "../utilities/jwt";
 
 import { Request, Response, NextFunction } from "express";
-
-const validateToken = async (req: any, res: any, next: any) => {
+interface CustomRequest extends Request {
+  token: string; // Define the type of the 'token' property
+}
+const validateToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   let response: any = { ...defaultServerResponse };
   try {
     if (!req.headers.authorization) {
@@ -41,7 +47,7 @@ const validateToken = async (req: any, res: any, next: any) => {
         messages: commonLabel["TOKEN_IS_NOT_VALID"],
       });
     }
-    (req as any).token = token;
+    (req as CustomRequest).token = token;
     return next();
   } catch (error: any) {
     if (error.message === "invalid signature") {

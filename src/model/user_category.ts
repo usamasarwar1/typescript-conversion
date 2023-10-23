@@ -4,14 +4,14 @@ import model from "./model_name";
 const objectId = Types.ObjectId;
 
 interface IUserCategory extends Document {
-  user_id: any;
+  user_id: Types.ObjectId;
   category_id: Types.ObjectId;
 }
 
 const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
   {
     user_id: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model.USER,
       required: true,
     },
@@ -24,7 +24,7 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret.__v;
         return ret;
       },
@@ -32,9 +32,8 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
   },
 );
 
-const userCategoryModel = mongoose.models.Categories || mongoose.model<IUserCategory>(
-  model.CATEGORIES,
-  userCategorySchema,
-);
+const userCategoryModel =
+  mongoose.models.Categories ||
+  mongoose.model<IUserCategory>(model.CATEGORIES, userCategorySchema);
 
 export { userCategoryModel };

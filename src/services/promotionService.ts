@@ -5,7 +5,11 @@ const { promotionModel } = Promotions;
 import mongoose from "mongoose";
 
 const getUserAdvertisementPromotionsByType = async (PromotionData: {
-  query: { is_pagination: any; page_index: any; page_size: any };
+  query: {
+    is_pagination: string | any;
+    page_index: number | any;
+    page_size: number | any;
+  };
   userId: any;
   type: string;
 }) => {
@@ -64,13 +68,13 @@ const getUserAdvertisementPromotionsByType = async (PromotionData: {
   }
 };
 
-const getAdvertisementId = async (promotionId: any) => {
+const getAdvertisementId = async (promotionId: mongoose.Types.ObjectId) => {
   try {
     promotionId = new mongoose.Types.ObjectId(promotionId);
 
     let projectData = await promotionModel
       .find({ _id: promotionId })
-      .select('advertisement_id')
+      .select("advertisement_id")
       .lean();
 
     if (projectData) {

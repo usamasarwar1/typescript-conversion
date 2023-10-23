@@ -1,21 +1,19 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import model_name from "../model/model_name";
 
-const ObjectId = Types.ObjectId;
-
 interface IAdvertisement extends Document {
   title: string;
   is_draft: boolean;
-  draft_id: any;
-  published_id: any;
-  user_id: any;
+  draft_id: Types.ObjectId;
+  published_id: Types.ObjectId;
+  user_id: Types.ObjectId;
   is_owner: boolean;
   is_global_profile: boolean;
   first_name: string;
   last_name: string;
   country_code: string;
   phone_number?: number;
-  image_id: any;
+  image_id: Types.ObjectId;
   folder_id: string;
   email: string;
   ratings: number;
@@ -38,15 +36,15 @@ const advertisementSchema: Schema<IAdvertisement> = new Schema<IAdvertisement>(
       default: false,
     },
     draft_id: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId, // Cast the type
       ref: model_name.DRAFT,
     },
     published_id: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model_name.PUBLISHED,
     },
     user_id: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model_name.USER,
     },
     is_owner: {
@@ -73,7 +71,7 @@ const advertisementSchema: Schema<IAdvertisement> = new Schema<IAdvertisement>(
       type: Number,
     },
     image_id: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model_name.ATTACHMENTS,
     },
     folder_id: {
@@ -110,7 +108,7 @@ const advertisementSchema: Schema<IAdvertisement> = new Schema<IAdvertisement>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any, options: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret.__v;
         return ret;
       },
@@ -124,7 +122,7 @@ const advertisementModel = mongoose.model<IAdvertisement>(
 );
 
 interface IAdvertisementFavouritesFollowers extends Document {
-  advertisement_id: any;
+  advertisement_id: Types.ObjectId;
   followers_count: number;
   followers: Types.ObjectId[];
   favourites_count: number;
@@ -135,7 +133,7 @@ const advertisementFavouritesFollowersSchema: Schema<IAdvertisementFavouritesFol
   new Schema<IAdvertisementFavouritesFollowers>(
     {
       advertisement_id: {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: model_name.ADVERTISEMENT,
       },
       followers_count: {
