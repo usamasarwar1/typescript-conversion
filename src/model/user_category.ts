@@ -32,7 +32,7 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
   },
 );
 
-const userCategoryModel = mongoose.model<IUserCategory>(
+const userCategoryModel = mongoose.models.Categories || mongoose.model<IUserCategory>(
   model.CATEGORIES,
   userCategorySchema,
 );
