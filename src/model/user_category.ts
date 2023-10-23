@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import model from "../model/model_name";
+import model from "./model_name";
 
 const objectId = Types.ObjectId;
 
@@ -18,7 +18,7 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
     category_id: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: model.CATEGORY,
+      ref: model.CATEGORIES,
     },
   },
   {
@@ -33,7 +33,7 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
 );
 
 const userCategoryModel = mongoose.model<IUserCategory>(
-  model.CATEGORY,
+  model.CATEGORIES,
   userCategorySchema,
 );
 

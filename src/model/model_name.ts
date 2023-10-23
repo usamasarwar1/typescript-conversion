@@ -4,7 +4,7 @@ const NOTIFICATION_SETTING: string = "NotificationSetting";
 
 const ATTACHMENTS: string = "common.attachments";
 
-const CATEGORY: string = "Category";
+const CATEGORIES: string = "Categories";
 const PARENT_CHILD_CATEGORY: string = "ParentChildCategory";
 const MENU_MANAGEMENT: string = "MenuManagement";
 const MENU_ITEM: string = "MenuItem";
@@ -77,7 +77,7 @@ export default {
   USER_LOGOUT,
   NOTIFICATION_SETTING,
   ATTACHMENTS,
-  CATEGORY,
+  CATEGORIES,
   PARENT_CHILD_CATEGORY,
   MENU_MANAGEMENT,
   MENU_ITEM,

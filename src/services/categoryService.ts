@@ -1,6 +1,6 @@
 // import logger from "../../utils/logger";
 import * as Category from "../model/category";
-const { categoryModel } = Category;
+const {categoryModel}  = Category;
 
 // Define the function to validate categories.
 const validCategory = async (categoryId: string | string[]) => {

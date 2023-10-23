@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import { promotion } from "../utilities/enum";
-import model_name from "../model/model_name";
+import model_name from "./model_name";
 
 const ObjectId = Types.ObjectId;
 
@@ -29,7 +29,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
     category_ids: [
       {
         type: Types.ObjectId,
-        ref: model_name.CATEGORY,
+        ref: model_name.CATEGORIES,
       },
     ],
     advertisement_id: {

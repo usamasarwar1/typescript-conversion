@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { defaultServerResponse } from "../../utilities/common/response";
 import { requestValidationMessage } from "../../utilities/common/validation_message";
 import { errors } from "../../utilities/error";
+import { validateObjectSchema } from "./joiSchemaValidation";
 
 const validateManagementQuery = (schema: any) => {
   return (req: Request, res: Response, next: NextFunction) => {

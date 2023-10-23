@@ -74,7 +74,7 @@ const Joi = require("joi");
 import sanitizeHtml from 'sanitize-html';
 
 
-const validateObjectSchema = (data, schema) => {
+export const validateObjectSchema = (data, schema) => {
   const validation = schema.validate(data, { abortEarly: false });
   if (validation.error) {
     const errorDetails = validation.error.details.map((value) => {

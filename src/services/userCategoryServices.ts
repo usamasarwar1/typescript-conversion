@@ -1,4 +1,4 @@
-import user_service from "./user.service";
+import userService from "./userservice";
 
 import category_service from "../services/categoryService"; // Import your dependencies
 
@@ -15,12 +15,12 @@ const categoryFollowOrUnfollow = async (
   try {
     const { category_ids } = categoryFollow;
     const { is_follow } = query;
-    const user = await user_service.getVerifiedUser({ userId });
+    const user = await userService.getVerifiedUser({ userId });
     let valid_category_ids: any = await category_service.validCategory(
       category_ids,
     );
     let alreadyFollowedCategory: any = await userCategoryModel.find({
-      user_id: user._id,
+      user_id: user?._id,
       category_id: { $in: valid_category_ids },
     });
 
@@ -44,7 +44,7 @@ const categoryFollowOrUnfollow = async (
       ) {
         await valid_category_ids.forEach(async (categoryId: any) => {
           const userCategory = {
-            user_id: user._id,
+            user_id: user?._id,
             category_id: categoryId,
           };
           UsersCategoryItems.push(userCategory);
@@ -75,7 +75,7 @@ const categoryFollowOrUnfollow = async (
 
         await followCategoryId.forEach(async (categoryId: any) => {
           const userCategory = {
-            user_id: user._id,
+            user_id: user?._id,
             category_id: categoryId,
           };
           UsersCategoryItems.push(userCategory);
@@ -122,7 +122,7 @@ const categoryFollowOrUnfollow = async (
       }
 
       await userCategoryModel.deleteMany({
-        user_id: user._id,
+        user_id: user?._id,
         category_id: { $in: valid_category_ids },
       });
 
@@ -139,10 +139,10 @@ const categoryFollowOrUnfollow = async (
 
 const getCategoryFollowedList = async (userId: string) => {
   try {
-    const user = await user_service.getVerifiedUser({ userId });
+    const user = await userService.getVerifiedUser({ userId });
     const userCategory = await userCategoryModel.aggregate([
       {
-        $match: { user_id: user._id },
+        $match: { user_id: user?._id },
       },
       {
         $lookup: {

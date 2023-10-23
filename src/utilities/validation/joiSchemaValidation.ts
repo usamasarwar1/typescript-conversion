@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { defaultServerResponse } from "../../utilities/common/response";
 import { requestValidationMessage } from "../../utilities/common/validation_message";
 import { errors } from "../../utilities/error";
+import Joi from "joi";
 
 const validateBody = (schema: any) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -31,4 +32,23 @@ const validateQuery = (schema: any) => {
   };
 };
 
-export { validateBody, validateQuery };
+
+
+const validateObjectSchema = (data: any, schema: Joi.ObjectSchema) => {
+  const validation = schema.validate(data, { abortEarly: false });
+
+  if (validation.error) {
+    const errorDetails = validation.error.details.map((value: Joi.ValidationErrorItem) => {
+      return {
+        error: value.message,
+        path: value.path,
+      };
+    });
+
+    return errorDetails;
+  }
+
+  return null;
+};
+
+export { validateBody, validateQuery,validateObjectSchema };

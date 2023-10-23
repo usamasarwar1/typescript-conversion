@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import model from "../model/model_name";
+import model from "./model_name";
 
 interface ICategory extends Document {
   title: string;
@@ -76,6 +76,7 @@ const categorySchema: Schema<ICategory> = new Schema<ICategory>(
   },
 );
 
-const categoryModel = mongoose.model<ICategory>(model.CATEGORY, categorySchema);
+const existModel=mongoose.models[model.CATEGORIES] as mongoose.Model<ICategory>
+const categoryModel = existModel|| mongoose.model<ICategory>(model.CATEGORIES, categorySchema);
 
-export { categoryModel };
+export   {categoryModel} ;

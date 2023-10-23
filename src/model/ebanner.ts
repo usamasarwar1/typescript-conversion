@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import model_name from "../model/model_name";
+import model_name from "./model_name";
 
 const ObjectId = Types.ObjectId;
 
@@ -23,7 +23,7 @@ const ebannerSchema: Schema<IEbanner> = new Schema<IEbanner>(
     category_ids: [
       {
         type: Types.ObjectId,
-        ref: model_name.CATEGORY,
+        ref: model_name.CATEGORIES,
       },
     ],
     advertisement_id: {
