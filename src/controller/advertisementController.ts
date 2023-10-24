@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { defaultServerResponse } from "../utilities/common/response";
 import { advertisementFollowInfo } from "../utilities/common/advertisement_label";
 import { success } from "../utilities/success";
+import { ObjectId } from 'mongodb';
+import { errors } from "../utilities/error";
 import advertisementService from "../services/advertisement/advertisementService";
 
 const getOwner = async (request: any, response: any, next: NextFunction) => {
@@ -14,9 +16,10 @@ const getOwner = async (request: any, response: any, next: NextFunction) => {
     newResponse.message = advertisementFollowInfo["OWNER_DETAILS"];
     newResponse.body = ownerDetails;
   } catch (error: any) {
-    newResponse.status = JSON.parse(error)["status"];
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    console.log(error);
+    newResponse.status = errors.Bad_Request.code;
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message };
   }
   response.status(newResponse.status).send(newResponse);
 };
@@ -36,9 +39,9 @@ const getFollowerList = async (
     newResponse.message = advertisementFollowInfo["LIST_OF_FOLLOWER"];
     newResponse.body = followerList;
   } catch (error: any) {
-    newResponse.status = JSON.parse(error)["status"];
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    newResponse.status = errors.Bad_Request.code;
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message };
   }
   response.status(newResponse.status).send(newResponse);
 };

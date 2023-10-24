@@ -5,6 +5,7 @@ import {
 } from "../utilities/common/advertisement_label";
 import { success } from "../utilities/success";
 import { decode } from "../utilities/jwt";
+import { errors } from "../utilities/error";
 import advertisementService from "../services/advertisement/indexService";
 import promotion_service from "../services/promotionService";
 import ebanner_service from "../services/ebannerService";
@@ -36,7 +37,7 @@ const setFavouriteAdvertisementById = async (request: any, response: any) => {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisement =
       await advertisementService.setFavouritesAdvertisementById({
-        userId: decodedData["id"],
+        userId: decodedData?.id,
         query: request.query,
         advertisement_id: request.params.advertisementId,
       });
@@ -44,9 +45,9 @@ const setFavouriteAdvertisementById = async (request: any, response: any) => {
     newResponse.message = userFavouriteAdvertisement["message"];
     newResponse.body = userFavouriteAdvertisement["body"];
   } catch (error: any) {
-    newResponse.status = 500;
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message }; // In
   }
   response.status(newResponse.status).send(newResponse);
 };

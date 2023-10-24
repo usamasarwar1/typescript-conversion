@@ -360,6 +360,8 @@ const getFollowFaviouriteDetails = async (advertisementData: any) => {
 const getOwner = async (advertisementId: any) => {
   try {
     advertisementId = new mongoose.Types.ObjectId(advertisementId);
+    console.log("advertisementId: ", advertisementId);
+
 
     var pipeline = [
       {

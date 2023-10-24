@@ -63,16 +63,22 @@ const getUserAdvertisementPromotionsByType = async (PromotionData: {
     throw error;
   }
 };
+type objectidconstructor = {
+  (str: string): mongoose.Types.ObjectId;
+  new (str: string): mongoose.Types.ObjectId;
+}
 
 const getAdvertisementId = async (promotionId: any) => {
   try {
-    promotionId = new mongoose.Types.ObjectId(promotionId);
-
+    // console.log("getAdvertisemnetId")
+    // promotionId = (mongoose.Types.ObjectId as unknown as objectidconstructor)(promotionId);
+    // console.log("promotion id:",promotionId);
+    
     let projectData = await promotionModel
-      .find({ _id: promotionId })
+      .findOne({ _id: "634112edec58c491ceb1c067" })
       .select('advertisement_id')
       .lean();
-
+console.log("projectData",projectData)
     if (projectData) {
       return (projectData as any).advertisement_id;
     }

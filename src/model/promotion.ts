@@ -1,13 +1,16 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import { promotion } from "../utilities/enum";
-import model_name from "./model_name";
+import model from "./model_name";
 
 const ObjectId = Types.ObjectId;
 
 interface IPromotion extends Document {
-  user_id: any;
+  user_id: {
+    type: Types.ObjectId;
+    ref: typeof model.USER;
+  };
   category_ids: Types.ObjectId[];
-  advertisement_id: any;
+  advertisement_id: Types.ObjectId; // Corrected this line
   by: string;
   start_date: Date;
   end_date: Date;
@@ -23,18 +26,18 @@ interface IPromotion extends Document {
 const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
   {
     user_id: {
-      type: Types.ObjectId,
-      ref: model_name.USER,
+      type: ObjectId,
+      ref: model.USER,
     },
     category_ids: [
       {
-        type: Types.ObjectId,
-        ref: model_name.CATEGORIES,
+        type: ObjectId,
+        ref: model.CATEGORIES,
       },
     ],
     advertisement_id: {
-      type: Types.ObjectId,
-      ref: model_name.ADVERTISEMENT,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: model.ADVERTISEMENT, // Corrected this line
     },
     by: {
       type: String,
@@ -72,8 +75,8 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
     ],
     promotion_data_ids: [
       {
-        type: Types.ObjectId,
-        ref: model_name.PROMOTION_DATA,
+        type: ObjectId,
+        ref: model.PROMOTION_DATA,
       },
     ],
   },
@@ -90,7 +93,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
 );
 
 const promotionModel = mongoose.model<IPromotion>(
-  model_name.PROMOTION,
+  model.PROMOTION,
   promotionSchema,
 );
 

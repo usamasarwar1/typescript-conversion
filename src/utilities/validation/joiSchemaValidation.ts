@@ -34,6 +34,8 @@ const validateQuery = (schema: any) => {
 
 
 
+
+
 const validateObjectSchema = (data: any, schema: Joi.ObjectSchema) => {
   const validation = schema.validate(data, { abortEarly: false });
 

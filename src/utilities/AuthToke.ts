@@ -17,7 +17,7 @@ const validateToken = async (req: any, res: any, next: any) => {
       // todo: check status code
       throw JSON.stringify({
         status: errors.Unauthorized.code,
-        messages: requestValidationMessage.TOKEN_MISSING,
+        messages: [requestValidationMessage.TOKEN_MISSING],
       });
     }
     let token = await getTokenFromRequest(req.headers.authorization);
@@ -25,20 +25,20 @@ const validateToken = async (req: any, res: any, next: any) => {
       // todo: check status code
       throw JSON.stringify({
         status: errors.Bad_Request.code,
-        messages: commonLabel["TOKEN_IS_NOT_VALID"],
+        messages: [commonLabel["TOKEN_IS_NOT_VALID"]],
       });
     }
     let expireToken = await userLogoutModel.findOne({ token });
     if (expireToken) {
       throw JSON.stringify({
         status: errors.Bad_Request.code,
-        messages: commonLabel["TOKEN_NOT_VALID"],
+        messages: [commonLabel["TOKEN_NOT_VALID"]],
       });
     }
     if (!(await verifyJwtToken(token))) {
       throw JSON.stringify({
         status: errors.Forbidden.code,
-        messages: commonLabel["TOKEN_IS_NOT_VALID"],
+        messages: [commonLabel["TOKEN_IS_NOT_VALID"]],
       });
     }
     (req as any).token = token;
@@ -49,9 +49,8 @@ const validateToken = async (req: any, res: any, next: any) => {
       response.status = errors.Bad_Request.code;
       response.body = undefined;
     } else {
-      response.message = JSON.parse(error)["messages"];
-      response.status = JSON.parse(error)["status"];
-      response.body = undefined;
+      response.message = error.messages || "An error occurred while processing the request.";
+      response.status = error.status || 500;
     }
   }
   return res.status(response.status).send(response);

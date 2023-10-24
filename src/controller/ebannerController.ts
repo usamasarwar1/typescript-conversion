@@ -18,16 +18,16 @@ const userFollowedAdvertisementsEbanners = async (
     const userAdvertisementEbanner =
       await ebanner_service.getUserAdvertisementEbannersByType({
         query: request.query,
-        userId: decodedData["id"],
+        userId: decodedData?.id,
         type: "FOLLOWEDADVERTISEMENT",
       });
     newResponse.status = success.OK.code;
     newResponse.message = ebannerInfo["USER_FOLLOWED_ADVERTISEMENTS_EBANNERS"];
     newResponse.body = userAdvertisementEbanner;
   } catch (error: any) {
-    newResponse.status = 500;
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    newResponse.status = errors.Bad_Request.code;
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message };  
   }
   response.status(newResponse.status).send(newResponse);
 };
@@ -52,9 +52,9 @@ const getOwner = async (request: any, response: any) => {
       newResponse.body = null;
     }
   } catch (error: any) {
-    newResponse.status = JSON.parse(error)["status"];
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    newResponse.status = errors.Bad_Request.code;
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message };  
   }
   response.status(newResponse.status).send(newResponse);
 };
@@ -80,9 +80,9 @@ const getFollowerList = async (request: any, response: any) => {
       newResponse.body = null;
     }
   } catch (error: any) {
-    newResponse.status = JSON.parse(error)["status"];
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    newResponse.status = errors.Bad_Request.code;
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message };  
   }
   response.status(newResponse.status).send(newResponse);
 };

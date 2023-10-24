@@ -4,6 +4,7 @@ import { categoryInfo } from "../utilities/common/category_label";
 import { decode } from "../utilities/jwt";
 import user_category_service from "../services/userCategoryServices";
 import { success } from "../utilities/success";
+import { errors } from "../utilities/error";
 
 const categoryFollowOrUnfollow = async (
   request: any,
@@ -13,6 +14,7 @@ const categoryFollowOrUnfollow = async (
   const newResponse: any = { ...defaultServerResponse };
   try {
     const decodedData = await decode((request as any).token);
+    console.log(decodedData);
     const followedCategory: any =
       await user_category_service.categoryFollowOrUnfollow(
         decodedData["id"],
@@ -23,9 +25,9 @@ const categoryFollowOrUnfollow = async (
     newResponse.message = followedCategory["message"];
     newResponse.body = followedCategory["body"];
   } catch (error: any) {
-    newResponse.status = 500;
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message }; 
   }
   response.status(newResponse.status).send(newResponse);
 };
@@ -38,6 +40,7 @@ const getFollowCategory = async (
   const newResponse: any = { ...defaultServerResponse };
   try {
     const decodedData = await decode((request as any).token);
+    console.log(decodedData);
     const userId = request.query.user_id
       ? request.query.user_id
       : decodedData["id"];
@@ -47,9 +50,9 @@ const getFollowCategory = async (
     newResponse.message = `${categoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
     newResponse.body = followedCategory;
   } catch (error: any) {
-    newResponse.status = 500;
-    newResponse.message = JSON.parse(error)["messages"];
-    newResponse.body = undefined;
+    newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
+    newResponse.message = "An error occurred while processing the request.";
+    newResponse.body = { error: error.message }; 
   }
   response.status(newResponse.status).send(newResponse);
 };
