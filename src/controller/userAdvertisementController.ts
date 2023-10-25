@@ -25,6 +25,7 @@ const followUnfollowAdvertisementById = async (
   let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
+
     const userFollowAdvertisement =
       await advertisementService.followUnfollowAdvertisement({
         userId: decodedData["id"],

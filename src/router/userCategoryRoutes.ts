@@ -7,7 +7,7 @@ import user_category_controller from "../controller/userCategoryController";
 const user_category_router = express.Router();
 
 user_category_router.post(
-  "/",
+  "/category",
   validateToken,
   validateBody(categoryFollowSchema),
   user_category_controller.categoryFollowOrUnfollow,

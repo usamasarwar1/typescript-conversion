@@ -30,8 +30,8 @@ const getOwner = async (
 };
 
 const getFollowerList = async (
-  request: any,
-  response: any,
+  request: Request | any,
+  response: Response,
   next: NextFunction,
 ) => {
   const newResponse: NewResponse = { ...defaultServerResponse };

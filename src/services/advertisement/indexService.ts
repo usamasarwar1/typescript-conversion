@@ -240,7 +240,7 @@ async function setFavouritesAdvertisementById(advertisementData: {
 }
 
 const getAdvertisementFollowFavoriteList = async (advertisementData: {
-  userId: Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
   query: {
     is_pagination: string;
     page_index: number;
