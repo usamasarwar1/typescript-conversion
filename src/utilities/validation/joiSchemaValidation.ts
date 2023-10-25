@@ -3,10 +3,14 @@ import { defaultServerResponse } from "../../utilities/common/response";
 import { requestValidationMessage } from "../../utilities/common/validation_message";
 import { errors } from "../../utilities/error";
 import Joi from "joi";
-
+interface NewResponse {
+  status: number;
+  message: string;
+  body: string | any;
+}
 const validateBody = (schema: any) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    let response: any = defaultServerResponse;
+    let response: NewResponse = defaultServerResponse;
     const error = validateObjectSchema(req.body, schema); // Replace 'any' with the appropriate type for your validation schema
     if (error) {
       response.body = error;
@@ -20,7 +24,7 @@ const validateBody = (schema: any) => {
 
 const validateQuery = (schema: any) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    let response: any = defaultServerResponse;
+    let response: NewResponse = defaultServerResponse;
     // const error = validateObjectSchema(req.query, schema); // Replace 'any' with the appropriate type for your validation schema
     // if (error) {
     //   response.body = error;
@@ -32,20 +36,18 @@ const validateQuery = (schema: any) => {
   };
 };
 
-
-
-
-
 const validateObjectSchema = (data: any, schema: Joi.ObjectSchema) => {
   const validation = schema.validate(data, { abortEarly: false });
 
   if (validation.error) {
-    const errorDetails = validation.error.details.map((value: Joi.ValidationErrorItem) => {
-      return {
-        error: value.message,
-        path: value.path,
-      };
-    });
+    const errorDetails = validation.error.details.map(
+      (value: Joi.ValidationErrorItem) => {
+        return {
+          error: value.message,
+          path: value.path,
+        };
+      },
+    );
 
     return errorDetails;
   }
@@ -53,4 +55,4 @@ const validateObjectSchema = (data: any, schema: Joi.ObjectSchema) => {
   return null;
 };
 
-export { validateBody, validateQuery,validateObjectSchema };
+export { validateBody, validateQuery, validateObjectSchema };

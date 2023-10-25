@@ -60,7 +60,7 @@ async function followUnfollowAdvertisement(advertisementData: {
       await advertisementFavouritesFollowersModel
         .findOne({ advertisement_id })
         .lean();
-    let alreadyFollowedUserIds: any;
+    let alreadyFollowedUserIds: string[] = [];
 
     if (existingFollowAdvertisement) {
       alreadyFollowedUserIds = existingFollowAdvertisement.followers.map(
@@ -156,7 +156,7 @@ async function setFavouritesAdvertisementById(advertisementData: {
       await advertisementFavouritesFollowersModel
         .findOne({ advertisement_id })
         .lean();
-    let alreadyFavouriteUserIds: any;
+    let alreadyFavouriteUserIds: string[] = [];
 
     if (existingFavouriteAdvertisement) {
       alreadyFavouriteUserIds = existingFavouriteAdvertisement.favourites.map(
@@ -252,8 +252,8 @@ const getAdvertisementFollowFavoriteList = async (advertisementData: {
     let { userId, query, type } = advertisementData;
     let { is_pagination, page_index, page_size } = query;
 
-    let match = [],
-      filter = [];
+    let match: any = [],
+      filter: any = [];
     let skip, limit, paginationObject, dataCount: any;
 
     if (type === "favourite_list") {

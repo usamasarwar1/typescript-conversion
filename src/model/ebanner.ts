@@ -1,12 +1,10 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import model_name from "./model_name";
 
-const ObjectId = Types.ObjectId;
-
 interface IEbanner extends Document {
-  user_id: any;
+  user_id: Types.ObjectId;
   category_ids: Types.ObjectId[];
-  advertisement_id: any;
+  advertisement_id: Types.ObjectId;
   is_live: boolean;
   title: string;
   description: string;
@@ -17,17 +15,17 @@ interface IEbanner extends Document {
 const ebannerSchema: Schema<IEbanner> = new Schema<IEbanner>(
   {
     user_id: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model_name.USER,
     },
     category_ids: [
       {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: model_name.CATEGORIES,
       },
     ],
     advertisement_id: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model_name.ADVERTISEMENT,
     },
     is_live: {
@@ -56,7 +54,7 @@ const ebannerSchema: Schema<IEbanner> = new Schema<IEbanner>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any, options: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret._id;
         delete ret.__v;
         return ret;

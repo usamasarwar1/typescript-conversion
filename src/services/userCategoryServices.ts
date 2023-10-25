@@ -8,18 +8,17 @@ import { success } from "../utilities/success";
 import { userCategoryModel } from "../model/user_category";
 
 const categoryFollowOrUnfollow = async (
-  userId: any,
-  categoryFollow: any,
-  query: any,
+  userId: string,
+  categoryFollow: { category_ids: string[] },
+  query: { is_follow: string },
 ) => {
   try {
     const { category_ids } = categoryFollow;
     const { is_follow } = query;
     const user = await userService.getVerifiedUser({ userId });
-    let valid_category_ids: any = await category_service.validCategory(
-      category_ids,
-    );
-    let alreadyFollowedCategory: any = await userCategoryModel.find({
+    let valid_category_ids: string[] | any =
+      await category_service.validCategory(category_ids);
+    let alreadyFollowedCategory = await userCategoryModel.find({
       user_id: user?._id,
       category_id: { $in: valid_category_ids },
     });
@@ -42,7 +41,7 @@ const categoryFollowOrUnfollow = async (
         valid_category_ids.length === category_ids.length &&
         !alreadyFollowedCategory.length
       ) {
-        await valid_category_ids.forEach(async (categoryId: any) => {
+        await valid_category_ids.forEach(async (categoryId: string) => {
           const userCategory = {
             user_id: user?._id,
             category_id: categoryId,
@@ -62,18 +61,20 @@ const categoryFollowOrUnfollow = async (
           },
         };
       } else {
-        alreadyFollowedCategory = alreadyFollowedCategory.map((Category: any) =>
+        alreadyFollowedCategory = alreadyFollowedCategory.map((Category) =>
           Category.category_id.toString(),
         );
-        valid_category_ids = valid_category_ids.map((id: any) => id.toString());
+        valid_category_ids = valid_category_ids.map((id: string) =>
+          id.toString(),
+        );
         const followCategoryId = valid_category_ids.filter(
-          (id: any) => !alreadyFollowedCategory.includes(id),
+          (id: string) => !alreadyFollowedCategory.includes(id),
         );
         const invalidId = category_ids.filter(
-          (id: any) => !valid_category_ids.includes(id.toString()),
+          (id: string) => !valid_category_ids.includes(id.toString()),
         );
 
-        await followCategoryId.forEach(async (categoryId: any) => {
+        await followCategoryId.forEach(async (categoryId: string) => {
           const userCategory = {
             user_id: user?._id,
             category_id: categoryId,

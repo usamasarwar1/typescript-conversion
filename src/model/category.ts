@@ -68,7 +68,7 @@ const categorySchema: Schema<ICategory> = new Schema<ICategory>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret.__v;
         return ret;
       },
@@ -76,7 +76,10 @@ const categorySchema: Schema<ICategory> = new Schema<ICategory>(
   },
 );
 
-const existModel=mongoose.models[model.CATEGORIES] as mongoose.Model<ICategory>
-const categoryModel = existModel|| mongoose.model<ICategory>(model.CATEGORIES, categorySchema);
+const existModel = mongoose.models[
+  model.CATEGORIES
+] as mongoose.Model<ICategory>;
+const categoryModel =
+  existModel || mongoose.model<ICategory>(model.CATEGORIES, categorySchema);
 
-export   {categoryModel} ;
+export { categoryModel };

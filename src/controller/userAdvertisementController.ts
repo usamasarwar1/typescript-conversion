@@ -5,13 +5,24 @@ import {
 } from "../utilities/common/advertisement_label";
 import { success } from "../utilities/success";
 import { decode } from "../utilities/jwt";
-import { errors } from "../utilities/error";
 import advertisementService from "../services/advertisement/indexService";
 import promotion_service from "../services/promotionService";
 import ebanner_service from "../services/ebannerService";
+import { Request, Response } from "express";
 
-const followUnfollowAdvertisementById = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+interface NewResponse {
+  status: number;
+  message: string;
+  body: string | any;
+}
+interface CustomRequest extends Request {
+  token: string; // Define the type of the 'token' property
+}
+const followUnfollowAdvertisementById = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFollowAdvertisement =
@@ -31,13 +42,16 @@ const followUnfollowAdvertisementById = async (request: any, response: any) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const setFavouriteAdvertisementById = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+const setFavouriteAdvertisementById = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisement =
       await advertisementService.setFavouritesAdvertisementById({
-        userId: decodedData?.id,
+        userId: decodedData["id"],
         query: request.query,
         advertisement_id: request.params.advertisementId,
       });
@@ -45,15 +59,18 @@ const setFavouriteAdvertisementById = async (request: any, response: any) => {
     newResponse.message = userFavouriteAdvertisement["message"];
     newResponse.body = userFavouriteAdvertisement["body"];
   } catch (error: any) {
-    newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
-    newResponse.message = "An error occurred while processing the request.";
-    newResponse.body = { error: error.message }; // In
+    newResponse.status = 500;
+    newResponse.message = JSON.parse(error)["messages"];
+    newResponse.body = undefined;
   }
   response.status(newResponse.status).send(newResponse);
 };
 
-const getAdvertisementFollowList = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+const getAdvertisementFollowList = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFollowedAdvertisement =
@@ -74,8 +91,11 @@ const getAdvertisementFollowList = async (request: any, response: any) => {
   response.status(newResponse.status).send(newResponse);
 };
 
-const getAdvertisementFavoriteList = async (request: any, response: any) => {
-  let newResponse: any = defaultServerResponse;
+const getAdvertisementFavoriteList = async (
+  request: Request | any,
+  response: Response,
+) => {
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisement =
@@ -97,10 +117,10 @@ const getAdvertisementFavoriteList = async (request: any, response: any) => {
 };
 
 const getFavoritesAdvertisementPromotionList = async (
-  request: any,
-  response: any,
+  request: Request | any,
+  response: Response,
 ) => {
-  let newResponse: any = defaultServerResponse;
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisementPrmotions =
@@ -124,10 +144,10 @@ const getFavoritesAdvertisementPromotionList = async (
 };
 
 const getFavoritesAdvertisementEbannerList = async (
-  request: any,
-  response: any,
+  request: Request | any,
+  response: Response,
 ) => {
-  let newResponse: any = defaultServerResponse;
+  let newResponse: NewResponse = defaultServerResponse;
   try {
     let decodedData = await decode(request.token);
     const userFavouriteAdvertisementEbanners =

@@ -1,16 +1,13 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import { promotion } from "../utilities/enum";
-import model from "./model_name";
+import model_name from "./model_name";
 
 const ObjectId = Types.ObjectId;
 
 interface IPromotion extends Document {
-  user_id: {
-    type: Types.ObjectId;
-    ref: typeof model.USER;
-  };
+  user_id: Types.ObjectId | any;
   category_ids: Types.ObjectId[];
-  advertisement_id: Types.ObjectId; // Corrected this line
+  advertisement_id: Types.ObjectId | any;
   by: string;
   start_date: Date;
   end_date: Date;
@@ -26,18 +23,18 @@ interface IPromotion extends Document {
 const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
   {
     user_id: {
-      type: ObjectId,
-      ref: model.USER,
+      type: Types.ObjectId,
+      ref: model_name.USER,
     },
     category_ids: [
       {
-        type: ObjectId,
-        ref: model.CATEGORIES,
+        type: Types.ObjectId,
+        ref: model_name.CATEGORIES,
       },
     ],
     advertisement_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: model.ADVERTISEMENT, // Corrected this line
+      type: Types.ObjectId,
+      ref: model_name.ADVERTISEMENT,
     },
     by: {
       type: String,
@@ -75,15 +72,15 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
     ],
     promotion_data_ids: [
       {
-        type: ObjectId,
-        ref: model.PROMOTION_DATA,
+        type: Types.ObjectId,
+        ref: model_name.PROMOTION_DATA,
       },
     ],
   },
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any, options: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret._id;
         delete ret.__v;
         return ret;
@@ -93,7 +90,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
 );
 
 const promotionModel = mongoose.model<IPromotion>(
-  model.PROMOTION,
+  model_name.PROMOTION,
   promotionSchema,
 );
 

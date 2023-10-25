@@ -5,7 +5,7 @@ import {
   privacy_type,
 } from "../utilities/enum";
 import model from "../model/model_name";
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -17,8 +17,8 @@ interface IUser extends Document {
   country_code?: string;
   gender: string;
   contact_type: string;
-  profile_image_id: any;
-  cover_image_id: any;
+  profile_image_id: Types.ObjectId;
+  cover_image_id: Types.ObjectId;
   shortcuts: any; // Replace 'any[]' with a more specific type if necessary
   state?: string;
   country?: string;
@@ -42,7 +42,7 @@ interface IUserLogout extends Document {
 }
 
 interface INotificationSettings extends Document {
-  user_id: any;
+  user_id: Types.ObjectId;
   is_advertisement_enabled: boolean;
   is_deals_enabled: boolean;
   is_messages_enabled: boolean;
@@ -77,11 +77,11 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
       enum: contact_type_enum,
     },
     profile_image_id: {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model.ATTACHMENTS,
     },
     cover_image_id: {
-      type: ObjectId,
+      type: Schema.Types.ObjectId,
       ref: model.ATTACHMENTS,
     },
     shortcuts: {
@@ -151,7 +151,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret.__v;
         delete ret.password;
         return ret;
@@ -169,7 +169,7 @@ const userLogoutSchema: Schema<IUserLogout> = new Schema<IUserLogout>(
   {
     timestamps: true,
     toObject: {
-      transform: function (doc: any, ret: any) {
+      transform: function (doc: Document, ret: Record<string, any>) {
         delete ret.__v;
         return ret;
       },
@@ -181,7 +181,7 @@ const notificationSettingsSchema: Schema<INotificationSettings> =
   new Schema<INotificationSettings>(
     {
       user_id: {
-        type: ObjectId,
+        type: Schema.Types.ObjectId,
         ref: model.USER,
       },
       is_advertisement_enabled: {
@@ -200,7 +200,7 @@ const notificationSettingsSchema: Schema<INotificationSettings> =
     {
       timestamps: true,
       toObject: {
-        transform: function (doc: any, ret: any) {
+        transform: function (doc: Document, ret: Record<string, any>) {
           delete ret.__v;
           return ret;
         },

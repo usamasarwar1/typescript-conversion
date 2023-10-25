@@ -1,14 +1,9 @@
-import dotenv from 'dotenv'
-dotenv.config()
 import jwt, { JwtPayload } from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 
-
 const verifyJwtToken = async (token: string) => {
   return jwt.verify(token, process.env.SECRET_KEY || "my-secret-key");
-  
 };
-
 
 const getTokenFromRequest = (bearerToken: string): string => {
   bearerToken = String(bearerToken).split(" ")[1];

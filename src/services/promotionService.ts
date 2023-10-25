@@ -5,7 +5,11 @@ const { promotionModel } = Promotions;
 import mongoose from "mongoose";
 
 const getUserAdvertisementPromotionsByType = async (PromotionData: {
-  query: { is_pagination: any; page_index: any; page_size: any };
+  query: {
+    is_pagination: string | any;
+    page_index: number | any;
+    page_size: number | any;
+  };
   userId: any;
   type: string;
 }) => {
@@ -63,21 +67,15 @@ const getUserAdvertisementPromotionsByType = async (PromotionData: {
     throw error;
   }
 };
-type objectidconstructor = {
-  (str: string): mongoose.Types.ObjectId;
-  new (str: string): mongoose.Types.ObjectId;
-}
 
-const getAdvertisementId = async (promotionId: any) => {
+const getAdvertisementId = async (promotionId: mongoose.Types.ObjectId) => {
   try {
-    // console.log("getAdvertisemnetId")
-    // promotionId = (mongoose.Types.ObjectId as unknown as objectidconstructor)(promotionId);
-    // console.log("promotion id:",promotionId);
-    
+    // promotionId = new mongoose.Types.ObjectId(promotionId);
+
     let projectData = await promotionModel
-      .findOne({ _id: "634112edec58c491ceb1c067" })
-      .select('advertisement_id')
-      .lean();
+    .findOne({ _id: "634112edec58c491ceb1c067" })
+    .select('advertisement_id')
+    .lean();
 console.log("projectData",projectData)
     if (projectData) {
       return (projectData as any).advertisement_id;
