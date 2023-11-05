@@ -32,6 +32,7 @@ const categoryFollowOrUnfollow = async (
     newResponse.message = followedCategory["message"];
     newResponse.body = followedCategory["body"];
   } catch (error: any) {
+    console.log(error);
     newResponse.status = 500;
     newResponse.message = JSON.parse(error)["messages"];
     newResponse.body = undefined;

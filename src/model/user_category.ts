@@ -1,8 +1,6 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import model from "./model_name";
 
-const objectId = Types.ObjectId;
-
 interface IUserCategory extends Document {
   user_id: Types.ObjectId;
   category_id: Types.ObjectId;
@@ -33,7 +31,7 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
 );
 
 const userCategoryModel =
-  mongoose.models.Categories ||
-  mongoose.model<IUserCategory>(model.CATEGORIES, userCategorySchema);
+  mongoose.models.USER_CATEGORY ||
+  mongoose.model<IUserCategory>(model.USER_CATEGORY, userCategorySchema);
 
 export { userCategoryModel };

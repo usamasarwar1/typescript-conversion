@@ -11,13 +11,13 @@ promotionRouter.get(
 );
 
 promotionRouter.get(
-  "/advertisement/owner/:promotionId",
+  "/owner/:promotionId",
   validateToken,
   promotion_controller.getOwner,
 );
 
 promotionRouter.get(
-  "/advertisement/follower/:promotionId",
+  "/follower/:promotionId",
   validateToken,
   promotion_controller.getFollowerList,
 );

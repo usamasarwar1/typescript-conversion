@@ -23,7 +23,6 @@ const categorySchema: Schema<ICategory> = new Schema<ICategory>(
     title: {
       type: String,
       text: true,
-      required: true,
     },
     code: {
       type: String,

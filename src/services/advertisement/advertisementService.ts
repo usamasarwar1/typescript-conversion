@@ -380,7 +380,7 @@ const getFollowFaviouriteDetails = async (
 
 const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
   try {
-    advertisementId = new mongoose.Types.ObjectId(advertisementId);
+    // advertisementId = new mongoose.Types.ObjectId(advertisementId);
 
     var pipeline = [
       {
@@ -422,6 +422,7 @@ const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
 
     return owner;
   } catch (error) {
+    console.log("----------------------------", error)
     throw error;
   }
 };
