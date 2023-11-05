@@ -381,7 +381,7 @@ const getFollowFaviouriteDetails = async (
 const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
   try {
     // advertisementId = new mongoose.Types.ObjectId(advertisementId);
-
+console.log("advertisementId: ",advertisementId)
     var pipeline = [
       {
         $project: {
@@ -411,6 +411,7 @@ const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
       },
       {
         $project: {
+          "advertisement._id":"$advertisement._id",
           "user._id": "$user._id",
           "user.email": "$user.email",
           _id: 0,
@@ -419,10 +420,9 @@ const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
     ];
 
     let owner = await advertisementModel.aggregate(pipeline);
-
+    console.log("owner: ", owner)
     return owner;
   } catch (error) {
-    console.log("----------------------------", error)
     throw error;
   }
 };

@@ -49,10 +49,10 @@ const getUserFollowedAdvertisementPromotions = async (
 const getOwner = async (request: Request | any, response: Response) => {
   const newResponse: NewResponse = { ...defaultServerResponse };
   try {
-    const advertisementId = promotion_service.getAdvertisementId(
-      request.params.advertisementId,
+    const advertisementId = await promotion_service.getAdvertisementId(
+      request.params.promotionId,
     );
-
+      console.log("advertisementId: ", advertisementId)
     if (advertisementId) {
       const ownerDetails = await advertisementService.getOwner({
         advertisementId: advertisementId,

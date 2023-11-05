@@ -71,12 +71,10 @@ const getUserAdvertisementPromotionsByType = async (PromotionData: {
 const getAdvertisementId = async (promotionId: mongoose.Types.ObjectId) => {
   try {
     // promotionId = new mongoose.Types.ObjectId(promotionId);
-
     let projectData = await promotionModel
-    .findOne({ _id: "634112edec58c491ceb1c067" })
+    .findOne({ _id: promotionId })
     .select('advertisement_id')
     .lean();
-console.log("projectData",projectData)
     if (projectData) {
       return (projectData as any).advertisement_id;
     }
