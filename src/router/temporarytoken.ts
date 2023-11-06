@@ -8,7 +8,7 @@ const token = express.Router();
 token.post('/generate-token', (req:any, res:any) => {
   const secretKey = process.env.SECRET_KEY || "my-secret-key";
 
-  const user = { id: '63beebace729563e313cc384' };
+  const user = { id: '63469e9b35c9dc3a3184de4d' };
   const token = jwt.sign(user, secretKey, { expiresIn:'1d' }); // Token expires in 1  day
   res.json({ token });
 });

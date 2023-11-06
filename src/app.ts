@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import token from "./router/temporarytoken";
 import bodyParser from "body-parser";
 import routes from "./router/routes";
+import { logger } from "./logger/logger";
 
 const app: Application = express();
 
@@ -33,5 +34,5 @@ const PORT = process.env.PORT || 5000;
 dbConnect();
 
 app.listen(PORT, () => {
-  console.log(`The project is running on PORT ${PORT}.`);
+  logger.info(`The project is running on PORT ${PORT}.`);
 });

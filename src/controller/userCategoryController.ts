@@ -4,6 +4,7 @@ import { categoryInfo } from "../utilities/common/category_label";
 import { decode } from "../utilities/jwt";
 import user_category_service from "../services/userCategoryServices";
 import { success } from "../utilities/success";
+import { logger } from "../logger/logger";
 
 interface NewResponse {
   status: number;
@@ -31,8 +32,10 @@ const categoryFollowOrUnfollow = async (
     newResponse.status = followedCategory["status"] ?? success.OK.code;
     newResponse.message = followedCategory["message"];
     newResponse.body = followedCategory["body"];
+    logger.info(`Sent response for categoryFollowOrUnfollow: ${JSON.stringify(newResponse)}`);
   } catch (error: any) {
-    console.log(error);
+    logger.error(`Error in categoryFollowOrUnfollow: ${error}`);
+    logger.error(error);
     newResponse.status = 500;
     newResponse.message = JSON.parse(error)["messages"];
     newResponse.body = undefined;
@@ -47,6 +50,7 @@ const getFollowCategory = async (
 ) => {
   const newResponse: NewResponse = { ...defaultServerResponse };
   try {
+    
     const decodedData = await decode((request as CustomRequest).token);
     const userId = request.query.user_id
       ? request.query.user_id
@@ -56,7 +60,9 @@ const getFollowCategory = async (
     newResponse.status = success.OK.code;
     newResponse.message = `${categoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
     newResponse.body = followedCategory;
+    logger.info(`Sent response for getFollowCategory: ${JSON.stringify(newResponse)}`);
   } catch (error: any) {
+    logger.error(`Error in getFollowCategory: ${error}`);
     newResponse.status = 500;
     newResponse.message = JSON.parse(error)["messages"];
     newResponse.body = undefined;

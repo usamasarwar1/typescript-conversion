@@ -7,6 +7,7 @@ import { ebannerInfo } from "../utilities/common/ebanner_label";
 import { advertisementFollowInfo } from "../utilities/common/advertisement_label";
 import advertisementService from "../services/advertisement/advertisementService";
 import ebanner_service from "../services/ebannerService";
+import { logger } from "../logger/logger";
 interface NewResponse {
   status: number;
   message: string;
@@ -31,7 +32,9 @@ const userFollowedAdvertisementsEbanners = async (
     newResponse.status = success.OK.code;
     newResponse.message = ebannerInfo["USER_FOLLOWED_ADVERTISEMENTS_EBANNERS"];
     newResponse.body = userAdvertisementEbanner;
+    logger.info(`Sent response for userFollowedAdvertisementsEbanners: ${JSON.stringify(newResponse)}`);
   } catch (error: any) {
+    logger.error(`Error in userFollowedAdvertisementsEbanners: ${error}`);
     newResponse.status = 500;
     newResponse.message = JSON.parse(error)["messages"];
     newResponse.body = undefined;
@@ -42,6 +45,7 @@ const userFollowedAdvertisementsEbanners = async (
 const getOwner = async (request: Request, response: Response) => {
   const newResponse: NewResponse = { ...defaultServerResponse };
   try {
+     logger.info(`Received request for getOwner: ${JSON.stringify(request.params)}`);
     const advertisementId = ebanner_service.getAdvertisementId(
       request.params.advertisementId,
     );
@@ -59,6 +63,7 @@ const getOwner = async (request: Request, response: Response) => {
       newResponse.body = null;
     }
   } catch (error: any) {
+    logger.error(`Error in getOwner: ${error}`);
     newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
     newResponse.message = "An error occurred while processing the request.";
     newResponse.body = { error: error.message }; // Include error message in the response
@@ -87,6 +92,7 @@ const getFollowerList = async (request: Request | any, response: Response) => {
       newResponse.body = null;
     }
   } catch (error: any) {
+    logger.error(`Error in getFollowerList: ${error}`);
     newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
     newResponse.message = "An error occurred while processing the request.";
     newResponse.body = { error: error.message }; // Include error message in the response

@@ -17,7 +17,7 @@ promotionRouter.get(
 );
 
 promotionRouter.get(
-  "/follower/:promotionId",
+  "/advertisement/follower/:promotionId",
   validateToken,
   promotion_controller.getFollowerList,
 );

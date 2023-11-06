@@ -7,6 +7,7 @@ import { errors } from "../utilities/error";
 import { advertisementFollowInfo } from "../utilities/common/advertisement_label";
 import advertisementService from "../services/advertisement/advertisementService";
 import { promotionInfo } from "../utilities/common/promotion_label";
+import { logger } from "../logger/logger";
 interface NewResponse {
   status: number;
   message: string;
@@ -38,7 +39,10 @@ const getUserFollowedAdvertisementPromotions = async (
     newResponse.message =
       promotionInfo["USER_FOLLOWED_ADVERTISEMENT_PROMOTIONS"];
     newResponse.body = userAdvertisementPromotionsDetail;
+    logger.info(`Sent response for getUserFollowedAdvertisementPromotions: ${JSON.stringify(newResponse)}`);
+
   } catch (error: any) {
+    logger.error(`Error in getUserFollowedAdvertisementPromotions: ${error}`);
     newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
     newResponse.message = "An error occurred while processing the request.";
     newResponse.body = { error: error.message }; // Include error message in the response
@@ -49,10 +53,10 @@ const getUserFollowedAdvertisementPromotions = async (
 const getOwner = async (request: Request | any, response: Response) => {
   const newResponse: NewResponse = { ...defaultServerResponse };
   try {
+    logger.info(`Received request for getOwner: ${JSON.stringify(request.params)}`);
     const advertisementId = await promotion_service.getAdvertisementId(
       request.params.promotionId,
     );
-      console.log("advertisementId: ", advertisementId)
     if (advertisementId) {
       const ownerDetails = await advertisementService.getOwner({
         advertisementId: advertisementId,
@@ -66,6 +70,7 @@ const getOwner = async (request: Request | any, response: Response) => {
       newResponse.body = null;
     }
   } catch (error: any) {
+    logger.error(`Error in getOwner: ${error}`);
     newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
     newResponse.message = "An error occurred while processing the request.";
     newResponse.body = { error: error.message }; // Include error message in the response
@@ -80,7 +85,6 @@ const getFollowerList = async (request: Request | any, response: Response) => {
       request.params.promotionId,
     );
 
-    console.log("Advertisement ID:", advertisementId);  
 
     if (advertisementId) {
       const followerList = await advertisementService.getFollowerList({
@@ -96,6 +100,7 @@ const getFollowerList = async (request: Request | any, response: Response) => {
       newResponse.body = null;
     }
   } catch (error: any) {
+    logger.error(`Error in getFollowerList: ${error}`);
     newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
     newResponse.message = "An error occurred while processing the request.";
     newResponse.body = { error: error.message }; // Include error message in the response
