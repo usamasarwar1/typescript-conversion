@@ -20,15 +20,16 @@ const validateToken = async (
   let response: any = { ...defaultServerResponse };
   try {
     if (!req.headers.authorization) {
-      // todo: check status code
+      
       throw JSON.stringify({
         status: errors.Unauthorized.code,
         messages: requestValidationMessage.TOKEN_MISSING,
       });
     }
-    let token = await getTokenFromRequest(req.headers.authorization);
+    console.log(req.headers.authorization)
+    let token = getTokenFromRequest(req.headers.authorization);
     if (!token) {
-      // todo: check status code
+     
       throw JSON.stringify({
         status: errors.Bad_Request.code,
         messages: commonLabel["TOKEN_IS_NOT_VALID"],
