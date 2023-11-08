@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import { promotion } from "../utilities/enum";
+import { PromotionBy,PromotionStatus,PromotionType ,ServiceDayType} from "../utilities/enum";
 import model_name from "./model_name";
 
 const ObjectId = Types.ObjectId;
@@ -38,7 +38,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
     },
     by: {
       type: String,
-      enum: promotion.by,
+      enum: PromotionBy,
     },
     start_date: {
       type: Date,
@@ -57,7 +57,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
     },
     status: {
       type: String,
-      enum: promotion.status,
+      enum: PromotionStatus,
       default: "CREATED",
     },
     is_repeat_every: {
@@ -67,7 +67,7 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
     repeat: [
       {
         type: String,
-        enum: promotion.repeat,
+        enum: ServiceDayType,
       },
     ],
     promotion_data_ids: [

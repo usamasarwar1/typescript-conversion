@@ -1,15 +1,15 @@
 import {
-  gender as gender_enum,
-  contact_type as contact_type_enum,
-  social_media_type,
-  privacy_type,
+  Gender as gender_enum,
+  ContactType as contact_type_enum,
+  SocialMediaType,
+  PrivacyType,
 } from "../utilities/enum";
 import model from "../model/model_name";
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 const ObjectId = mongoose.Types.ObjectId;
 
-interface IUser extends Document {
+export interface User extends Document {
   first_name: string;
   last_name: string;
   email: string;
@@ -48,7 +48,7 @@ interface INotificationSettings extends Document {
   is_messages_enabled: boolean;
 }
 
-const userSchema: Schema<IUser> = new Schema<IUser>(
+const userSchema: Schema<User> = new Schema<User>(
   {
     first_name: {
       type: String,
@@ -124,7 +124,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
     },
     is_social_type: {
       type: String,
-      enum: social_media_type,
+      enum: SocialMediaType,
     },
     social_media_id: {
       type: String,
@@ -139,7 +139,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
     },
     privacy: {
       type: String,
-      enum: privacy_type,
+      enum: PrivacyType,
       default: "PUBLIC",
     },
     fcm_token: [
@@ -208,7 +208,7 @@ const notificationSettingsSchema: Schema<INotificationSettings> =
     },
   );
 
-const userModel = mongoose.model<IUser>(model.USER, userSchema);
+const userModel = mongoose.model<User>(model.USER, userSchema);
 const userLogoutModel = mongoose.model<IUserLogout>(
   model.USER_LOGOUT,
   userLogoutSchema,

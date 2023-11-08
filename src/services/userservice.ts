@@ -1,4 +1,4 @@
-import { userModel } from "../model/user";
+import { userModel, User } from "../model/user";
 import { commonLabel } from "../utilities/common/label";
 import { errors } from "../utilities/error";
 import { userLabel, userMessage } from "../utilities/common/user_label";
@@ -8,23 +8,27 @@ interface UserData {
   userId?: string;
 }
 
-const userService = {
-  getVerifiedUser: async (userData: UserData) => {
+class UserService {
+  async getVerifiedUser(userData: UserData): Promise<User | null> {
     try {
       const { email, userId } = userData;
-      let user;
+      let user: User | null = null;
+
       if (userId || email) {
         if (email) {
-          user = await userService.getUserByEmail(email);
+          user = await this.getUserByEmail(email);
         } else if (userId) {
           user = await userModel.findOne({ _id: userId }).lean();
-          if (!user)
-            throw JSON.stringify({
-              status: errors.Not_Found.code,
+          if (!user) {
+            throw new Error(JSON.stringify({
+              status: errors.Not_Found,
               messages: `${userLabel["user_id"]} ${commonLabel["NOT_VALID"]}.`,
-            });
+            }));
+          }
         }
+
         // Additional logic for verification and activation can be added here
+
         return user;
       } else {
         return null;
@@ -32,37 +36,41 @@ const userService = {
     } catch (error) {
       throw error;
     }
-  },
+  }
 
-  getUserByEmail: async (email: string) => {
+  async getUserByEmail(email: string): Promise<User | null> {
     try {
-      let user = await userModel.findOne({ email: email }).lean();
+      let user: User | null = await userModel.findOne({ email: email }).lean();
+
       if (!user) {
-        throw JSON.stringify({
+        throw new Error(JSON.stringify({
           status: 512,
           messages: `${userLabel["email"]} ${commonLabel["NOT_VALID"]}.`,
-        });
+        }));
       }
+
       return user;
     } catch (error) {
       throw error;
     }
-  },
+  }
 
-  getActiveUser: async (email: string) => {
+  async getActiveUser(email: string): Promise<User | null> {
     try {
-      let user = await userService.getUserByEmail(email);
-      if (user["is_account_locked"]) {
-        throw JSON.stringify({
+      let user: User | null = await this.getUserByEmail(email);
+
+      if (user && user["is_account_locked"]) {
+        throw new Error(JSON.stringify({
           status: 513,
           messages: userMessage["USER_ACCOUNT_LOCKED"],
-        });
+        }));
       }
+
       return user;
     } catch (error) {
       throw error;
     }
-  },
-};
+  }
+}
 
-export default userService;
+export default new UserService();

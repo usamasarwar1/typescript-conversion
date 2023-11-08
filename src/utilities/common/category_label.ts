@@ -1,4 +1,26 @@
-const categoryInfo = {
+interface CategoryInfo {
+  readonly CATEGORY_ID_NOT_VALID: string;
+  readonly CREATE_CATEGORY: string;
+  readonly UPDATE_CATEGORY: string;
+  readonly GET_CATEGORY: string;
+  readonly LIST_CATEGORY: string;
+  readonly DELETE_CATEGORY: string;
+  readonly DELETE_CATEGORY_Id: string;
+  readonly DELETE_FOLLOWED_CATEGORY: string;
+  readonly DELETE_USER_CATEGORY: string;
+  readonly GET_ALL_CHILD_CATEGORY: string;
+  readonly PARENT_CATEGORY_ID_NOT_VALID: string;
+  readonly SOME_CATEGORY_ALREADY_FOLLOWED: string;
+  readonly SOME_CATEGORY_ALREADY_UNFOLLOWED: string;
+  readonly THIS_CATEGORY_ALREADY_FOLLOWED: string;
+  readonly THIS_CATEGORY_ALREADY_UNFOLLOWED: string;
+  readonly THIS_USER_CATEGORY_FOLLOWED: string;
+  readonly THIS_USER_CATEGORY_UNFOLLOWED: string;
+  readonly GET_LIST_CATEGORY_FOLLOWED: string;
+  readonly GET_ALL_PARENT_AND_CHILD: string;
+}
+
+const categoryInfo: CategoryInfo = {
   CATEGORY_ID_NOT_VALID: "Category id is not valid",
   CREATE_CATEGORY: "Create Category",
   UPDATE_CATEGORY: "Update Category",

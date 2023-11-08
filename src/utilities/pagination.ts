@@ -1,19 +1,23 @@
+interface PaginationObject {
+  page_size: number;
+  page_index: number;
+  page_count: number;
+  data_count: number;
+  data: any[]; // Adjust the type of 'data' as per your use case
+}
+
+interface PaginationResult {
+  paginationObject: PaginationObject;
+  skip: number;
+  limit: number;
+}
+
 const pagination = (
   pageIndex: number,
   pageSize: number,
-  data_count: number,
-): {
-  paginationObject: {
-    page_size: number;
-    page_index: number;
-    page_count: number;
-    data_count: number;
-    data: any[]; // Adjust the type of 'data' as per your use case
-  };
-  skip: number;
-  limit: number;
-} => {
-  let paginationObject = {
+  data_count: number
+): PaginationResult => {
+  let paginationObject: PaginationObject = {
     page_size: 0,
     page_index: 0,
     page_count: 0,
@@ -36,6 +40,7 @@ const pagination = (
   let page_count = Math.ceil(data_count / paginationObject.page_size);
   paginationObject.data_count = data_count;
   paginationObject.page_count = page_count;
+
   return {
     paginationObject,
     skip,

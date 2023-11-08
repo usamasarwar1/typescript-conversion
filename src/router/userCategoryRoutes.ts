@@ -2,27 +2,28 @@ import express from "express";
 import { validateToken } from "../utilities/AuthToke";
 import { validateBody } from "../utilities/validation/joiSchemaValidation";
 import { categoryFollowSchema } from "../schemaValidation/userCategory";
-import user_category_controller from "../controller/userCategoryController";
+import UserCategoriesController from "../controller/userCategoryController";
 
 const user_category_router = express.Router();
+const UserCategoryController = new UserCategoriesController();
 
 user_category_router.post(
   "/category/",
   validateToken,
   validateBody(categoryFollowSchema),
-  user_category_controller.categoryFollowOrUnfollow,
+  UserCategoryController.categoryFollowOrUnfollow,
 );
 
 user_category_router.get(
   "/category/follow_list",
   validateToken,
-  user_category_controller.getFollowCategory,
+  UserCategoryController.getFollowCategory,
 );
 
 user_category_router.get(
   "/category/follow_list:/:categoryId",
   validateToken,
-  user_category_controller.getFollowCategory,
+  UserCategoryController.getFollowCategory,
 );
 
 

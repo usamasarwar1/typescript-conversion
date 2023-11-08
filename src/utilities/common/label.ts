@@ -1,4 +1,30 @@
-const commonLabel = {
+interface CommonLabel {
+  readonly pageLimit: string;
+  readonly pageNumber: string;
+  readonly ALREADY_EXISTS: string;
+  readonly RECOMENDED: string;
+  readonly ALSO_ALREADY_EXISTS: string;
+  readonly NOT_VALID: string;
+  readonly MUST_BE_NUMBER: string;
+  readonly SHOULD_NOT_ZERO: string;
+  readonly IS_REQUIRED: string;
+  readonly ACCEPT_SHOULD_BE_STRING: string;
+  readonly TOKEN_NOT_VALID: string;
+  readonly USER_ALREADY_REGISTER: string;
+  readonly USER_NOT_REGISTER: string;
+  readonly USER_EMAIL_UPDATE_ONLY_FIRST_TIME: string;
+  readonly REMAINING: string;
+  readonly AND: string;
+  readonly TOKEN_IS_NOT_VALID: string;
+  readonly START_DATE_NOT_VALID_FORMAT: string;
+  readonly END_DATE_NOT_VALID_FORMAT: string;
+  readonly DATE_FORMAT_WITH_OUT_TIME: string;
+  readonly DATA_FORMAT_SCHEDULE_WITH_TIME: string;
+  readonly TIME_FORMAT_WITH_OUT_DATE: string;
+  readonly INAVALID_AUTHORIZATION: string;
+}
+
+const commonLabel: CommonLabel = {
   pageLimit: "Page Limit",
   pageNumber: "Page number",
   ALREADY_EXISTS: "has been already exists",

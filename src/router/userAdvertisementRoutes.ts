@@ -1,27 +1,29 @@
 import express from "express";
 import { validateToken } from "../utilities/AuthToke";
+import {AdvertisementValidation} from '../schemaValidation/userAdvertisement';
 import { validateManagementQuery } from "../utilities/validation/index";
-import {
-  followerAdvertisementSchema,
-  favouriteAdvertisementSchema,
-  paginationSchema,
-} from "../schemaValidation/userAdvertisement";
-
 import user_advertisement_controller from "../controller/userAdvertisementController";
+
+const advertisementValidation = new AdvertisementValidation();
+
+const followerSchema = advertisementValidation.getFollowerAdvertisementSchema();
+const favouriteSchema = advertisementValidation.getFavouriteAdvertisementSchema();
+const paginationSchema = advertisementValidation.getPaginationSchema();
+
 
 const user_advertisement_router = express.Router();
 
 user_advertisement_router.post(
   "/advertisement/follow/:advertisementId",
   validateToken,
-  validateManagementQuery(followerAdvertisementSchema),
+  validateManagementQuery(followerSchema),
   user_advertisement_controller.followUnfollowAdvertisementById,
 );
 
 user_advertisement_router.post(
   "/advertisement/favourite/:advertisementId",
   validateToken,
-  validateManagementQuery(favouriteAdvertisementSchema),
+  validateManagementQuery(favouriteSchema),
   user_advertisement_controller.setFavouriteAdvertisementById,
 );
 

@@ -1,4 +1,22 @@
-const promotionInfo = {
+interface PromotionInfo {
+  readonly CREATE_PROMOTIONS: string;
+  readonly UPDATE_PROMOTIONS: string;
+  readonly LIST_OF_USER_PROMOTIONS: string;
+  readonly START_DATE_NOT_VALID_FORMAT: string;
+  readonly END_DATE_NOT_VALID_FORMAT: string;
+  readonly PROMOTION_ADD_LIKE: string;
+  readonly FEED_BASED_PROMOTIONS_DETAILS: string;
+  readonly USER_FOLLOWED_ADVERTISEMENT_PROMOTIONS: string;
+  readonly PROMOTION_REMOVED_LIKE: string;
+  readonly PROMOTION_ID_NOT_VALID: string;
+  readonly PROMOTION_ALREADY_LIKE: string;
+  readonly PROMOTION_ALREADY_REMOVED_LIKE: string;
+  readonly GET_PROMOTIONS: string;
+  readonly LIST_BY_CATEGORY_PROMOTIONS_DETAILS: string;
+  readonly LIST_BY_ADVERTISEMENT_PROMOTIONS_DETAILS: string;
+}
+
+const promotionInfo: PromotionInfo = {
   CREATE_PROMOTIONS: "Created Promotions",
   UPDATE_PROMOTIONS: "Updated Promotions",
   LIST_OF_USER_PROMOTIONS: "List Of User Promotions Detail",

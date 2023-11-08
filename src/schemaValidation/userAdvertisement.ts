@@ -1,21 +1,31 @@
-import Joi from "joi";
+import Joi, { Schema } from "joi";
 
-const followerAdvertisementSchema = Joi.object({
-  is_follow: Joi.string().valid("true", "false"),
-});
+export class AdvertisementValidation {
+  private readonly followerAdvertisementSchema: Schema = Joi.object({
+    is_follow: Joi.string().valid("true", "false"),
+  });
 
-const favouriteAdvertisementSchema = Joi.object({
-  is_favourite: Joi.string().valid("true", "false"),
-});
+  private readonly favouriteAdvertisementSchema: Schema = Joi.object({
+    is_favourite: Joi.string().valid("true", "false"),
+  });
 
-const paginationSchema = Joi.object({
-  is_pagination: Joi.string().valid("true", "false"),
-  page_index: Joi.string(),
-  page_size: Joi.string(),
-});
+  private readonly paginationSchema: Schema = Joi.object({
+    is_pagination: Joi.string().valid("true", "false"),
+    page_index: Joi.string(),
+    page_size: Joi.string(),
+  });
 
-export {
-  followerAdvertisementSchema,
-  favouriteAdvertisementSchema,
-  paginationSchema,
-};
+
+  getFollowerAdvertisementSchema() {
+    return this.followerAdvertisementSchema;
+  }
+
+  getFavouriteAdvertisementSchema() {
+    return this.favouriteAdvertisementSchema;
+  }
+
+  getPaginationSchema() {
+    return this.paginationSchema;
+  }
+}
+
