@@ -1,5 +1,5 @@
 import { pagination } from "../utilities/pagination";
-import advertisementService from "../services/advertisement/advertisementService";
+import AdvertisementService from "../services/advertisement/advertisementService";
 import * as Promotions from "../model/promotion";
 import mongoose from "mongoose";
 
@@ -26,7 +26,7 @@ class PromotionService {
       let advertisementIds: string[] = [];
 
       if (type === "FOLLOWEDADVERTISEMENT" || type === "FAVOURITESADVERTISEMENT") {
-        advertisementIds = await advertisementService.getUserAdvertisementIdsByUserId({
+        advertisementIds = await AdvertisementService.getUserAdvertisementIdsByUserId({
           userId,
           type,
         });

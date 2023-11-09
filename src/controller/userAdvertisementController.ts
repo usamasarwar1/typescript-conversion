@@ -1,28 +1,31 @@
-  import { defaultServerResponse } from "../utilities/common/response";
-  import {
-    advertisementFollowInfo,
-    advertisementFavouriteInfo,
-  } from "../utilities/common/advertisement_label";
-  import { success } from "../utilities/success";
-  import { decode } from "../utilities/jwt";
-  import advertisementService from "../services/advertisement/indexService";
-  import promotion_service from "../services/promotionService";
-  import ebanner_service from "../services/ebannerService";
-  import { Request, Response } from "express";
-  import { logger } from "../logger/logger";
+import { defaultServerResponse } from "../utilities/common/response";
+import {
+  advertisementFollowInfo,
+  advertisementFavouriteInfo,
+} from "../utilities/common/advertisement_label";
+import { success } from "../utilities/success";
+import { decode } from "../utilities/jwt";
+import advertisementService from "../services/advertisement/indexService";
+import promotion_service from "../services/promotionService";
+import ebanner_service from "../services/ebannerService";
+import { Request, Response } from "express";
+import { logger } from "../logger/logger";
 
-  interface NewResponse {
-    status: number;
-    message: string|any;
-    body: string | any;
-  }
-  interface CustomRequest extends Request {
-    token: string; // Define the type of the 'token' property
-  }
-  const followUnfollowAdvertisementById = async (
+interface NewResponse {
+  status: number;
+  message: string | any;
+  body: string | any;
+}
+
+interface CustomRequest extends Request {
+  token: string; // Define the type of the 'token' property
+}
+
+class AdvertisementController {
+  static async followUnfollowAdvertisementById(
     request: Request | any,
-    response: Response,
-  ) => {
+    response: Response
+  ) {
     let newResponse: NewResponse = defaultServerResponse;
     try {
       let decodedData = await decode(request.token);
@@ -43,12 +46,12 @@
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);
-  };
+  }
 
-  const setFavouriteAdvertisementById = async (
+  static async setFavouriteAdvertisementById(
     request: Request | any,
-    response: Response,
-  ) => {
+    response: Response
+  ) {
     let newResponse: NewResponse = defaultServerResponse;
     try {
       let decodedData = await decode(request.token);
@@ -69,12 +72,12 @@
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);
-  };
+  }
 
-  const getAdvertisementFollowList = async (
+  static async getAdvertisementFollowList(
     request: Request | any,
-    response: Response,
-  ) => {
+    response: Response
+  ) {
     let newResponse: NewResponse = defaultServerResponse;
     try {
       let decodedData = await decode(request.token);
@@ -96,12 +99,12 @@
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);
-  };
+  }
 
-  const getAdvertisementFavoriteList = async (
+  static async getAdvertisementFavoriteList(
     request: Request | any,
-    response: Response,
-  ) => {
+    response: Response
+  ) {
     let newResponse: NewResponse = defaultServerResponse;
     try {
       let decodedData = await decode(request.token);
@@ -123,12 +126,12 @@
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);
-  };
+  }
 
-  const getFavoritesAdvertisementPromotionList = async (
+  static async getFavoritesAdvertisementPromotionList(
     request: Request | any,
-    response: Response,
-  ) => {
+    response: Response
+  ) {
     let newResponse: NewResponse = defaultServerResponse;
     try {
       let decodedData = await decode(request.token);
@@ -152,12 +155,12 @@
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);
-  };
+  }
 
-  const getFavoritesAdvertisementEbannerList = async (
+  static async getFavoritesAdvertisementEbannerList(
     request: Request | any,
-    response: Response,
-  ) => {
+    response: Response
+  ) {
     let newResponse: NewResponse = defaultServerResponse;
     try {
       let decodedData = await decode(request.token);
@@ -181,13 +184,7 @@
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);
-  };
+  }
+}
 
-  export default {
-    followUnfollowAdvertisementById,
-    setFavouriteAdvertisementById,
-    getAdvertisementFollowList,
-    getAdvertisementFavoriteList,
-    getFavoritesAdvertisementEbannerList,
-    getFavoritesAdvertisementPromotionList,
-  };
+export default AdvertisementController;

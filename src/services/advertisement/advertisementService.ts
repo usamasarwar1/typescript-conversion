@@ -1,8 +1,14 @@
+
+
+
 import mongoose from "mongoose";
 import * as AdvertisementSchema from "../../model/advertisement";
 const { advertisementModel, advertisementFavouritesFollowersModel } =
   AdvertisementSchema;
 import { pagination } from "../../utilities/pagination";
+
+
+
 interface AdvertisementData {
   match: [];
   filter: [];
@@ -22,11 +28,18 @@ interface UserAdvertisementData {
   userId: mongoose.Types.ObjectId | any;
   type: string;
 }
+ class AdvertisementService {
+  private advertisementModel: any;
+  private advertisementFavouritesFollowersModel: any;
 
-const getFollowFaviouriteDetails = async (
-  advertisementData: AdvertisementData,
-) => {
-  try {
+  constructor() {
+    const { advertisementModel, advertisementFavouritesFollowersModel } = AdvertisementSchema;
+    this.advertisementModel = advertisementModel;
+    this.advertisementFavouritesFollowersModel = advertisementFavouritesFollowersModel;
+  }
+
+  async getFollowFavouriteDetails(advertisementData: AdvertisementData) {
+    try {
     let { match = [], filter = [], userId } = advertisementData;
     let advertisementDetails =
       await advertisementFavouritesFollowersModel.aggregate([
@@ -378,7 +391,7 @@ const getFollowFaviouriteDetails = async (
   }
 };
 
-const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
+async getOwner(advertisementId: mongoose.Types.ObjectId | any) {
   try {
     // advertisementId = new mongoose.Types.ObjectId(advertisementId);
     var pipeline = [
@@ -425,7 +438,7 @@ const getOwner = async (advertisementId: mongoose.Types.ObjectId | any) => {
   }
 };
 
-const getFollowerList = async (advertisementData: AdvertisementIdQuery) => {
+async getFollowerList(advertisementData: AdvertisementIdQuery) {
   try {
     let { advertisementId, query } = advertisementData;
     let { is_pagination, page_index, page_size } = query;
@@ -517,7 +530,7 @@ const getFollowerList = async (advertisementData: AdvertisementIdQuery) => {
   }
 };
 
-const getUserAdvertisementIdsByUserId = async (data: UserAdvertisementData) => {
+async getUserAdvertisementIdsByUserId(data: UserAdvertisementData) {
   try {
     let { userId, type } = data;
 
@@ -583,10 +596,6 @@ const getUserAdvertisementIdsByUserId = async (data: UserAdvertisementData) => {
     throw error;
   }
 };
+}
 
-export default {
-  getUserAdvertisementIdsByUserId,
-  getFollowFaviouriteDetails,
-  getOwner,
-  getFollowerList,
-};
+export default new AdvertisementService;

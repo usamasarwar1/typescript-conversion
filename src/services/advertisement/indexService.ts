@@ -42,20 +42,20 @@ class AdvertisementService {
       let { is_follow } = query;
       is_follow = is_follow ? is_follow : "true";
       let followerDetail: any;
-
+  
       await this.validateAdvertisement(advertisement_id, userId);
-
+  
       let existingFollowAdvertisement: any = await advertisementFavouritesFollowersModel
         .findOne({ advertisement_id })
         .lean();
       let alreadyFollowedUserIds: string[] = [];
-
+  
       if (existingFollowAdvertisement) {
         alreadyFollowedUserIds = existingFollowAdvertisement.followers.map(
           (follower: any) => follower.toString(),
         );
       }
-
+  
       if (is_follow === "true") {
         if (!existingFollowAdvertisement) {
           let advertisementFollow = new advertisementFavouritesFollowersModel({
@@ -66,10 +66,10 @@ class AdvertisementService {
           followerDetail = await advertisementFollow.save();
         } else {
           if (alreadyFollowedUserIds.includes(userId.toString())) {
-            throw JSON.stringify({
-              status: errors.Not_Acceptable.code,
+            throw {
+              status: 406, // Not Acceptable
               messages: ["ALREADY_ADVERTISEMENT_FOLLOW"],
-            });
+            };
           }
           followerDetail = await advertisementFavouritesFollowersModel.findByIdAndUpdate(
             { _id: existingFollowAdvertisement._id },
@@ -82,10 +82,10 @@ class AdvertisementService {
         }
       } else if (is_follow === "false") {
         if (!alreadyFollowedUserIds.includes(userId.toString())) {
-          throw JSON.stringify({
-            status: errors.Not_Found.code,
+          throw {
+            status: 404, // Not Found
             messages: ["ALREADY_ADVERTISEMENT_UNFOLLOW"],
-          });
+          };
         }
         followerDetail = await advertisementFavouritesFollowersModel.findOneAndUpdate(
           {
@@ -101,12 +101,12 @@ class AdvertisementService {
           { new: true },
         );
       } else {
-        throw JSON.stringify({
-          status: errors.Bad_Request.code,
-          messages: errors.Bad_Request.message,
-        });
+        throw {
+          status: 400, // Bad Request
+          messages: ["Invalid value for is_follow parameter"],
+        };
       }
-
+  
       return {
         message:
           is_follow === "true"
@@ -118,10 +118,10 @@ class AdvertisementService {
         },
       };
     } catch (error) {
-      throw error;
+      throw error; // Rethrow the error to be handled by the calling function
     }
   }
-
+  
   async setFavouritesAdvertisementById(advertisementData: {
     query: { is_favourite?: string };
     userId: Types.ObjectId;
@@ -258,7 +258,7 @@ class AdvertisementService {
         if (limit) filter.push({ $limit: limit });
       }
 
-      const data = await advertisementService.getFollowFaviouriteDetails({
+      const data = await advertisementService.getFollowFavouriteDetails({
         match,
         filter,
         userId,
