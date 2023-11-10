@@ -34,7 +34,6 @@ class EbannerController {
       newResponse.message = "An error occurred while processing the request.";
       newResponse.body = { error: error.message };
     }
-    response.status(newResponse.status).send(newResponse);
   }
 
   userFollowedAdvertisementsEbanners = async (
@@ -61,6 +60,7 @@ class EbannerController {
         newResponse.message = JSON.parse(error)["messages"];
         newResponse.body = undefined;
       }
+      response.status(newResponse.status).send(newResponse);
     });
   };
 
@@ -91,6 +91,8 @@ class EbannerController {
         newResponse.message = "An error occurred while processing the request.";
         newResponse.body = { error: error.message }; // Include error message in the response
       }
+    response.status(newResponse.status).send(newResponse);
+
     });
   };
 
@@ -121,6 +123,8 @@ class EbannerController {
         newResponse.message = "An error occurred while processing the request.";
         newResponse.body = { error: error.message }; // Include error message in the response
       }
+    response.status(newResponse.status).send(newResponse);
+
     });
   };
 }
