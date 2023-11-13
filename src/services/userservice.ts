@@ -20,10 +20,12 @@ class UserService {
         } else if (userId) {
           user = await userModel.findOne({ _id: userId }).lean();
           if (!user) {
-            throw new Error(JSON.stringify({
-              status: errors.Not_Found,
-              messages: `${userLabel["user_id"]} ${commonLabel["NOT_VALID"]}.`,
-            }));
+            throw new Error(
+              JSON.stringify({
+                status: errors.Not_Found,
+                messages: `${userLabel["user_id"]} ${commonLabel["NOT_VALID"]}.`,
+              })
+            );
           }
         }
 
@@ -43,10 +45,12 @@ class UserService {
       let user: User | null = await userModel.findOne({ email: email }).lean();
 
       if (!user) {
-        throw new Error(JSON.stringify({
-          status: 512,
-          messages: `${userLabel["email"]} ${commonLabel["NOT_VALID"]}.`,
-        }));
+        throw new Error(
+          JSON.stringify({
+            status: 512,
+            messages: `${userLabel["email"]} ${commonLabel["NOT_VALID"]}.`,
+          })
+        );
       }
 
       return user;
@@ -60,10 +64,12 @@ class UserService {
       let user: User | null = await this.getUserByEmail(email);
 
       if (user && user["is_account_locked"]) {
-        throw new Error(JSON.stringify({
-          status: 513,
-          messages: userMessage["USER_ACCOUNT_LOCKED"],
-        }));
+        throw new Error(
+          JSON.stringify({
+            status: 513,
+            messages: userMessage["USER_ACCOUNT_LOCKED"],
+          })
+        );
       }
 
       return user;

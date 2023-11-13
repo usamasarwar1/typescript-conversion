@@ -15,21 +15,19 @@ interface CustomRequest extends Request {
 const validateToken = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   let response: any = { ...defaultServerResponse };
   try {
     if (!req.headers.authorization) {
-      
       throw JSON.stringify({
         status: errors.Unauthorized.code,
         messages: requestValidationMessage.TOKEN_MISSING,
       });
     }
-    console.log(req.headers.authorization)
+    console.log(req.headers.authorization);
     let token = getTokenFromRequest(req.headers.authorization);
     if (!token) {
-     
       throw JSON.stringify({
         status: errors.Bad_Request.code,
         messages: commonLabel["TOKEN_IS_NOT_VALID"],

@@ -7,8 +7,6 @@ import {
 import model from "../model/model_name";
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-const ObjectId = mongoose.Types.ObjectId;
-
 export interface User extends Document {
   first_name: string;
   last_name: string;
@@ -19,7 +17,7 @@ export interface User extends Document {
   contact_type: string;
   profile_image_id: Types.ObjectId;
   cover_image_id: Types.ObjectId;
-  shortcuts: any; // Replace 'any[]' with a more specific type if necessary
+  shortcuts: any;
   state?: string;
   country?: string;
   description?: string;
@@ -85,7 +83,7 @@ const userSchema: Schema<User> = new Schema<User>(
       ref: model.ATTACHMENTS,
     },
     shortcuts: {
-      type: [Schema.Types.Mixed], // Use a more specific type for shortcuts
+      type: [Schema.Types.Mixed],
       default: [],
     },
     state: {
@@ -157,7 +155,7 @@ const userSchema: Schema<User> = new Schema<User>(
         return ret;
       },
     },
-  },
+  }
 );
 
 const userLogoutSchema: Schema<IUserLogout> = new Schema<IUserLogout>(
@@ -174,7 +172,7 @@ const userLogoutSchema: Schema<IUserLogout> = new Schema<IUserLogout>(
         return ret;
       },
     },
-  },
+  }
 );
 
 const notificationSettingsSchema: Schema<INotificationSettings> =
@@ -205,17 +203,17 @@ const notificationSettingsSchema: Schema<INotificationSettings> =
           return ret;
         },
       },
-    },
+    }
   );
 
 const userModel = mongoose.model<User>(model.USER, userSchema);
 const userLogoutModel = mongoose.model<IUserLogout>(
   model.USER_LOGOUT,
-  userLogoutSchema,
+  userLogoutSchema
 );
 const notificationSettingsModel = mongoose.model<INotificationSettings>(
   model.NOTIFICATION_SETTING,
-  notificationSettingsSchema,
+  notificationSettingsSchema
 );
 
 // Create and export the user model

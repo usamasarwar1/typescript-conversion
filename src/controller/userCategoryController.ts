@@ -20,7 +20,7 @@ class UserCategoryController {
   categoryFollowOrUnfollow = async (
     request: Request | any,
     response: Response,
-    next: NextFunction,
+    next: NextFunction
   ) => {
     const newResponse: NewResponse = { ...defaultServerResponse };
     try {
@@ -28,17 +28,22 @@ class UserCategoryController {
       const followedCategory: any =
         await userCategoryService.categoryFollowOrUnfollow(
           decodedData["id"],
-          request.body,
+          request.body
         );
       newResponse.status = followedCategory?.status ?? success.OK.code;
       newResponse.message = followedCategory?.message;
       newResponse.body = followedCategory?.body;
-      logger.info(`Sent response for categoryFollowOrUnfollow: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for categoryFollowOrUnfollow: ${JSON.stringify(
+          newResponse
+        )}`
+      );
     } catch (error: any) {
       logger.error(`Error in categoryFollowOrUnfollow: ${error}`);
       logger.error(error);
       newResponse.status = 500;
-      newResponse.message = typeof error === 'string' ? error : 'Unexpected error format';
+      newResponse.message =
+        typeof error === "string" ? error : "Unexpected error format";
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);
@@ -47,7 +52,7 @@ class UserCategoryController {
   getFollowCategory = async (
     request: Request,
     response: Response,
-    next: NextFunction,
+    next: NextFunction
   ) => {
     const newResponse: NewResponse = { ...defaultServerResponse };
     try {
@@ -60,11 +65,14 @@ class UserCategoryController {
       newResponse.status = success.OK.code;
       newResponse.message = `${categoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
       newResponse.body = followedCategory;
-      logger.info(`Sent response for getFollowCategory: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for getFollowCategory: ${JSON.stringify(newResponse)}`
+      );
     } catch (error: any) {
       logger.error(`Error in getFollowCategory: ${error}`);
       newResponse.status = 500;
-      newResponse.message = typeof error === 'string' ? error : 'Unexpected error format';
+      newResponse.message =
+        typeof error === "string" ? error : "Unexpected error format";
       newResponse.body = undefined;
     }
     response.status(newResponse.status).send(newResponse);

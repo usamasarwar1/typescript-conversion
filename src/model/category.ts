@@ -72,7 +72,7 @@ const categorySchema: Schema<ICategory> = new Schema<ICategory>(
         return ret;
       },
     },
-  },
+  }
 );
 
 const existModel = mongoose.models[

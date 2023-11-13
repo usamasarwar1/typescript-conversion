@@ -1,8 +1,12 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import { PromotionBy,PromotionStatus,PromotionType ,ServiceDayType} from "../utilities/enum";
+import {
+  PromotionBy,
+  PromotionStatus,
+  PromotionType,
+  ServiceDayType,
+} from "../utilities/enum";
 import model_name from "./model_name";
 
-const ObjectId = Types.ObjectId;
 
 interface IPromotion extends Document {
   user_id: Types.ObjectId | any;
@@ -86,12 +90,12 @@ const promotionSchema: Schema<IPromotion> = new Schema<IPromotion>(
         return ret;
       },
     },
-  },
+  }
 );
 
 const promotionModel = mongoose.model<IPromotion>(
   model_name.PROMOTION,
-  promotionSchema,
+  promotionSchema
 );
 
 export { promotionModel };

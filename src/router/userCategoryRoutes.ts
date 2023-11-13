@@ -11,20 +11,19 @@ user_category_router.post(
   "/category/",
   validateToken,
   validateBody(categoryFollowSchema),
-  UserCategoryController.categoryFollowOrUnfollow,
+  UserCategoryController.categoryFollowOrUnfollow
 );
 
 user_category_router.get(
   "/category/follow_list",
   validateToken,
-  UserCategoryController.getFollowCategory,
+  UserCategoryController.getFollowCategory
 );
 
 user_category_router.get(
   "/category/follow_list:/:categoryId",
   validateToken,
-  UserCategoryController.getFollowCategory,
+  UserCategoryController.getFollowCategory
 );
-
 
 export { user_category_router };

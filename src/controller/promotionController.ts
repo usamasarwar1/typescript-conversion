@@ -16,7 +16,7 @@ interface NewResponse {
 }
 
 interface CustomRequest extends Request {
-  token: string; // Define the type of the 'token' property
+  token: string; 
 }
 
 class PromotionController {
@@ -58,9 +58,15 @@ class PromotionController {
         newResponse.message =
           promotionInfo["USER_FOLLOWED_ADVERTISEMENT_PROMOTIONS"];
         newResponse.body = userAdvertisementPromotionsDetail;
-        logger.info(`Sent response for getUserFollowedAdvertisementPromotions: ${JSON.stringify(newResponse)}`);
+        logger.info(
+          `Sent response for getUserFollowedAdvertisementPromotions: ${JSON.stringify(
+            newResponse
+          )}`
+        );
       } catch (error: any) {
-        logger.error(`Error in getUserFollowedAdvertisementPromotions: ${error}`);
+        logger.error(
+          `Error in getUserFollowedAdvertisementPromotions: ${error}`
+        );
         newResponse.status = errors.Bad_Request.code; // Default to Bad_Request for simplicity
         newResponse.message = "An error occurred while processing the request.";
         newResponse.body = { error: error.message }; // Include error message in the response
@@ -68,16 +74,21 @@ class PromotionController {
       response.status(newResponse.status).send(newResponse);
     });
   };
-  
 
   getOwner = async (request: Request | any, response: Response) => {
     await this.handleRequest(request, response, async () => {
       const newResponse: NewResponse = { ...defaultServerResponse };
       try {
-        logger.info(`Received request for getOwner: ${JSON.stringify(request.params)}`);
-        const advertisementId = await promotion_service.getAdvertisementId(request.params.promotionId);
+        logger.info(
+          `Received request for getOwner: ${JSON.stringify(request.params)}`
+        );
+        const advertisementId = await promotion_service.getAdvertisementId(
+          request.params.promotionId
+        );
         if (advertisementId) {
-          const ownerDetails = await advertisementService.getOwner({ advertisementId });
+          const ownerDetails = await advertisementService.getOwner({
+            advertisementId,
+          });
           newResponse.status = success.OK.code;
           newResponse.message = advertisementFollowInfo["OWNER_DETAILS"];
           newResponse.body = ownerDetails;
@@ -95,12 +106,14 @@ class PromotionController {
       response.status(newResponse.status).send(newResponse);
     });
   };
-  
+
   getFollowerList = async (request: Request | any, response: Response) => {
     await this.handleRequest(request, response, async () => {
       const newResponse: NewResponse = { ...defaultServerResponse };
       try {
-        const advertisementId = await promotion_service.getAdvertisementId(request.params.promotionId);
+        const advertisementId = await promotion_service.getAdvertisementId(
+          request.params.promotionId
+        );
         if (advertisementId) {
           const followerList = await advertisementService.getFollowerList({
             advertisementId,
@@ -123,7 +136,6 @@ class PromotionController {
       response.status(newResponse.status).send(newResponse);
     });
   };
-  
 }
 
 export default new PromotionController();

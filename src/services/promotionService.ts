@@ -16,7 +16,9 @@ interface PromotionData {
 }
 
 class PromotionService {
-  async getUserAdvertisementPromotionsByType(promotionData: PromotionData): Promise<any> {
+  async getUserAdvertisementPromotionsByType(
+    promotionData: PromotionData
+  ): Promise<any> {
     try {
       const { query, userId, type } = promotionData;
 
@@ -25,11 +27,15 @@ class PromotionService {
       let match = [];
       let advertisementIds: string[] = [];
 
-      if (type === "FOLLOWEDADVERTISEMENT" || type === "FAVOURITESADVERTISEMENT") {
-        advertisementIds = await AdvertisementService.getUserAdvertisementIdsByUserId({
-          userId,
-          type,
-        });
+      if (
+        type === "FOLLOWEDADVERTISEMENT" ||
+        type === "FAVOURITESADVERTISEMENT"
+      ) {
+        advertisementIds =
+          await AdvertisementService.getUserAdvertisementIdsByUserId({
+            userId,
+            type,
+          });
       } else return [];
 
       match.push({ $match: { advertisement_id: { $in: advertisementIds } } });
@@ -43,7 +49,7 @@ class PromotionService {
         let { skip, limit, paginationObject } = pagination(
           page_index,
           page_size,
-          dataCount,
+          dataCount
         );
 
         match.push({ $skip: skip }, { $limit: limit });
@@ -69,7 +75,7 @@ class PromotionService {
     try {
       let projectData = await promotionModel
         .findOne({ _id: promotionId })
-        .select('advertisement_id')
+        .select("advertisement_id")
         .lean();
       if (projectData) {
         return (projectData as any).advertisement_id;
@@ -144,7 +150,9 @@ class PromotionService {
                 $match: {
                   $and: [
                     {
-                      $expr: { $eq: ["$advertisement_id", "$$advertisementId"] },
+                      $expr: {
+                        $eq: ["$advertisement_id", "$$advertisementId"],
+                      },
                     },
                     { data_for: "PUBLISH" },
                     { is_primary_address: true },
@@ -265,4 +273,3 @@ class PromotionService {
   }
 }
 export default new PromotionService();
-

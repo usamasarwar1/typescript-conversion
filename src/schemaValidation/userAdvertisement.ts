@@ -15,7 +15,6 @@ export class AdvertisementValidation {
     page_size: Joi.string(),
   });
 
-
   getFollowerAdvertisementSchema() {
     return this.followerAdvertisementSchema;
   }
@@ -28,4 +27,3 @@ export class AdvertisementValidation {
     return this.paginationSchema;
   }
 }
-

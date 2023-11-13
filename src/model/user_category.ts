@@ -27,7 +27,7 @@ const userCategorySchema: Schema<IUserCategory> = new Schema<IUserCategory>(
         return ret;
       },
     },
-  },
+  }
 );
 
 const userCategoryModel =

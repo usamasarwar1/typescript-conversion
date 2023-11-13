@@ -36,7 +36,7 @@ const advertisementSchema: Schema<IAdvertisement> = new Schema<IAdvertisement>(
       default: false,
     },
     draft_id: {
-      type: Schema.Types.ObjectId, // Cast the type
+      type: Schema.Types.ObjectId,
       ref: model_name.DRAFT,
     },
     published_id: {
@@ -113,12 +113,12 @@ const advertisementSchema: Schema<IAdvertisement> = new Schema<IAdvertisement>(
         return ret;
       },
     },
-  },
+  }
 );
 
 const advertisementModel = mongoose.model<IAdvertisement>(
   model_name.ADVERTISEMENT,
-  advertisementSchema,
+  advertisementSchema
 );
 
 interface IAdvertisementFavouritesFollowers extends Document {
@@ -159,13 +159,13 @@ const advertisementFavouritesFollowersSchema: Schema<IAdvertisementFavouritesFol
     },
     {
       timestamps: true,
-    },
+    }
   );
 
 const advertisementFavouritesFollowersModel =
   mongoose.model<IAdvertisementFavouritesFollowers>(
     model_name.ADVERTISEMENT_FAVOURITES_FOLLOWERS,
-    advertisementFavouritesFollowersSchema,
+    advertisementFavouritesFollowersSchema
   );
 
 export { advertisementModel, advertisementFavouritesFollowersModel };

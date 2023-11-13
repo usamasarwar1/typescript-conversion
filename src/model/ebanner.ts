@@ -60,12 +60,12 @@ const ebannerSchema: Schema<IEbanner> = new Schema<IEbanner>(
         return ret;
       },
     },
-  },
+  }
 );
 
 const ebannerModel = mongoose.model<IEbanner>(
   model_name.EBANNER,
-  ebannerSchema,
+  ebannerSchema
 );
 
 export { ebannerModel };

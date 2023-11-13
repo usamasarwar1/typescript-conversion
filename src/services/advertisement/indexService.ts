@@ -4,17 +4,21 @@ import { pagination } from "../../utilities/pagination";
 import mongoose, { Types } from "mongoose";
 import * as AdvertisementSchema from "../../model/advertisement";
 
-const { advertisementModel, advertisementFavouritesFollowersModel } = AdvertisementSchema;
+const { advertisementModel, advertisementFavouritesFollowersModel } =
+  AdvertisementSchema;
 
 class AdvertisementService {
-  async validateAdvertisement(advertisement_id: Types.ObjectId, userId: Types.ObjectId) {
+  async validateAdvertisement(
+    advertisement_id: Types.ObjectId,
+    userId: Types.ObjectId
+  ) {
     let advertisement = await advertisementModel.findOne(
       {
         _id: advertisement_id,
         is_deleted: false,
         published_id: { $exists: true },
       },
-      { user_id: 1 },
+      { user_id: 1 }
     );
 
     if (!advertisement) {
@@ -42,20 +46,21 @@ class AdvertisementService {
       let { is_follow } = query;
       is_follow = is_follow ? is_follow : "true";
       let followerDetail: any;
-  
+
       await this.validateAdvertisement(advertisement_id, userId);
-  
-      let existingFollowAdvertisement: any = await advertisementFavouritesFollowersModel
-        .findOne({ advertisement_id })
-        .lean();
+
+      let existingFollowAdvertisement: any =
+        await advertisementFavouritesFollowersModel
+          .findOne({ advertisement_id })
+          .lean();
       let alreadyFollowedUserIds: string[] = [];
-  
+
       if (existingFollowAdvertisement) {
         alreadyFollowedUserIds = existingFollowAdvertisement.followers.map(
-          (follower: any) => follower.toString(),
+          (follower: any) => follower.toString()
         );
       }
-  
+
       if (is_follow === "true") {
         if (!existingFollowAdvertisement) {
           let advertisementFollow = new advertisementFavouritesFollowersModel({
@@ -71,14 +76,16 @@ class AdvertisementService {
               messages: ["ALREADY_ADVERTISEMENT_FOLLOW"],
             };
           }
-          followerDetail = await advertisementFavouritesFollowersModel.findByIdAndUpdate(
-            { _id: existingFollowAdvertisement._id },
-            {
-              $addToSet: { followers: userId },
-              followers_count: existingFollowAdvertisement.followers_count + 1,
-            },
-            { new: true },
-          );
+          followerDetail =
+            await advertisementFavouritesFollowersModel.findByIdAndUpdate(
+              { _id: existingFollowAdvertisement._id },
+              {
+                $addToSet: { followers: userId },
+                followers_count:
+                  existingFollowAdvertisement.followers_count + 1,
+              },
+              { new: true }
+            );
         }
       } else if (is_follow === "false") {
         if (!alreadyFollowedUserIds.includes(userId.toString())) {
@@ -87,26 +94,27 @@ class AdvertisementService {
             messages: ["ALREADY_ADVERTISEMENT_UNFOLLOW"],
           };
         }
-        followerDetail = await advertisementFavouritesFollowersModel.findOneAndUpdate(
-          {
-            _id: existingFollowAdvertisement._id,
-          },
-          {
-            $pull: { followers: userId },
-            followers_count:
-              existingFollowAdvertisement?.followers_count === 0
-                ? 0
-                : existingFollowAdvertisement.followers_count - 1,
-          },
-          { new: true },
-        );
+        followerDetail =
+          await advertisementFavouritesFollowersModel.findOneAndUpdate(
+            {
+              _id: existingFollowAdvertisement._id,
+            },
+            {
+              $pull: { followers: userId },
+              followers_count:
+                existingFollowAdvertisement?.followers_count === 0
+                  ? 0
+                  : existingFollowAdvertisement.followers_count - 1,
+            },
+            { new: true }
+          );
       } else {
         throw {
           status: 400, // Bad Request
           messages: ["Invalid value for is_follow parameter"],
         };
       }
-  
+
       return {
         message:
           is_follow === "true"
@@ -121,7 +129,7 @@ class AdvertisementService {
       throw error; // Rethrow the error to be handled by the calling function
     }
   }
-  
+
   async setFavouritesAdvertisementById(advertisementData: {
     query: { is_favourite?: string };
     userId: Types.ObjectId;
@@ -135,24 +143,26 @@ class AdvertisementService {
 
       await this.validateAdvertisement(advertisement_id, userId);
 
-      let existingFavouriteAdvertisement: any = await advertisementFavouritesFollowersModel
-        .findOne({ advertisement_id })
-        .lean();
+      let existingFavouriteAdvertisement: any =
+        await advertisementFavouritesFollowersModel
+          .findOne({ advertisement_id })
+          .lean();
       let alreadyFavouriteUserIds: string[] = [];
 
       if (existingFavouriteAdvertisement) {
         alreadyFavouriteUserIds = existingFavouriteAdvertisement.favourites.map(
-          (favourite: any) => favourite.toString(),
+          (favourite: any) => favourite.toString()
         );
       }
 
       if (is_favourite === "true") {
         if (!existingFavouriteAdvertisement) {
-          let advertisementFavourite = new advertisementFavouritesFollowersModel({
-            advertisement_id: advertisement_id,
-            favourites: [userId],
-            favourites_count: 1,
-          });
+          let advertisementFavourite =
+            new advertisementFavouritesFollowersModel({
+              advertisement_id: advertisement_id,
+              favourites: [userId],
+              favourites_count: 1,
+            });
           favouritesDetail = await advertisementFavourite.save();
         } else {
           if (alreadyFavouriteUserIds.includes(userId.toString())) {
@@ -161,14 +171,16 @@ class AdvertisementService {
               messages: ["ADVERTISEMENT_ALREADY_FAVOURITE"],
             });
           }
-          favouritesDetail = await advertisementFavouritesFollowersModel.findByIdAndUpdate(
-            { _id: existingFavouriteAdvertisement._id },
-            {
-              $addToSet: { favourites: userId },
-              favourites_count: existingFavouriteAdvertisement.favourites_count + 1,
-            },
-            { new: true },
-          );
+          favouritesDetail =
+            await advertisementFavouritesFollowersModel.findByIdAndUpdate(
+              { _id: existingFavouriteAdvertisement._id },
+              {
+                $addToSet: { favourites: userId },
+                favourites_count:
+                  existingFavouriteAdvertisement.favourites_count + 1,
+              },
+              { new: true }
+            );
         }
       } else if (is_favourite === "false") {
         if (!alreadyFavouriteUserIds.includes(userId.toString())) {
@@ -177,21 +189,22 @@ class AdvertisementService {
             messages: ["ADVERTISEMENT_ALREADY_REMOVED_FAVOURITE"],
           });
         }
-        favouritesDetail = await advertisementFavouritesFollowersModel.findOneAndUpdate(
-          {
-            _id: existingFavouriteAdvertisement._id,
-          },
-          {
-            $pull: { favourites: userId },
-            favourites_count:
-              existingFavouriteAdvertisement.favourites_count === 0
-                ? 0
-                : existingFavouriteAdvertisement.favourites_count - 1,
-          },
-          {
-            new: true,
-          },
-        );
+        favouritesDetail =
+          await advertisementFavouritesFollowersModel.findOneAndUpdate(
+            {
+              _id: existingFavouriteAdvertisement._id,
+            },
+            {
+              $pull: { favourites: userId },
+              favourites_count:
+                existingFavouriteAdvertisement.favourites_count === 0
+                  ? 0
+                  : existingFavouriteAdvertisement.favourites_count - 1,
+            },
+            {
+              new: true,
+            }
+          );
       } else {
         throw JSON.stringify({
           status: errors.Bad_Request.code,
@@ -229,7 +242,9 @@ class AdvertisementService {
 
       if (type === "favourite_list") {
         match.push({
-          $match: { favourites: { $in: [new mongoose.Types.ObjectId(userId)] } },
+          $match: {
+            favourites: { $in: [new mongoose.Types.ObjectId(userId)] },
+          },
         });
       } else if (type === "follow_list") {
         match.push({
@@ -239,14 +254,20 @@ class AdvertisementService {
       if (is_pagination === "true") {
         if (type === "favourite_list") {
           dataCount = await advertisementFavouritesFollowersModel
-            .find({ favourites: { $in: [new mongoose.Types.ObjectId(userId)] } })
+            .find({
+              favourites: { $in: [new mongoose.Types.ObjectId(userId)] },
+            })
             .count();
         } else if (type === "follow_list") {
           dataCount = await advertisementFavouritesFollowersModel
             .find({ followers: { $in: [new mongoose.Types.ObjectId(userId)] } })
             .count();
         }
-        let paginationDetails: any = pagination(page_index, page_size, dataCount);
+        let paginationDetails: any = pagination(
+          page_index,
+          page_size,
+          dataCount
+        );
 
         skip = paginationDetails.skip;
         limit = paginationDetails.limit;

@@ -13,7 +13,11 @@ interface NewResponse {
 }
 
 class AdvertisementController {
-  getOwner = async (request: Request, response: Response, next: NextFunction) => {
+  getOwner = async (
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) => {
     const newResponse: NewResponse = { ...defaultServerResponse };
     try {
       const ownerDetails = await advertisementService.getOwner({
@@ -42,7 +46,9 @@ class AdvertisementController {
       newResponse.status = success.OK.code;
       newResponse.message = advertisementFollowInfo["LIST_OF_FOLLOWER"];
       newResponse.body = followerList;
-      logger.info(`Sent response for getFollowerList: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for getFollowerList: ${JSON.stringify(newResponse)}`
+      );
     } catch (error: any) {
       newResponse.status = JSON.parse(error)["status"];
       newResponse.message = JSON.parse(error)["messages"];

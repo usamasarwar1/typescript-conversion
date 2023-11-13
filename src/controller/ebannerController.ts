@@ -51,9 +51,14 @@ class EbannerController {
             type: "FOLLOWEDADVERTISEMENT",
           });
         newResponse.status = success.OK.code;
-        newResponse.message = ebannerInfo["USER_FOLLOWED_ADVERTISEMENTS_EBANNERS"];
+        newResponse.message =
+          ebannerInfo["USER_FOLLOWED_ADVERTISEMENTS_EBANNERS"];
         newResponse.body = userAdvertisementEbanner;
-        logger.info(`Sent response for userFollowedAdvertisementsEbanners: ${JSON.stringify(newResponse)}`);
+        logger.info(
+          `Sent response for userFollowedAdvertisementsEbanners: ${JSON.stringify(
+            newResponse
+          )}`
+        );
       } catch (error: any) {
         logger.error(`Error in userFollowedAdvertisementsEbanners: ${error}`);
         newResponse.status = 500;
@@ -68,9 +73,11 @@ class EbannerController {
     await this.handleRequest(request, response, async () => {
       const newResponse: NewResponse = { ...defaultServerResponse };
       try {
-        logger.info(`Received request for getOwner: ${JSON.stringify(request.params)}`);
+        logger.info(
+          `Received request for getOwner: ${JSON.stringify(request.params)}`
+        );
         const advertisementId = ebanner_service.getAdvertisementId(
-          request.params.advertisementId,
+          request.params.advertisementId
         );
 
         if (advertisementId) {
@@ -91,8 +98,7 @@ class EbannerController {
         newResponse.message = "An error occurred while processing the request.";
         newResponse.body = { error: error.message }; // Include error message in the response
       }
-    response.status(newResponse.status).send(newResponse);
-
+      response.status(newResponse.status).send(newResponse);
     });
   };
 
@@ -100,9 +106,8 @@ class EbannerController {
     await this.handleRequest(request, response, async () => {
       const newResponse: NewResponse = { ...defaultServerResponse };
       try {
-        const advertisementId: string | any = ebanner_service.getAdvertisementId(
-          request.params.advertisementId,
-        );
+        const advertisementId: string | any =
+          ebanner_service.getAdvertisementId(request.params.advertisementId);
 
         if (advertisementId) {
           const followerList = await advertisementService.getFollowerList({
@@ -123,8 +128,7 @@ class EbannerController {
         newResponse.message = "An error occurred while processing the request.";
         newResponse.body = { error: error.message }; // Include error message in the response
       }
-    response.status(newResponse.status).send(newResponse);
-
+      response.status(newResponse.status).send(newResponse);
     });
   };
 }

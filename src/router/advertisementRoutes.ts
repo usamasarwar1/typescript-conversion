@@ -7,12 +7,12 @@ const advertisementRouter = express.Router();
 advertisementRouter.get(
   "/owner/:advertisementId",
   validateToken,
-  advertisement_controller.getOwner,
+  advertisement_controller.getOwner
 );
 advertisementRouter.get(
   "/follower/:advertisementId",
   validateToken,
-  advertisement_controller.getFollowerList,
+  advertisement_controller.getFollowerList
 );
 
 export { advertisementRouter };

@@ -24,11 +24,11 @@ class CategoryFollowService {
       const { is_follow } = query;
       const user = await userService.getVerifiedUser({ userId });
       let valid_category_ids: string[] | any =
-      await categoryService.validCategory(category_ids);
+        await categoryService.validCategory(category_ids);
       if (valid_category_ids === null || valid_category_ids === undefined) {
         return {
           status: 500,
-          message: 'Valid category IDs are null or undefined',
+          message: "Valid category IDs are null or undefined",
           body: undefined,
         };
       }
@@ -64,7 +64,7 @@ class CategoryFollowService {
           });
 
           UsersCategoryItems = await userCategoryModel.insertMany(
-            UsersCategoryItems,
+            UsersCategoryItems
           );
 
           return {
@@ -97,7 +97,7 @@ class CategoryFollowService {
           });
 
           UsersCategoryItems = await userCategoryModel.insertMany(
-            UsersCategoryItems,
+            UsersCategoryItems
           );
 
           return {
@@ -108,7 +108,9 @@ class CategoryFollowService {
               ? "users Categories followed partially"
               : errors.Not_Acceptable.message,
             body: {
-              success: UsersCategoryItems.length ? UsersCategoryItems : undefined,
+              success: UsersCategoryItems.length
+                ? UsersCategoryItems
+                : undefined,
               error: {
                 message: {
                   invalid_id: invalidId.length

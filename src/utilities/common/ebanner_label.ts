@@ -37,7 +37,8 @@ const ebannerInfo: EbannerInfo = {
   CATEGORY_BASED_EBANNER: "List of Ebanner Details by category",
   FEED_BASED_EBANNERS: "List Of Feed Based Ebanner Details",
   ADVERTISEMENT_BASED_EBANNER: "List Of  Ebanner Details By Advertisement",
-  USER_FOLLOWED_ADVERTISEMENTS_EBANNERS: "List User Followed Advertisements Ebanners Details",
+  USER_FOLLOWED_ADVERTISEMENTS_EBANNERS:
+    "List User Followed Advertisements Ebanners Details",
 };
 
 export { ebannerInfo };

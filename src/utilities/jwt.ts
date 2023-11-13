@@ -6,7 +6,10 @@ interface DecodedToken extends JwtPayload {
 }
 
 const verifyJwtToken = async (token: string): Promise<JwtPayload> => {
-  return jwt.verify(token, process.env.SECRET_KEY || "my-secret-key") as JwtPayload;
+  return jwt.verify(
+    token,
+    process.env.SECRET_KEY || "my-secret-key"
+  ) as JwtPayload;
 };
 
 const getTokenFromRequest = (bearerToken: string): string => {

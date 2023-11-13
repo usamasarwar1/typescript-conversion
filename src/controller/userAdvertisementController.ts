@@ -38,7 +38,11 @@ class AdvertisementController {
       newResponse.status = success.OK.code;
       newResponse.message = userFollowAdvertisement["message"];
       newResponse.body = userFollowAdvertisement["body"];
-      logger.info(`Sent response for followUnfollowAdvertisementById: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for followUnfollowAdvertisementById: ${JSON.stringify(
+          newResponse
+        )}`
+      );
     } catch (error: any) {
       logger.error(`Error in followUnfollowAdvertisementById: ${error}`);
       newResponse.status = 500;
@@ -64,7 +68,11 @@ class AdvertisementController {
       newResponse.status = success.OK.code;
       newResponse.message = userFavouriteAdvertisement["message"];
       newResponse.body = userFavouriteAdvertisement["body"];
-      logger.info(`Sent response for setFavouriteAdvertisementById: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for setFavouriteAdvertisementById: ${JSON.stringify(
+          newResponse
+        )}`
+      );
     } catch (error: any) {
       logger.error(`Error in setFavouriteAdvertisementById: ${error}`);
       newResponse.status = 500;
@@ -91,7 +99,11 @@ class AdvertisementController {
       newResponse.message =
         advertisementFollowInfo["LIST_FOLLOWED_ADVERTISEMENT_DETAILS"];
       newResponse.body = userFollowedAdvertisement;
-      logger.info(`Sent response for getAdvertisementFollowList: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for getAdvertisementFollowList: ${JSON.stringify(
+          newResponse
+        )}`
+      );
     } catch (error: any) {
       logger.error(`Error in getAdvertisementFollowList: ${error}`);
       newResponse.status = 500;
@@ -118,7 +130,11 @@ class AdvertisementController {
       newResponse.message =
         advertisementFavouriteInfo["LIST_FAVOURITE_ADVERTISEMENT_DETAILS"];
       newResponse.body = userFavouriteAdvertisement;
-      logger.info(`Sent response for getAdvertisementFavoriteList: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for getAdvertisementFavoriteList: ${JSON.stringify(
+          newResponse
+        )}`
+      );
     } catch (error: any) {
       logger.error(`Error in getAdvertisementFavoriteList: ${error}`);
       newResponse.status = 500;
@@ -147,7 +163,11 @@ class AdvertisementController {
           "LIST_FAVOURITE_ADVERTISEMENT_PROMOTION_DETAILS"
         ];
       newResponse.body = userFavouriteAdvertisementPrmotions;
-      logger.info(`Sent response for getFavoritesAdvertisementPromotionList: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for getFavoritesAdvertisementPromotionList: ${JSON.stringify(
+          newResponse
+        )}`
+      );
     } catch (error: any) {
       logger.error(`Error in getFavoritesAdvertisementPromotionList: ${error}`);
       newResponse.status = 500;
@@ -176,7 +196,11 @@ class AdvertisementController {
           "LIST_FAVOURITE_ADVERTISEMENT_EBANNER_DETAILS"
         ];
       newResponse.body = userFavouriteAdvertisementEbanners;
-      logger.info(`Sent response for getFavoritesAdvertisementEbannerList: ${JSON.stringify(newResponse)}`);
+      logger.info(
+        `Sent response for getFavoritesAdvertisementEbannerList: ${JSON.stringify(
+          newResponse
+        )}`
+      );
     } catch (error: any) {
       logger.error(`Error in getFavoritesAdvertisementEbannerList: ${error}`);
       newResponse.status = 500;

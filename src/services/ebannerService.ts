@@ -14,7 +14,9 @@ interface EbannerData {
 }
 
 class EbannerService {
-  async getUserAdvertisementEbannersByType(ebannerData: EbannerData): Promise<any> {
+  async getUserAdvertisementEbannersByType(
+    ebannerData: EbannerData
+  ): Promise<any> {
     try {
       const { query, userId, type } = ebannerData;
       let { is_pagination, page_index, page_size } = query;
@@ -42,7 +44,7 @@ class EbannerService {
         let { skip, limit, paginationObject } = pagination(
           page_index,
           page_size,
-          dataCount,
+          dataCount
         );
 
         match.push({ $skip: skip }, { $limit: limit });
