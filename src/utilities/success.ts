@@ -1,8 +1,3 @@
-interface SuccessResponse {
-  code: number;
-  message: string;
-}
-
 enum SuccessCode {
   OK = 200,
   Created = 201,
