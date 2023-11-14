@@ -511,10 +511,10 @@ class AdvertisementService {
           ...filter,
           {
             $lookup: {
-              from: "users", // The name of the User collection
+              from: "users", 
               localField: "followers",
               foreignField: "_id",
-              as: "followers", // Output field that will contain the user documents
+              as: "followers",
             },
           },
           {
