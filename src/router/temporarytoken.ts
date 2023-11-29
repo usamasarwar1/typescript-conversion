@@ -5,6 +5,8 @@ import express from "express";
 import jwt from "jsonwebtoken";
 const token = express.Router();
 
+
+//FEEDBACK - Same validation like the 
 token.post("/generate-token", (req: any, res: any) => {
   const secretKey = process.env.SECRET_KEY || "my-secret-key";
 

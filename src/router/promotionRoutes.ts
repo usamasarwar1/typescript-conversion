@@ -5,20 +5,14 @@ import promotion_controller from "../controller/promotionController";
 const promotionRouter = express.Router();
 
 promotionRouter.get(
-  "/followed",
-  validateToken,
-  promotion_controller.getUserFollowedAdvertisementPromotions
-);
-
-promotionRouter.get(
   "/owner/:promotionId",
-  validateToken,
+  validateToken, //FEEDBACK - Parameter validation need to done
   promotion_controller.getOwner
 );
 
 promotionRouter.get(
   "/follower/:promotionId",
-  validateToken,
+  validateToken, //FEEDBACK - Parameter validation need to done
   promotion_controller.getFollowerList
 );
 

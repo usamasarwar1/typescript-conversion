@@ -17,6 +17,7 @@ interface AdvertisementFavouriteInfo {
   readonly LIST_FAVOURITE_ADVERTISEMENT_DETAILS: string;
   readonly LIST_FAVOURITE_ADVERTISEMENT_PROMOTION_DETAILS: string;
   readonly LIST_FAVOURITE_ADVERTISEMENT_EBANNER_DETAILS: string;
+  readonly LIST_FOLLOWED_ADVERTISEMENT_PROMOTION_DETAILS: string;
 }
 
 const advertisementFollowInfo: AdvertisementFollowInfo = {
@@ -33,18 +34,13 @@ const advertisementFollowInfo: AdvertisementFollowInfo = {
 
 const advertisementFavouriteInfo: AdvertisementFavouriteInfo = {
   ADVERTISEMENT_ADD_FAVOURITE: "This Advertisement Added To Your Favourites",
-  ADVERTISEMENT_REMOVED_FAVOURITE:
-    "This Advertisement Removed From Your Favourites",
-  ADVERTISEMENT_ALREADY_FAVOURITE:
-    "This Advertisement Already Added To Your Favourites",
-  ADVERTISEMENT_ALREADY_REMOVED_FAVOURITE:
-    "This Advertisement Already Removed From Your Favourites",
-  LIST_FAVOURITE_ADVERTISEMENT_DETAILS:
-    "List Of Favourite Advertisement Details",
-  LIST_FAVOURITE_ADVERTISEMENT_PROMOTION_DETAILS:
-    "List Of Favourite Advertisement Promotion Details",
-  LIST_FAVOURITE_ADVERTISEMENT_EBANNER_DETAILS:
-    "List Of Favourite Advertisement Ebanner Details",
+  ADVERTISEMENT_REMOVED_FAVOURITE:"This Advertisement Removed From Your Favourites",
+  ADVERTISEMENT_ALREADY_FAVOURITE: "This Advertisement Already Added To Your Favourites",
+  ADVERTISEMENT_ALREADY_REMOVED_FAVOURITE: "This Advertisement Already Removed From Your Favourites",
+  LIST_FAVOURITE_ADVERTISEMENT_DETAILS: "List Of Favourite Advertisement Details",
+  LIST_FAVOURITE_ADVERTISEMENT_PROMOTION_DETAILS: "List Of Favourite Advertisement Promotion Details",
+  LIST_FAVOURITE_ADVERTISEMENT_EBANNER_DETAILS: "List Of Favourite Advertisement Ebanner Details",
+  LIST_FOLLOWED_ADVERTISEMENT_PROMOTION_DETAILS: "List Of Followed Advertisement Promotion Details"
 };
 
 export { advertisementFollowInfo, advertisementFavouriteInfo };

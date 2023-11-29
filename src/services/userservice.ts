@@ -2,6 +2,7 @@ import { userModel, User } from "../model/user";
 import { commonLabel } from "../utilities/common/label";
 import { errors } from "../utilities/error";
 import { userLabel, userMessage } from "../utilities/common/user_label";
+import { NotFoundException } from "../exceptions";
 
 interface UserData {
   email?: string;
@@ -17,16 +18,12 @@ class UserService {
       if (userId || email) {
         if (email) {
           user = await this.getUserByEmail(email);
+          if (!user)
+            throw new NotFoundException(email, "USER_EMAIL");
         } else if (userId) {
           user = await userModel.findOne({ _id: userId }).lean();
-          if (!user) {
-            throw new Error(
-              JSON.stringify({
-                status: errors.Not_Found,
-                messages: `${userLabel["user_id"]} ${commonLabel["NOT_VALID"]}.`,
-              })
-            );
-          }
+          if (!user)
+            throw new NotFoundException(userId, "USER_ID");
         }
 
         // Additional logic for verification and activation can be added here

@@ -5,20 +5,14 @@ import ebanner_controller from "../controller/ebannerController";
 const ebannerRouter = express.Router();
 
 ebannerRouter.get(
-  "/followed",
-  validateToken,
-  ebanner_controller.userFollowedAdvertisementsEbanners
-);
-
-ebannerRouter.get(
-  "/owner/:promotionId",
-  validateToken,
+  "/owner/:ebannerId",
+  validateToken,//FEEDBACK - Parameter validation need to done
   ebanner_controller.getOwner
 );
 
 ebannerRouter.get(
-  "/follower/:promotionId",
-  validateToken,
+  "/follower/:ebannerId",
+  validateToken, //FEEDBACK - Parameter validation need to done
   ebanner_controller.getFollowerList
 );
 

@@ -5,6 +5,7 @@ import token from "./router/temporarytoken";
 import bodyParser from "body-parser";
 import routes from "./router/routes";
 import { logger } from "./logger/logger";
+import { exceptionHandlerMiddleware } from "./middleware/exceptionHandlerMiddleware";
 const app: Application = express();
 app.use(express.json());
 dotenv.config();
@@ -15,9 +16,18 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+
+
+
 app.use("/token", token);
 app.use("/api/", routes);
+
+// Register the exception handler middleware
+app.use(exceptionHandlerMiddleware);
+//FEEDBACK - the port should be brought from the config. I don't see the config folder and file to read configs
 const PORT = process.env.PORT || 5000;
+
+//FEEDBACK- TO START THE SERVER AFTER SUCCESSFULL CONNECTION TO Database
 dbConnect();
 
 app.listen(PORT, () => {

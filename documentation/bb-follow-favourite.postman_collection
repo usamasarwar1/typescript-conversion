@@ -1,0 +1,1575 @@
+{
+	"info": {
+		"_postman_id": "e6629705-a931-40e0-a5d1-5af477ab4693",
+		"name": "bb-follow-favourite-v3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18500506",
+		"_collection_link": "https://astutex.postman.co/workspace/BB-Workspace~b52d20a9-2c26-4bac-8ddb-335767bddd0a/collection/18500506-e6629705-a931-40e0-a5d1-5af477ab4693?action=share&source=collection_link&creator=18500506"
+	},
+	"item": [
+		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "[C] login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"{{email}}\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/token/generate-token",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"token",
+								"generate-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Advertisement",
+			"item": [
+				{
+					"name": "[W] Advertisement Follow or un Follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/advertisement/follow/:advertisementId?is_follow=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"advertisement",
+								"follow",
+								":advertisementId"
+							],
+							"query": [
+								{
+									"key": "is_follow",
+									"value": "true"
+								}
+							],
+							"variable": [
+								{
+									"key": "advertisementId",
+									"value": "656491175f2e18f5bfe7ac96"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Advertisement Follow or un Follow",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/user/advertisement/follow/63410eb5ec58c491ceb1bd41?is_follow=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"advertisement",
+										"follow",
+										"63410eb5ec58c491ceb1bd41"
+									],
+									"query": [
+										{
+											"key": "is_follow",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "106"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"6a-b8q79TIjlSH47TqRjcQbv253Zas\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 13:38:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Your Following This Advertisement\",\n    \"body\": {\n        \"followers_count\": 3,\n        \"is_follow\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Advertisement Favourite or un Favourite",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/advertisement/favourite/:advertisementId?is_favourite=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"advertisement",
+								"favourite",
+								":advertisementId"
+							],
+							"query": [
+								{
+									"key": "is_favourite",
+									"value": "true"
+								}
+							],
+							"variable": [
+								{
+									"key": "advertisementId",
+									"value": "63c56de8ab37394a76b51bd6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Advertisement Favourite or un Favourite",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/user/advertisement/favourite/63410eb5ec58c491ceb1bd41?is_favourite=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"advertisement",
+										"favourite",
+										"63410eb5ec58c491ceb1bd41"
+									],
+									"query": [
+										{
+											"key": "is_favourite",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "121"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"79-UKB/9pZYt9G108c6F9IjLM/2qmU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 13:38:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"This Advertisement Added To Your Favourites\",\n    \"body\": {\n        \"favourites_count\": 6,\n        \"is_favourites\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Advertisement Follow List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/advertisement/followed?is_pagination=true&page_size=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"advertisement",
+								"followed"
+							],
+							"query": [
+								{
+									"key": "is_pagination",
+									"value": "true"
+								},
+								{
+									"key": "page_index",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "page_size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Get Advertisement Follow List",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/user/advertisement/followed?is_pagination=true&page_size=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"advertisement",
+										"followed"
+									],
+									"query": [
+										{
+											"key": "is_pagination",
+											"value": "true"
+										},
+										{
+											"key": "page_index",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "page_size",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "946"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b2-j/F9w/35BFohIV5OztKKfYSLXRY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 12:19:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"List Of Followed Advertisement Details\",\n    \"body\": {\n        \"page_size\": 2,\n        \"page_index\": 1,\n        \"page_count\": 1,\n        \"data_count\": 1,\n        \"data\": [\n            {\n                \"id\": \"633a7e8fd35719b0716848c6\",\n                \"title\": \"Home Appliances\",\n                \"first_name\": \"Abu\",\n                \"last_name\": \"Sri\",\n                \"image_url\": \"https://bb-dev-storage.s3.ap-south-1.amazonaws.com/633a7948ae95cbe9757e49d4/Images/Advertisements/646edbce-09b5-4a84-b2d1-e738a52ee387/Profile_Pic/Test_on_Real_Devices.jpg\",\n                \"country_code\": \"IN\",\n                \"phone_number\": 9865471230,\n                \"is_verified\": false,\n                \"email\": \"Homeappliancesshop@gmail.com\",\n                \"ratings\": 4.1,\n                \"followers_count\": 2,\n                \"favourites_count\": 4,\n                \"is_follow\": true,\n                \"is_favourite\": false,\n                \"address\": {\n                    \"title\": \"Chennai\",\n                    \"address_line_1\": \"Velachery\",\n                    \"address_line_2\": \"\",\n                    \"state\": \"\",\n                    \"country\": \"Velachery\",\n                    \"zip_code\": \"\",\n                    \"latitude\": 19.1083775,\n                    \"longitude\": 73.0236038,\n                    \"is_primary_address\": true,\n                    \"id\": \"633a7e8fd35719b0716848d1\"\n                },\n                \"categories\": [],\n                \"createdAt\": \"2022-10-03T06:17:51.306Z\",\n                \"updatedAt\": \"2023-08-17T11:47:05.702Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Advertisement Favourite List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/advertisement/favourites?is_pagination=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"advertisement",
+								"favourites"
+							],
+							"query": [
+								{
+									"key": "is_pagination",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Advertisement Favourite List",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/user/advertisement/favourites?is_pagination=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"advertisement",
+										"favourites"
+									],
+									"query": [
+										{
+											"key": "is_pagination",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "929"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a1-9kRvABWxva2ooRGz5F8BiHC+QnI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 11:24:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"List Of Favourite Advertisement Details\",\n    \"body\": {\n        \"page_size\": 10,\n        \"page_index\": 1,\n        \"page_count\": 1,\n        \"data_count\": 1,\n        \"data\": [\n            {\n                \"id\": \"633a9054d35719b071684e03\",\n                \"title\": \"Car Store\",\n                \"first_name\": \"Pravin\",\n                \"last_name\": \"Raj\",\n                \"image_url\": \"https://bb-dev-storage.s3.ap-south-1.amazonaws.com/633a813ed35719b071684a1f/Images/Advertisements/e52db019-5d5e-45a3-93fc-c9ff0967f40d/Profile_Pic/Test_on_Real_Devices.jpg\",\n                \"country_code\": \"IN\",\n                \"phone_number\": 9568743210,\n                \"is_verified\": false,\n                \"email\": \"carstore12@gmail.com\",\n                \"ratings\": 4,\n                \"followers_count\": 1,\n                \"favourites_count\": 3,\n                \"is_follow\": false,\n                \"is_favourite\": true,\n                \"address\": {\n                    \"title\": \"chennai\",\n                    \"address_line_1\": \"Adayar\",\n                    \"address_line_2\": \"\",\n                    \"state\": \"\",\n                    \"country\": \"Adayar\",\n                    \"zip_code\": \"\",\n                    \"latitude\": 19.1083738,\n                    \"longitude\": 73.0236033,\n                    \"is_primary_address\": true,\n                    \"id\": \"633a9054d35719b071684e0e\"\n                },\n                \"categories\": [],\n                \"createdAt\": \"2022-10-03T07:33:40.310Z\",\n                \"updatedAt\": \"2022-11-03T09:53:56.842Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Favourites Advertisement Promotions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/advertisement/favourites/promotions?is_pagination=true&page_index=3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"advertisement",
+								"favourites",
+								"promotions"
+							],
+							"query": [
+								{
+									"key": "is_pagination",
+									"value": "true"
+								},
+								{
+									"key": "status",
+									"value": "STARTED",
+									"disabled": true
+								},
+								{
+									"key": "page_index",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Get Favourites Advertisement Promotions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/user/advertisement/favourites/promotions?is_pagination=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"advertisement",
+										"favourites",
+										"promotions"
+									],
+									"query": [
+										{
+											"key": "is_pagination",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1093"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"445-9mOFDyLCksF2cZ2IFjbRUh7yToc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 12:25:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"List Of Favourite Advertisement Promotion Details\",\n    \"body\": {\n        \"page_size\": 10,\n        \"page_index\": 1,\n        \"page_count\": 1,\n        \"data_count\": 1,\n        \"data\": [\n            {\n                \"promotion_id\": \"634112edec58c491ceb1c067\",\n                \"title\": \"watch\",\n                \"by\": \"DATE\",\n                \"status\": \"CREATED\",\n                \"start_date\": \"2022-10-08T00:00:00.000Z\",\n                \"end_date\": \"2022-10-09T00:00:00.000Z\",\n                \"start_time\": \"10:00 AM\",\n                \"end_time\": \"11:00 PM\",\n                \"is_repeat_every\": false,\n                \"user_id\": \"633a7948ae95cbe9757e49d4\",\n                \"advertisement_id\": \"63410eb5ec58c491ceb1bd41\",\n                \"advertisement_title\": \"watch\",\n                \"advertisement_image_url\": \"https://bb-dev-storage.s3.ap-south-1.amazonaws.com/633a7948ae95cbe9757e49d4/Images/Advertisements/2e18a3b3-4be8-4dc3-a4fc-1cd39a8df6e4/Profile_Pic/Test_on_Real_Devices.jpg\",\n                \"advertisement_ratings\": 3,\n                \"advertisement_state\": \"\",\n                \"advertisement_country\": \"anna nagar\",\n                \"categories\": [\n                    {\n                        \"title\": \"RedMi\",\n                        \"id\": \"62ce5e128d7c0e5a08556c36\"\n                    }\n                ],\n                \"data\": [\n                    {\n                        \"type\": \"IMAGE\",\n                        \"id\": \"634e6d82bd1325617d2df475\",\n                        \"image_url\": \"https://busibeez.s3.ap-south-1.amazonaws.com/633a7948ae95cbe9757e49d4/Images/ProfileCover/BrowserStack_1665209061518.octet-stream\"\n                    }\n                ],\n                \"like_counts\": 0,\n                \"is_like\": false\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Followed Advertisement Promotions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/advertisement/followed/promotions?is_pagination=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"advertisement",
+								"followed",
+								"promotions"
+							],
+							"query": [
+								{
+									"key": "is_pagination",
+									"value": "true"
+								},
+								{
+									"key": "status",
+									"value": "STARTED",
+									"disabled": true
+								},
+								{
+									"key": "page_index",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Get Favourites Advertisement Promotions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/user/advertisement/favourites/promotions?is_pagination=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"advertisement",
+										"favourites",
+										"promotions"
+									],
+									"query": [
+										{
+											"key": "is_pagination",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1093"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"445-9mOFDyLCksF2cZ2IFjbRUh7yToc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 12:25:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"List Of Favourite Advertisement Promotion Details\",\n    \"body\": {\n        \"page_size\": 10,\n        \"page_index\": 1,\n        \"page_count\": 1,\n        \"data_count\": 1,\n        \"data\": [\n            {\n                \"promotion_id\": \"634112edec58c491ceb1c067\",\n                \"title\": \"watch\",\n                \"by\": \"DATE\",\n                \"status\": \"CREATED\",\n                \"start_date\": \"2022-10-08T00:00:00.000Z\",\n                \"end_date\": \"2022-10-09T00:00:00.000Z\",\n                \"start_time\": \"10:00 AM\",\n                \"end_time\": \"11:00 PM\",\n                \"is_repeat_every\": false,\n                \"user_id\": \"633a7948ae95cbe9757e49d4\",\n                \"advertisement_id\": \"63410eb5ec58c491ceb1bd41\",\n                \"advertisement_title\": \"watch\",\n                \"advertisement_image_url\": \"https://bb-dev-storage.s3.ap-south-1.amazonaws.com/633a7948ae95cbe9757e49d4/Images/Advertisements/2e18a3b3-4be8-4dc3-a4fc-1cd39a8df6e4/Profile_Pic/Test_on_Real_Devices.jpg\",\n                \"advertisement_ratings\": 3,\n                \"advertisement_state\": \"\",\n                \"advertisement_country\": \"anna nagar\",\n                \"categories\": [\n                    {\n                        \"title\": \"RedMi\",\n                        \"id\": \"62ce5e128d7c0e5a08556c36\"\n                    }\n                ],\n                \"data\": [\n                    {\n                        \"type\": \"IMAGE\",\n                        \"id\": \"634e6d82bd1325617d2df475\",\n                        \"image_url\": \"https://busibeez.s3.ap-south-1.amazonaws.com/633a7948ae95cbe9757e49d4/Images/ProfileCover/BrowserStack_1665209061518.octet-stream\"\n                    }\n                ],\n                \"like_counts\": 0,\n                \"is_like\": false\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Followed Advertisement Ebanner",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/advertisement/followed/ebanners?is_pagination=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"advertisement",
+								"followed",
+								"ebanners"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "draft",
+									"disabled": true
+								},
+								{
+									"key": "is_pagination",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Categories",
+			"item": [
+				{
+					"name": "[W] Follow Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_ids\": [\r\n        \"62ce5dff8d7c0e5a08556c30\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/category?is_follow=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"category"
+							],
+							"query": [
+								{
+									"key": "is_follow",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Follow Category",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"category_ids\": [\r\n        \"62ce5dff8d7c0e5a08556c30\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/user/category?is_follow=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"category"
+									],
+									"query": [
+										{
+											"key": "is_follow",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "285"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11d-PK7GJTy5etmNGVVt6gGuT4gWTKs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 11:32:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"users Categories followed successfully\",\n    \"body\": {\n        \"success\": [\n            {\n                \"user_id\": \"633a813ed35719b071684a1f\",\n                \"category_id\": \"62ce5dff8d7c0e5a08556c30\",\n                \"_id\": \"65477d531889d38ba3b648df\",\n                \"__v\": 0,\n                \"createdAt\": \"2023-11-05T11:32:35.808Z\",\n                \"updatedAt\": \"2023-11-05T11:32:35.808Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Followed Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/category/follow_list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"category",
+								"follow_list"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "62b2c33cee7e4951d927a5f2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Get Followed Category",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/user/category/follow_list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"category",
+										"follow_list"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "62b2c33cee7e4951d927a5f2",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "194"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c2-4rdBk8DgPTNn9dcWVgV8k9vEO0g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 11:34:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Get followed categories list\",\n    \"body\": [\n        {\n            \"id\": \"62f1b956e7b757bd8ebe3436\",\n            \"title\": \"oppo\",\n            \"code\": \"123\"\n        },\n        {\n            \"id\": \"62ce5dff8d7c0e5a08556c30\",\n            \"title\": \"Samsung\",\n            \"code\": \"tc7890\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Followed Category By User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/category/follow_list?user_id=633a799bae95cbe9757e49f8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"category",
+								"follow_list"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "633a799bae95cbe9757e49f8"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Get Followed Category By User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/user/category/follow_list?user_id=633a813ed35719b071684a1f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"category",
+										"follow_list"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "633a813ed35719b071684a1f"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "194"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c2-4rdBk8DgPTNn9dcWVgV8k9vEO0g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 11:36:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Get followed categories list\",\n    \"body\": [\n        {\n            \"id\": \"62f1b956e7b757bd8ebe3436\",\n            \"title\": \"oppo\",\n            \"code\": \"123\"\n        },\n        {\n            \"id\": \"62ce5dff8d7c0e5a08556c30\",\n            \"title\": \"Samsung\",\n            \"code\": \"tc7890\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "[W] Get Category Follower List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/category/follower_list?category_id=64eb4ca58a5121d246e3b238&is_pagination=true&page_size=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"category",
+								"follower_list"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "64eb4ca58a5121d246e3b238"
+								},
+								{
+									"key": "is_pagination",
+									"value": "true"
+								},
+								{
+									"key": "page_size",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Get Followed Category By User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/user/category/follow_list?user_id=633a813ed35719b071684a1f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"user",
+										"category",
+										"follow_list"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "633a813ed35719b071684a1f"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "194"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c2-4rdBk8DgPTNn9dcWVgV8k9vEO0g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 11:36:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"Get followed categories list\",\n    \"body\": [\n        {\n            \"id\": \"62f1b956e7b757bd8ebe3436\",\n            \"title\": \"oppo\",\n            \"code\": \"123\"\n        },\n        {\n            \"id\": \"62ce5dff8d7c0e5a08556c30\",\n            \"title\": \"Samsung\",\n            \"code\": \"tc7890\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Promotions",
+			"item": [
+				{
+					"name": "[W] Get Owner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/promotion/owner/65448ecae09b02b215858424",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"promotion",
+								"owner",
+								"65448ecae09b02b215858424"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[W] Get Followers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/promotion/follower/65442d09af9fc3060d0b09fa",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"promotion",
+								"follower",
+								"65442d09af9fc3060d0b09fa"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[C] Get Followers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/promotion/advertisement/follower/65477d531889d38ba3b648df",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"promotion",
+										"advertisement",
+										"follower",
+										"65477d531889d38ba3b648df"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "232"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e8-3CLf4cZ7bBZ/booW4FObfU1/Ag0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 Nov 2023 11:45:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"List of Followers.\",\n    \"body\": [\n        {\n            \"_id\": \"6341118bec58c491ceb1bec0\",\n            \"user_id\": [\n                \"63beebace729563e313cc384\",\n                \"649a0e763145a1af66cdb9f5\"\n            ],\n            \"user_email\": [\n                \"vimalrajk89+seller@gmail.com\",\n                \"raphhsmcbutiymxtvn@tpwlb.com\"\n            ]\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "EBanner",
+			"item": [
+				{
+					"name": "[W] Get Owner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ebanner/owner/65442d09af9fc3060d0b09fa",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ebanner",
+								"owner",
+								"65442d09af9fc3060d0b09fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[W] Get Followers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ebanner/follower/65442d09af9fc3060d0b09fa",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ebanner",
+								"follower",
+								"65442d09af9fc3060d0b09fa"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "advertisement",
+			"item": [
+				{
+					"name": "[W] Get Owner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/advertisement/owner/65285506e0cc57d610a62d27",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"advertisement",
+								"owner",
+								"65285506e0cc57d610a62d27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[W] Get Followers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/advertisement/follower/63410eb5ec58c491ceb1bd41?is_pagination=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"advertisement",
+								"follower",
+								"63410eb5ec58c491ceb1bd41"
+							],
+							"query": [
+								{
+									"key": "is_pagination",
+									"value": "true"
+								},
+								{
+									"key": "page_size",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

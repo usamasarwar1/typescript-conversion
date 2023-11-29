@@ -1,10 +1,10 @@
-interface ServerResponse {
+interface ServerResponse<T> {
   readonly status: number;
   message: string;
-  body: any[]; // Adjust the type as per your use case
+  body: T; // Adjust the type as per your use case
 }
 
-const defaultServerResponse: ServerResponse = {
+const defaultServerResponse: ServerResponse<any> = {
   status: 400,
   message: "",
   body: [],

@@ -1,9 +1,13 @@
 import userService from "./userservice";
 import categoryService from "../services/categoryService"; // Import your dependencies
 import { categoryInfo } from "../utilities/common/category_label"; // Import constants
-import { errors } from "../utilities/error";
 import { success } from "../utilities/success";
 import { userCategoryModel } from "../model/user_category";
+import { BadRequestException, NotFoundException, NotValidException } from "../exceptions";
+import {  CategoryIdQuery } from "../services/advertisement/IAdvertisementData";
+
+import mongoose from "mongoose";
+import { pagination } from "../utilities/pagination";
 
 interface CategoryFollowData {
   userId: string;
@@ -11,131 +15,86 @@ interface CategoryFollowData {
 }
 
 interface CategoryFollowQuery {
-  is_follow: string;
+  category_ids: string[];
+  is_follow: boolean;
 }
 
 class CategoryFollowService {
   async categoryFollowOrUnfollow(
-    categoryFollowData: CategoryFollowData,
+    userId: string,
     query: CategoryFollowQuery
   ): Promise<any> {
     try {
-      const { userId, category_ids } = categoryFollowData;
-      const { is_follow } = query;
+      const { is_follow, category_ids } = query;
       const user = await userService.getVerifiedUser({ userId });
-      let valid_category_ids: string[] | any =
-        await categoryService.validCategory(category_ids);
-      if (valid_category_ids === null || valid_category_ids === undefined) {
-        return {
-          status: 500,
-          message: "Valid category IDs are null or undefined",
-          body: undefined,
-        };
+      const valid_category_ids = await categoryService.validCategory(category_ids);
+
+      if (!valid_category_ids || valid_category_ids.length === 0) {
+        throw new BadRequestException("Valid category IDs are null or undefined.");
       }
-      let alreadyFollowedCategory = await userCategoryModel.find({
+
+      const alreadyFollowedCategory = await userCategoryModel.find({
         user_id: user?._id,
         category_id: { $in: valid_category_ids },
       });
 
       if (!valid_category_ids.length) {
+        throw new BadRequestException("Users Categories provided or invalid.");
+      }
+
+      if (is_follow == true) {
+        const UsersCategoryItems: any[] = [];
+        const alreadyFollowedCategoryIds = alreadyFollowedCategory.map((Category) =>
+          Category.category_id.toString()
+        );
+
+        const validCategoryId = valid_category_ids.map((id) => id.toString());
+
+        const followCategoryId = valid_category_ids.filter(
+          (id) => !alreadyFollowedCategoryIds.includes(id.toString())
+        );
+
+        const invalidId = category_ids.filter(
+          (id) => !validCategoryId.includes(id.toString())
+        );
+
+        for (const categoryId of followCategoryId) {
+          UsersCategoryItems.push({
+            user_id: user?._id,
+            category_id: categoryId,
+          });
+        }
+
+        const result = UsersCategoryItems.length > 0 ? await userCategoryModel.insertMany(UsersCategoryItems) : [];
+
         return {
-          status: 400,
-          message: "users Categories provided or invalid",
+          status: result.length ? success.OK.code : success.Partial_Content.code,
+          message: result.length
+            ? "users Categories followed successfully"
+            : "users Categories followed partially",
           body: {
+            success: result.length ? result : undefined,
             error: {
-              message: `The Invalid Categories Id Are ${category_ids}`,
-              values: category_ids,
+              message: {
+                invalid_id: invalidId.length
+                  ? `The Invalid Categories Id Are ${invalidId}`
+                  : undefined,
+                already_followed_id: alreadyFollowedCategoryIds.length
+                  ? `Already Followed Categories ${alreadyFollowedCategoryIds}`
+                  : undefined,
+              },
+              values: {
+                invalid_id: invalidId.length ? invalidId : undefined,
+                already_followed_id: alreadyFollowedCategoryIds.length
+                  ? alreadyFollowedCategoryIds
+                  : undefined,
+              },
             },
           },
         };
-      } else if (query && is_follow === "true") {
-        let UsersCategoryItems: any[] = [];
-
-        if (
-          valid_category_ids.length === category_ids.length &&
-          !alreadyFollowedCategory.length
-        ) {
-          await valid_category_ids.forEach(async (categoryId: string) => {
-            const userCategory = {
-              user_id: user?._id,
-              category_id: categoryId,
-            };
-            UsersCategoryItems.push(userCategory);
-          });
-
-          UsersCategoryItems = await userCategoryModel.insertMany(
-            UsersCategoryItems
-          );
-
-          return {
-            status: success.OK.code,
-            message: "users Categories followed successfully",
-            body: {
-              success: UsersCategoryItems,
-            },
-          };
-        } else {
-          alreadyFollowedCategory = alreadyFollowedCategory.map((Category) =>
-            Category.category_id.toString()
-          );
-          valid_category_ids = valid_category_ids.map((id: string) =>
-            id.toString()
-          );
-          const followCategoryId = valid_category_ids.filter(
-            (id: string) => !alreadyFollowedCategory.includes(id)
-          );
-          const invalidId = category_ids.filter(
-            (id: string) => !valid_category_ids.includes(id.toString())
-          );
-
-          await followCategoryId.forEach(async (categoryId: string) => {
-            const userCategory = {
-              user_id: user?._id,
-              category_id: categoryId,
-            };
-            UsersCategoryItems.push(userCategory);
-          });
-
-          UsersCategoryItems = await userCategoryModel.insertMany(
-            UsersCategoryItems
-          );
-
-          return {
-            status: UsersCategoryItems.length
-              ? success.Partial_Content.code
-              : errors.Not_Acceptable.code,
-            message: UsersCategoryItems.length
-              ? "users Categories followed partially"
-              : errors.Not_Acceptable.message,
-            body: {
-              success: UsersCategoryItems.length
-                ? UsersCategoryItems
-                : undefined,
-              error: {
-                message: {
-                  invalid_id: invalidId.length
-                    ? `The Invalid Categories Id Are ${invalidId}`
-                    : undefined,
-                  already_followed_id: alreadyFollowedCategory.length
-                    ? `Already Followed Categories ${alreadyFollowedCategory}`
-                    : undefined,
-                },
-                values: {
-                  invalid_id: invalidId.length ? invalidId : undefined,
-                  already_followed_id: alreadyFollowedCategory.length
-                    ? alreadyFollowedCategory
-                    : undefined,
-                },
-              },
-            },
-          };
-        }
-      } else if (query && is_follow === "false") {
+      } else if (is_follow == false) {
         if (!alreadyFollowedCategory.length) {
-          throw JSON.stringify({
-            status: errors.Not_Found.code,
-            messages: errors.Not_Found.message,
-          });
+          throw new NotValidException("The category_ids is not valid for un-follow.");
         }
 
         await userCategoryModel.deleteMany({
@@ -154,7 +113,7 @@ class CategoryFollowService {
     }
   }
 
-  async getCategoryFollowedList(userId: string): Promise<any> {
+  async getCategoryFollowedList(userId: string | any): Promise<any> {
     try {
       const user = await userService.getVerifiedUser({ userId });
       const userCategory = await userCategoryModel.aggregate([
@@ -173,15 +132,115 @@ class CategoryFollowService {
           $unwind: "$category",
         },
         {
+          $match: { $and: [{ "category.is_active": true }, { "category.is_deleted": false }] },
+        },
+        {
           $project: {
             _id: 0,
             id: "$category._id",
             title: "$category.title",
             code: "$category.code",
+            url: "$category.image.url",
           },
         },
       ]);
       return userCategory;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getCategoryFollowerList(categoryIdQuery: CategoryIdQuery): Promise<any> {
+    try {
+      const { category_id, query } = categoryIdQuery;
+      const { is_pagination, page_index, page_size } = query;
+
+      const categ_id = await categoryService.validCategory(category_id);
+      if (!categ_id) throw new NotFoundException(category_id, "CATEGORY_ID"); //FEEDBACK - Adding all the type to a enum / constant. 
+      
+      const match: any[] = [{ $match: { "category_id" : new mongoose.Types.ObjectId(category_id) } }];
+      const filter: any[] = [];
+      let paginationObject: any;
+
+      if (is_pagination === 'true') {
+        const dataCountResult = await userCategoryModel.aggregate([
+          ...match,
+          {
+            $lookup: {
+              from: "categories",
+              localField: "category_id",
+              foreignField: "_id",
+              as: "category",
+            },
+          },
+          { $unwind: "$category"},
+          {
+            $match: {
+              "category.is_active": true,
+              "category.is_deleted": false,
+            },
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'user_id',
+              foreignField: '_id',
+              as: 'followersDetails'
+            }
+          },
+          { $unwind: "$followersDetails"},
+          { $group: { _id: null, count: { $sum: 1 } } },
+          { $project: { _id: 0, count: '$count' } }
+        ]);
+
+        const dataCount = dataCountResult.length > 0 ? dataCountResult[0].count : 0;
+        const paginationDetails = pagination(page_index, page_size, dataCount);
+        const { skip, limit } = paginationDetails;
+
+        paginationObject = paginationDetails.paginationObject;
+
+        if (skip) filter.push({ $skip: skip });
+        if (limit) filter.push({ $limit: limit });
+      }
+
+      const data = await userCategoryModel.aggregate([
+        ...match,
+        {
+          $lookup: {
+            from: "categories",
+            localField: "category_id",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        {
+          $unwind: "$category",
+        },
+        {
+          $match: {
+            "category.is_active": true,
+            "category.is_deleted": false,
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'user_id',
+            foreignField: '_id',
+            as: 'followersDetails'
+          }
+        },
+        {
+          $unwind: "$followersDetails",
+        },
+        ...filter,
+        { $project: { user_id: '$followersDetails._id', user_email: '$followersDetails.email', _id: 0 } }
+      ]);
+      if (is_pagination === 'true') {
+        paginationObject.data = data;
+        return paginationObject;
+      }
+      return data;
     } catch (error) {
       throw error;
     }

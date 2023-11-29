@@ -28,7 +28,7 @@ const categoryInfo: CategoryInfo = {
   LIST_CATEGORY: "List of Category",
   DELETE_CATEGORY: "Delete Category",
   DELETE_CATEGORY_Id: "Deleted Category",
-  DELETE_FOLLOWED_CATEGORY: "Delete Followed Category",
+  DELETE_FOLLOWED_CATEGORY: "Deleted Followed Category",
   DELETE_USER_CATEGORY: "Deleted User Category",
   GET_ALL_CHILD_CATEGORY: "Get all child Category",
   PARENT_CATEGORY_ID_NOT_VALID: "Parent category id is not valid",
