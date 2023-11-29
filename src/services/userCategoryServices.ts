@@ -156,7 +156,7 @@ class CategoryFollowService {
       const { is_pagination, page_index, page_size } = query;
 
       const categ_id = await categoryService.validCategory(category_id);
-      if (!categ_id) throw new NotFoundException(category_id, "CATEGORY_ID"); //FEEDBACK - Adding all the type to a enum / constant. 
+      if (!categ_id) throw new NotFoundException(category_id, categoryInfo.CATEGORY_ID); //FEEDBACK - Adding all the type to a enum / constant. 
       
       const match: any[] = [{ $match: { "category_id" : new mongoose.Types.ObjectId(category_id) } }];
       const filter: any[] = [];

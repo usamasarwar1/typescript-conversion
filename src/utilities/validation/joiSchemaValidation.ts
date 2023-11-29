@@ -29,19 +29,20 @@ const validateQuery = (schema: any) => {
 
 const validateObjectSchema = (data: any, schema: Joi.ObjectSchema) => {
   const validation = schema.validate(data, { abortEarly: false });
-
   if (validation.error) {
     const errorDetails = validation.error.details.map(
       (value: Joi.ValidationErrorItem) => {
         return {
+          
           error: value.message,
           path: value.path,
         };
       },
-    );
 
+    );
     return errorDetails;
   }
+
 
   return null;
 };

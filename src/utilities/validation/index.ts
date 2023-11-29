@@ -10,7 +10,9 @@ interface NewResponse {
   body: string | any;
 }
 const validateManagementQuery = (schema: any) => {
+
   return (req: Request, res: Response, next: NextFunction) => {
+    console.log("inside validationMangementQuery");
     let response: NewResponse = defaultServerResponse;
     const error = validateObjectSchema(req.query, schema); // You should replace 'any' with an appropriate type for your validation schema
     if (error) throw new BadRequestException(requestValidationMessage.REQUEST_PAYLOAD_ERROR, error);

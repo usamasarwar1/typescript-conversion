@@ -1,5 +1,6 @@
 interface CategoryInfo {
   readonly CATEGORY_ID_NOT_VALID: string;
+  readonly CATEGORY_ID: string;
   readonly CREATE_CATEGORY: string;
   readonly UPDATE_CATEGORY: string;
   readonly GET_CATEGORY: string;
@@ -22,6 +23,7 @@ interface CategoryInfo {
 
 const categoryInfo: CategoryInfo = {
   CATEGORY_ID_NOT_VALID: "Category id is not valid",
+  CATEGORY_ID: "CATEGORY_ID",
   CREATE_CATEGORY: "Create Category",
   UPDATE_CATEGORY: "Update Category",
   GET_CATEGORY: "Category Details",

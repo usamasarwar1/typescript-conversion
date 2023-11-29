@@ -10,14 +10,14 @@ const { advertisementFavouritesFollowersModel } = AdvertisementSchema;
 class FollowFavouriteService {
   //FOLLOW-UNFOLLOW
   async followUnfollowAdvertisement(advertisementData: {
-    query: { is_follow?: string }; //FEEDBACK changing is_follow as boolean
+    query: { is_follow?: boolean }; //FEEDBACK changing is_follow as boolean
     userId: Types.ObjectId;
     advertisement_id: Types.ObjectId;
   }) {
     try {
       const { query, userId, advertisement_id } = advertisementData;
       let { is_follow } = query;
-      is_follow = is_follow ? is_follow : "true";
+      is_follow = typeof is_follow === 'boolean' ? is_follow : true;
       let followerDetail: any;
 
       await advertisementService.validateAdvertisement(advertisement_id, userId);
@@ -35,7 +35,7 @@ class FollowFavouriteService {
       }
 
       //Follow
-      if (is_follow === "true") {
+      if (is_follow) {
         // ADD the new Advertisement Follow Count
         if (!existingFollowAdvertisement) {
           let advertisementFollow = new advertisementFavouritesFollowersModel({
@@ -62,7 +62,7 @@ class FollowFavouriteService {
         }
       }
       //UnFollow is_follow === "false"
-      else if (is_follow === "false") {
+      else if (is_follow) {
         if (!alreadyFollowedUserIds.includes(userId.toString())) throw new NotFoundException(userId.toString(), "User ID");
 
         followerDetail = await advertisementFavouritesFollowersModel.findOneAndUpdate(
@@ -83,12 +83,12 @@ class FollowFavouriteService {
 
       return {
         message:
-          is_follow === "true"
+          is_follow
             ? "UPDATING_ADVERTISEMENT_FOLLOWING"
             : "UPDATING_ADVERTISEMENT_UNFOLLOWING",
         body: {
           followers_count: followerDetail.followers_count,
-          is_follow: is_follow === "true",
+          is_follow: is_follow,
         },
       };
     } catch (error: any) {

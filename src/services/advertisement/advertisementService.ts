@@ -86,14 +86,13 @@ class AdvertisementService {
   }
 
   //FEEDBACK the parameter forNotification should come from the request and need to passed to this
-  async getFollowerList(advertisementData: AdvertisementIdQuery) {
+  async getFollowerList(advertisementData: AdvertisementIdQuery,forNotification: boolean=false) {
     try {
       const { advertisementId, query } = advertisementData;
       const { is_pagination, page_index, page_size } = query;
       const match: any[] = [{ $match: { advertisement_id: advertisementId } }];
       const filter: any[] = [];
-      let paginationObject: any;
-
+      let paginationObject: any;  
       if (is_pagination === 'true') {
         const dataCountResult = await advertisementFavouritesFollowersModel.aggregate([
           ...match,
