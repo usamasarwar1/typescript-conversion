@@ -55,4 +55,18 @@ user_advertisement_router.get(
   user_advertisement_controller.getFavoritesAdvertisementEbannerList
 );
 
+user_advertisement_router.get(
+  "/advertisement/followed/promotions",
+  validateToken,
+  validateManagementQuery(paginationSchema),
+  user_advertisement_controller.getFollowedAdvertisementPromotionList
+);
+
+user_advertisement_router.get(
+  "/advertisement/followed/ebanners",
+  validateToken,
+  validateManagementQuery(paginationSchema),
+  user_advertisement_controller.getFollowedAdvertisementEbannerList
+);
+
 export { user_advertisement_router };

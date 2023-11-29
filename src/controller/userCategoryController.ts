@@ -5,6 +5,7 @@ import { decode } from "../utilities/jwt";
 import userCategoryService from "../services/userCategoryServices";
 import { success } from "../utilities/success";
 import { logger } from "../logger/logger";
+import { BadRequestException } from "../exceptions";
 
 interface NewResponse {
   status: number;
@@ -22,60 +23,76 @@ class UserCategoryController {
     response: Response,
     next: NextFunction
   ) => {
-    const newResponse: NewResponse = { ...defaultServerResponse };
     try {
-      const decodedData = await decode((request as CustomRequest).token);
-      const followedCategory: any =
-        await userCategoryService.categoryFollowOrUnfollow(
-          decodedData["id"],
-          request.body
-        );
+      const newResponse: NewResponse = { ...defaultServerResponse };
+      const decodedData = decode((request as CustomRequest).token);
+      const { query, body } = request;
+      const isFollow = query.is_follow ? query.is_follow === 'true' : true;
+
+      if (!body?.category_ids) throw new BadRequestException("The category_ids have to be passed.")
+      const followedCategory: any = await userCategoryService.categoryFollowOrUnfollow(
+        decodedData["id"],
+        {
+          is_follow: isFollow,
+          category_ids: body.category_ids
+        }
+      );
       newResponse.status = followedCategory?.status ?? success.OK.code;
       newResponse.message = followedCategory?.message;
       newResponse.body = followedCategory?.body;
-      logger.info(
-        `Sent response for categoryFollowOrUnfollow: ${JSON.stringify(
-          newResponse
-        )}`
-      );
-    } catch (error: any) {
-      logger.error(`Error in categoryFollowOrUnfollow: ${error}`);
-      logger.error(error);
-      newResponse.status = 500;
-      newResponse.message =
-        typeof error === "string" ? error : "Unexpected error format";
-      newResponse.body = undefined;
+      logger.info(`Sent response for categoryFollowOrUnfollow.`);
+      response.json(newResponse);
+    } catch (error) {
+      logger.error(`Error in followUnfollowAdvertisementById: ${error}`);
+      next(error);
     }
-    response.status(newResponse.status).send(newResponse);
   };
 
-  getFollowCategory = async (
+  getFollowCategoryByUser = async (
     request: Request,
     response: Response,
     next: NextFunction
   ) => {
     const newResponse: NewResponse = { ...defaultServerResponse };
     try {
-      const decodedData = await decode((request as CustomRequest).token);
-      const userId = request.query.user_id
-        ? request.query.user_id
-        : decodedData["id"];
-      const followedCategory =
-        await userCategoryService.getCategoryFollowedList(userId);
+      const decodedData = decode((request as CustomRequest).token);
+      const userId = request.query.user_id ? request.query.user_id : decodedData["id"];
+      const followedCategory = await userCategoryService.getCategoryFollowedList(userId);
       newResponse.status = success.OK.code;
       newResponse.message = `${categoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
       newResponse.body = followedCategory;
-      logger.info(
-        `Sent response for getFollowCategory: ${JSON.stringify(newResponse)}`
-      );
-    } catch (error: any) {
+      logger.info(`Sent response for getFollowCategory.`);
+      response.json(newResponse);
+    } catch (error) {
       logger.error(`Error in getFollowCategory: ${error}`);
-      newResponse.status = 500;
-      newResponse.message =
-        typeof error === "string" ? error : "Unexpected error format";
-      newResponse.body = undefined;
+      next(error);
     }
-    response.status(newResponse.status).send(newResponse);
+  };
+
+  getFollowerCategoryById = async (
+    request: any,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const newResponse: NewResponse = { ...defaultServerResponse };
+    try {
+      
+      let categoryId = request.query.category_id;
+      if(!categoryId) throw new BadRequestException("categoryId cannot be empty");
+      let catid=categoryId = categoryId ?? "";
+      const followedCategory = await userCategoryService.getCategoryFollowerList({
+        category_id: catid,
+        query: request.query
+      });
+      newResponse.status = success.OK.code;
+      newResponse.message = `${categoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
+      newResponse.body = followedCategory;
+      logger.info(`Sent response for getFollowCategory.`);
+      response.json(newResponse);
+    } catch (error) {
+      logger.error(`Error in getFollowCategory: ${error}`);
+      next(error);
+    }
   };
 }
 

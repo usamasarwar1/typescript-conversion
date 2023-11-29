@@ -17,13 +17,13 @@ user_category_router.post(
 user_category_router.get(
   "/category/follow_list",
   validateToken,
-  UserCategoryController.getFollowCategory
+  UserCategoryController.getFollowCategoryByUser
 );
 
 user_category_router.get(
-  "/category/follow_list:/:categoryId",
+  "/category/follower_list",
   validateToken,
-  UserCategoryController.getFollowCategory
+  UserCategoryController.getFollowerCategoryById
 );
 
 export { user_category_router };

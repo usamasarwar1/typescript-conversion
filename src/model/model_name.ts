@@ -72,7 +72,7 @@ const DEAL_PAYMENTS_HISTORY: string = "make_deal.payments_history";
 const NEW_DEAL_NEEDS: string = "make_deal.needs";
 const NEW_DEAL_SCHEDULES: string = "make_deal.schedules";
 const USER_CATEGORY: string = "usercategories";
-
+//FEEDBACK -- Remove all the unused model names here.
 export default {
   USER,
   USER_LOGOUT,

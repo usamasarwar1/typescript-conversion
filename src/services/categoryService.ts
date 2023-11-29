@@ -33,16 +33,11 @@ class CategoryService {
 
         return verifiedId;
       }
-
+      console.log(categoryId);
       // Assuming that categoryModel is properly defined
       const category = await categoryModel.findOne({ _id: categoryId }).lean();
       return category ? [category._id] : null;
     } catch (error: any) {
-      // logger.get("app_log").error({
-      //   level: "error",
-      //   message: error.message,
-      //   metadata: error.stack,
-      // });
       throw error;
     }
   }

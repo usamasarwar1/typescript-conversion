@@ -3,6 +3,7 @@ import { defaultServerResponse } from "../../utilities/common/response";
 import { requestValidationMessage } from "../../utilities/common/validation_message";
 import { errors } from "../../utilities/error";
 import { validateObjectSchema } from "./joiSchemaValidation";
+import { BadRequestException } from "../../exceptions";
 interface NewResponse {
   status: number;
   message: string;
@@ -12,12 +13,7 @@ const validateManagementQuery = (schema: any) => {
   return (req: Request, res: Response, next: NextFunction) => {
     let response: NewResponse = defaultServerResponse;
     const error = validateObjectSchema(req.query, schema); // You should replace 'any' with an appropriate type for your validation schema
-    if (error) {
-      response.body = error;
-      response.message = requestValidationMessage.REQUEST_PAYLOAD_ERROR;
-      response.status = errors.Bad_Request.code;
-      return res.status(response.status).send(response);
-    }
+    if (error) throw new BadRequestException(requestValidationMessage.REQUEST_PAYLOAD_ERROR, error);
     return next();
   };
 };
