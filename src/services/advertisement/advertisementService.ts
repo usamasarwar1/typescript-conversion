@@ -101,7 +101,14 @@ class AdvertisementService {
           ...match,
           { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followersDetails' } },
           { $unwind: '$followersDetails' },
-          { $match: { 'followersDetails.is_notification_enabled': true }},
+          {
+            $match: {
+              $and: [
+                { 'followersDetails.is_notification_enabled': true },
+                { $expr: notificationEnabled ? { $eq: ['$followersDetails.is_notification_enabled', true] } : {} }
+              ]
+            }
+          },  
           { $group: { _id: null, count: { $sum: 1 } } },
           { $project: { _id: 0, count: '$count' } }
         ]);
@@ -122,7 +129,14 @@ class AdvertisementService {
         ...match,
         { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followersDetails' } },
         { $unwind: '$followersDetails' },
-        { $match: { 'followersDetails.is_notification_enabled': true }},
+        {
+          $match: {
+            'followersDetails.is_notification_enabled': true,
+            $expr: notificationEnabled
+              ? { $eq: ['$followersDetails.is_notification_enabled', true] }
+              : { }
+          }
+        },
         ...filter,
         { $project: { user_id: '$followersDetails._id', user_email: '$followersDetails.email', _id: 0 } }
       ]);
