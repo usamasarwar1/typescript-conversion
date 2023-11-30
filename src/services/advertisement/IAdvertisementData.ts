@@ -11,6 +11,14 @@ export interface AdvertisementIdQuery {
     is_pagination: string | any;
     page_index: number | any;
     page_size: number | any;
+    notificationEnabled: boolean | any;
+  };
+}
+
+export interface AdvertisementIdOwner {
+  advertisementId: mongoose.Types.ObjectId | any;
+  query?: {
+    notificationEnabled: boolean | any;
   };
 }
 

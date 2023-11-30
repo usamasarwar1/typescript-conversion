@@ -32,7 +32,6 @@ class EbannerService {
         userId,
         type,
       });
-      console.log(advertisementIds);
 
       let fetchquery = { advertisement_id: { $in: advertisementIds }, is_live: true };
       const match: any[] = [{ $match: fetchquery }];

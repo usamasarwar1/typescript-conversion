@@ -25,7 +25,6 @@ const validateToken = async (
         messages: requestValidationMessage.TOKEN_MISSING,
       });
     }
-    console.log(req.headers.authorization);
     let token = getTokenFromRequest(req.headers.authorization);
     if (!token) {
       throw JSON.stringify({

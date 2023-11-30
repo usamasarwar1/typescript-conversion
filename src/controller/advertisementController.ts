@@ -13,7 +13,7 @@ interface NewResponse {
 
 class AdvertisementController {
   getOwner = async (
-    request: Request,
+    request: any,
     response: Response,
     next: NextFunction
   ) => {
@@ -21,7 +21,7 @@ class AdvertisementController {
     try {
       const newResponse: NewResponse = { ...defaultServerResponse };
       let advertisementId = await advertisementService.getValidAdvertisement(request.params.advertisementId);
-      const ownerDetails = await advertisementService.getOwner(advertisementId);
+    const ownerDetails = await advertisementService.getOwner({advertisementId ,query: request.query});
       newResponse.status = success.OK.code;
       newResponse.message = advertisementFollowInfo["OWNER_DETAILS"];
       newResponse.body = ownerDetails;

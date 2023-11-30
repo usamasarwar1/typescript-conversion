@@ -34,4 +34,4 @@ dbConnect().then(() => {
   app.listen(PORT, () => {
       logger.info(`The project is running on PORT ${PORT}.`);
   });
-});
+}).catch(()=>logger.info("error while connection db"));

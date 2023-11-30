@@ -21,7 +21,7 @@ class PromotionController {
         request.params.promotionId
       );
       const ownerDetails = await advertisementService.getOwner(
-        advertisementId
+        {advertisementId}
       );
       newResponse.status = success.OK.code;
       newResponse.message = advertisementFollowInfo["OWNER_DETAILS"];
@@ -40,7 +40,6 @@ class PromotionController {
         const advertisementId = await promotion_service.getAdvertisementId(
           request.params.promotionId
         );
-        console.log(advertisementId)
         const followerList = await advertisementService.getFollowerList({
           advertisementId,
           query: request.query,

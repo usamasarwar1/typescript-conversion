@@ -20,7 +20,7 @@ class EbannerController {
       const advertisementId = await ebanner_service.getAdvertisementId(
         request.params.ebannerId
       );
-      const ownerDetails = await advertisementService.getOwner(advertisementId);
+      const ownerDetails = await advertisementService.getOwner({advertisementId});
       newResponse.status = success.OK.code;
       newResponse.message = advertisementFollowInfo["OWNER_DETAILS"];
       newResponse.body = ownerDetails;

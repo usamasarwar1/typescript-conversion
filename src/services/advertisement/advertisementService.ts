@@ -4,10 +4,12 @@ const { advertisementModel, advertisementFavouritesFollowersModel } =
   AdvertisementSchema;
 import { pagination } from "../../utilities/pagination";
 import { NotFoundException, NotAcceptedException } from "../../exceptions";
-import { AdvertisementIdQuery, UserAdvertisementData } from "./IAdvertisementData";
+import { AdvertisementIdQuery, UserAdvertisementData, AdvertisementIdOwner } from "./IAdvertisementData";
+import { logger } from "../../logger/logger";
 
 class AdvertisementService {
   //FEEDBACK - remove this if unused
+  // we are using 
   private advertisementModel: any;
   private advertisementFavouritesFollowersModel: any;
 
@@ -62,9 +64,10 @@ class AdvertisementService {
   }
 
   //FEEDBACK the parameter forNotification should come from the request and need to passed to this
-  async getOwner(advertisementId: mongoose.Types.ObjectId | any, forNotification: boolean = false) {
+  async getOwner(advertisementData:AdvertisementIdOwner) {
     try {
-      console.log(`${advertisementId.toString()} --for ${forNotification.toString()}`)
+      const { advertisementId, query } = advertisementData;
+      const { notificationEnabled } = query||{ notificationEnabled: false };
       let owner = await advertisementModel.aggregate([
         { $project: { _id: 0, advertisement: "$$ROOT" } },
         { $lookup: { localField: "advertisement.user_id", from: "users", foreignField: "_id", as: "user" } },
@@ -73,7 +76,7 @@ class AdvertisementService {
           $match: {
             $and: [
               { "advertisement._id": advertisementId },
-              { $expr: forNotification ? { $eq: ["$user.is_notification_enabled", true] } : {} }
+              { $expr: notificationEnabled ? { $eq: ["$user.is_notification_enabled", true] } : {} }
             ]
           }
         },
@@ -86,10 +89,10 @@ class AdvertisementService {
   }
 
   //FEEDBACK the parameter forNotification should come from the request and need to passed to this
-  async getFollowerList(advertisementData: AdvertisementIdQuery,forNotification: boolean=false) {
+  async getFollowerList(advertisementData: AdvertisementIdQuery) {
     try {
       const { advertisementId, query } = advertisementData;
-      const { is_pagination, page_index, page_size } = query;
+      const { is_pagination, page_index, page_size, notificationEnabled } = query;
       const match: any[] = [{ $match: { advertisement_id: advertisementId } }];
       const filter: any[] = [];
       let paginationObject: any;  
@@ -98,7 +101,7 @@ class AdvertisementService {
           ...match,
           { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followersDetails' } },
           { $unwind: '$followersDetails' },
-          { $match: { 'followersDetails.is_notification_enabled': true } },
+          { $match: { 'followersDetails.is_notification_enabled': true }},
           { $group: { _id: null, count: { $sum: 1 } } },
           { $project: { _id: 0, count: '$count' } }
         ]);
@@ -119,7 +122,7 @@ class AdvertisementService {
         ...match,
         { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followersDetails' } },
         { $unwind: '$followersDetails' },
-        { $match: { 'followersDetails.is_notification_enabled': true } },
+        { $match: { 'followersDetails.is_notification_enabled': true }},
         ...filter,
         { $project: { user_id: '$followersDetails._id', user_email: '$followersDetails.email', _id: 0 } }
       ]);
@@ -131,6 +134,7 @@ class AdvertisementService {
       return data;
 
     } catch (error) {
+      console.log(error)
       throw error;
     }
   }

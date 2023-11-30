@@ -33,7 +33,6 @@ const validateObjectSchema = (data: any, schema: Joi.ObjectSchema) => {
     const errorDetails = validation.error.details.map(
       (value: Joi.ValidationErrorItem) => {
         return {
-          
           error: value.message,
           path: value.path,
         };
