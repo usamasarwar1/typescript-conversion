@@ -4,12 +4,30 @@ const Gender = {
   OTHER: "OTHER",
 } as const;
 
+ const  Category={
+  CATEGORY_ID:"CATEGORY_ID",
+}as const
+
 const ContactType = {
   ADVERTISEMENT: "ADVERTISEMENT",
   PRIMARY: "PRIMARY",
   SECONDARY: "SECONDARY",
   USER: "USER",
 } as const;
+
+//
+const ListCategory={
+LIST_CATEGORY_ID:"List of Category",
+}as const
+
+//
+const DeletFollowedCategory={
+  DELETE_FOLLOWED_CATEGORY:"Deleted Followed Category",
+}
+//
+const GetListCategoryFollowed={
+  GET_LIST_CATEGORY_FOLLOWED:"Get followed categories list",
+}
 
 const TemplateType = {
   LOGIN: "LOGIN",
@@ -135,6 +153,18 @@ const Currency = {
   USD: "USD",
 } as const;
 
+const CategoryInfo = {
+  LIST_CATEGORY: "List of Category",
+  DELETE_FOLLOWED_CATEGORY: "Deleted Followed Category",
+  GET_LIST_CATEGORY_FOLLOWED: "Get followed categories list",
+} as const;
+
+
+ const CommonLabel= {
+  NOT_VALID :"is not valid",
+  TOKEN_IS_NOT_VALID : "Token is not valid",
+  TOKEN_NOT_VALID : "Token has expired",
+}as const
 const PaymentMethod = {
   CARD: "CARD",
   CASH: "CASH",
@@ -243,12 +273,15 @@ export {
   ValidityType,
   AdvertisementContactType,
   ServiceDayType,
+  CategoryInfo,
   PageContentType,
   TypeOfDeal,
   TypeOfField,
   Currency,
+  Category,
   PaymentMethod,
   FeedType,
+  CommonLabel,
   PageType,
   PromotionType,
   PromotionBy,

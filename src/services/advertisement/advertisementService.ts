@@ -5,8 +5,6 @@ const { advertisementModel, advertisementFavouritesFollowersModel } =
 import { pagination } from "../../utilities/pagination";
 import { NotFoundException, NotAcceptedException } from "../../exceptions";
 import { AdvertisementIdQuery, UserAdvertisementData, AdvertisementIdOwner } from "./IAdvertisementData";
-import { logger } from "../../logger/logger";
-
 class AdvertisementService {
   //FEEDBACK - remove this if unused
   // we are using 
@@ -67,7 +65,7 @@ class AdvertisementService {
   async getOwner(advertisementData:AdvertisementIdOwner) {
     try {
       const { advertisementId, query } = advertisementData;
-      const { notificationEnabled } = query||{ notificationEnabled: false };
+      const { notificationEnabled } = query||{ notificationEnabled: null };
       let owner = await advertisementModel.aggregate([
         { $project: { _id: 0, advertisement: "$$ROOT" } },
         { $lookup: { localField: "advertisement.user_id", from: "users", foreignField: "_id", as: "user" } },
@@ -78,7 +76,7 @@ class AdvertisementService {
               { "advertisement._id": advertisementId },
               { $expr: notificationEnabled ? { $eq: ["$user.is_notification_enabled", true] } : {} }
             ]
-          }
+          } 
         },
         { $project: { user_id: "$user._id", user_email: "$user.email", _id: 0 } }
       ]);
@@ -92,11 +90,13 @@ class AdvertisementService {
   async getFollowerList(advertisementData: AdvertisementIdQuery) {
     try {
       const { advertisementId, query } = advertisementData;
-      const { is_pagination, page_index, page_size, notificationEnabled } = query;
+      let { is_pagination, page_index, page_size, notificationEnabled } = query;
+      is_pagination = typeof is_pagination === 'boolean' ? is_pagination : is_pagination === 'true' ? true : is_pagination === 'false' ? false : undefined;
+
       const match: any[] = [{ $match: { advertisement_id: advertisementId } }];
       const filter: any[] = [];
       let paginationObject: any;  
-      if (is_pagination === 'true') {
+      if (is_pagination) {
         const dataCountResult = await advertisementFavouritesFollowersModel.aggregate([
           ...match,
           { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followersDetails' } },
@@ -104,7 +104,6 @@ class AdvertisementService {
           {
             $match: {
               $and: [
-                { 'followersDetails.is_notification_enabled': true },
                 { $expr: notificationEnabled ? { $eq: ['$followersDetails.is_notification_enabled', true] } : {} }
               ]
             }
@@ -131,7 +130,6 @@ class AdvertisementService {
         { $unwind: '$followersDetails' },
         {
           $match: {
-            'followersDetails.is_notification_enabled': true,
             $expr: notificationEnabled
               ? { $eq: ['$followersDetails.is_notification_enabled', true] }
               : { }
@@ -141,7 +139,7 @@ class AdvertisementService {
         { $project: { user_id: '$followersDetails._id', user_email: '$followersDetails.email', _id: 0 } }
       ]);
 
-      if (is_pagination === 'true') {
+      if (is_pagination) {
         paginationObject.data = data;
         return paginationObject;
       }

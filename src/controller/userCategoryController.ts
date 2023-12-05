@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { defaultServerResponse } from "../utilities/common/response";
-import { categoryInfo } from "../utilities/common/category_label";
+import { CategoryInfo } from "../utilities/enum";
 import { decode } from "../utilities/jwt";
 import userCategoryService from "../services/userCategoryServices";
 import { success } from "../utilities/success";
@@ -59,7 +59,7 @@ class UserCategoryController {
       const userId = request.query.user_id ? request.query.user_id : decodedData["id"];
       const followedCategory = await userCategoryService.getCategoryFollowedList(userId);
       newResponse.status = success.OK.code;
-      newResponse.message = `${categoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
+      newResponse.message = `${CategoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
       newResponse.body = followedCategory;
       logger.info(`Sent response for getFollowCategory.`);
       response.json(newResponse);
@@ -85,7 +85,7 @@ class UserCategoryController {
         query: request.query
       });
       newResponse.status = success.OK.code;
-      newResponse.message = `${categoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
+      newResponse.message = `${CategoryInfo["GET_LIST_CATEGORY_FOLLOWED"]}`;
       newResponse.body = followedCategory;
       logger.info(`Sent response for getFollowCategory.`);
       response.json(newResponse);

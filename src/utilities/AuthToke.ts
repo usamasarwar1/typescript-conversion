@@ -3,7 +3,7 @@ const { userLogoutModel } = UsersModels;
 
 import { defaultServerResponse } from "../utilities/common/response";
 import { requestValidationMessage } from "../utilities/common/validation_message";
-import { commonLabel } from "../utilities/common/label";
+import { CommonLabel } from "../utilities/enum";
 import { errors } from "../utilities/error";
 
 import { getTokenFromRequest, verifyJwtToken } from "../utilities/jwt";
@@ -29,20 +29,20 @@ const validateToken = async (
     if (!token) {
       throw JSON.stringify({
         status: errors.Bad_Request.code,
-        messages: commonLabel["TOKEN_IS_NOT_VALID"],
+        messages: CommonLabel["TOKEN_IS_NOT_VALID"],
       });
     }
     let expireToken = await userLogoutModel.findOne({ token });
     if (expireToken) {
       throw JSON.stringify({
         status: errors.Bad_Request.code,
-        messages: commonLabel["TOKEN_NOT_VALID"],
+        messages: CommonLabel["TOKEN_NOT_VALID"],
       });
     }
     if (!(await verifyJwtToken(token))) {
       throw JSON.stringify({
         status: errors.Forbidden.code,
-        messages: commonLabel["TOKEN_IS_NOT_VALID"],
+        messages: CommonLabel["TOKEN_IS_NOT_VALID"],
       });
     }
     (req as CustomRequest).token = token;

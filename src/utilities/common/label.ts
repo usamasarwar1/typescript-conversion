@@ -4,18 +4,18 @@ interface CommonLabel {
   readonly ALREADY_EXISTS: string;
   readonly RECOMENDED: string;
   readonly ALSO_ALREADY_EXISTS: string;
-  readonly NOT_VALID: string;
+  readonly NOT_VALID: string;//
   readonly MUST_BE_NUMBER: string;
   readonly SHOULD_NOT_ZERO: string;
   readonly IS_REQUIRED: string;
   readonly ACCEPT_SHOULD_BE_STRING: string;
-  readonly TOKEN_NOT_VALID: string;
+  readonly TOKEN_NOT_VALID: string;//
   readonly USER_ALREADY_REGISTER: string;
   readonly USER_NOT_REGISTER: string;
   readonly USER_EMAIL_UPDATE_ONLY_FIRST_TIME: string;
   readonly REMAINING: string;
   readonly AND: string;
-  readonly TOKEN_IS_NOT_VALID: string;
+  readonly TOKEN_IS_NOT_VALID: string;//
   readonly START_DATE_NOT_VALID_FORMAT: string;
   readonly END_DATE_NOT_VALID_FORMAT: string;
   readonly DATE_FORMAT_WITH_OUT_TIME: string;
@@ -24,6 +24,7 @@ interface CommonLabel {
   readonly INAVALID_AUTHORIZATION: string;
 }
 
+//nothing is used
 const commonLabel: CommonLabel = {
   pageLimit: "Page Limit",
   pageNumber: "Page number",
@@ -51,3 +52,13 @@ const commonLabel: CommonLabel = {
 };
 
 export { commonLabel };
+
+
+
+// enum ErrorCode {
+//   NOT_VALID = "is not valid",
+//   TOKEN_IS_NOT_VALID = "Token is not valid",
+//   TOKEN_NOT_VALID = "Token has expired",
+// }
+
+// export { ErrorCode };

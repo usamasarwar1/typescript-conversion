@@ -8,7 +8,7 @@ const { promotionModel } = Promotions;
 
 interface PromotionData {
   query: {
-    is_pagination: string | any;
+    is_pagination: boolean;
     page_index: number | any;
     page_size: number | any;
     status: string | any;
@@ -23,8 +23,11 @@ class PromotionService {
     promotionData: PromotionData
   ): Promise<any> {
     try {
+      console.log("in here");
       const { query, userId, type } = promotionData;
-      const { is_pagination, page_index, page_size, status } = query;
+      let { is_pagination, page_index, page_size, status } = query;
+      is_pagination = typeof is_pagination === 'boolean' ? is_pagination : is_pagination === 'true' ? true : is_pagination === 'false' ? false : true;
+
 
       if (!(type === "FOLLOWEDADVERTISEMENT" || type === "FAVOURITESADVERTISEMENT")) {
         return [];
@@ -47,7 +50,7 @@ class PromotionService {
 
       const match: any[] = [{ $match: getStatusQuery(status) }];
 
-      if (is_pagination === "true") {
+      if (is_pagination) {
         const dataCount = await promotionModel.find(getStatusQuery(status)).count().lean();
 
         const { skip, limit, paginationObject } = pagination(page_index, page_size, dataCount);

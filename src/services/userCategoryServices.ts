@@ -1,6 +1,7 @@
 import userService from "./userservice";
+import {Category} from "../utilities/enum"
 import categoryService from "../services/categoryService"; // Import your dependencies
-import { categoryInfo } from "../utilities/common/category_label"; // Import constants
+import { CategoryInfo } from "../utilities/enum"; // Import constants
 import { success } from "../utilities/success";
 import { userCategoryModel } from "../model/user_category";
 import { BadRequestException, NotFoundException, NotValidException } from "../exceptions";
@@ -26,6 +27,7 @@ class CategoryFollowService {
   ): Promise<any> {
     try {
       const { is_follow, category_ids } = query;
+      console.log("folounfolofollow", is_follow);
       const user = await userService.getVerifiedUser({ userId });
       const valid_category_ids = await categoryService.validCategory(category_ids);
 
@@ -104,7 +106,7 @@ class CategoryFollowService {
 
         return {
           status: success.OK.code,
-          message: ` ${categoryInfo["DELETE_FOLLOWED_CATEGORY"]}`,
+          message: ` ${CategoryInfo["DELETE_FOLLOWED_CATEGORY"]}`,
           body: valid_category_ids,
         };
       }
@@ -153,16 +155,18 @@ class CategoryFollowService {
   async getCategoryFollowerList(categoryIdQuery: CategoryIdQuery): Promise<any> {
     try {
       const { category_id, query } = categoryIdQuery;
-      const { is_pagination, page_index, page_size } = query;
+      let { is_pagination, page_index, page_size } = query;
+      console.log("the value is :",typeof is_pagination);
+      is_pagination = typeof is_pagination === 'boolean' ? is_pagination : is_pagination === 'true' ? true : is_pagination === 'false' ? false : undefined;
 
       const categ_id = await categoryService.validCategory(category_id);
-      if (!categ_id) throw new NotFoundException(category_id, categoryInfo.CATEGORY_ID); //FEEDBACK - Adding all the type to a enum / constant. 
+      if (!categ_id) throw new NotFoundException(category_id, Category.CATEGORY_ID); //FEEDBACK - Adding all the type to a enum / constant. 
       
       const match: any[] = [{ $match: { "category_id" : new mongoose.Types.ObjectId(category_id) } }];
       const filter: any[] = [];
       let paginationObject: any;
 
-      if (is_pagination === 'true') {
+      if (is_pagination) {
         const dataCountResult = await userCategoryModel.aggregate([
           ...match,
           {
@@ -236,7 +240,7 @@ class CategoryFollowService {
         ...filter,
         { $project: { user_id: '$followersDetails._id', user_email: '$followersDetails.email', _id: 0 } }
       ]);
-      if (is_pagination === 'true') {
+      if (is_pagination) {
         paginationObject.data = data;
         return paginationObject;
       }

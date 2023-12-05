@@ -1,5 +1,5 @@
 import { userModel, User } from "../model/user";
-import { commonLabel } from "../utilities/common/label";
+import { CommonLabel } from "../utilities/enum";
 import { errors } from "../utilities/error";
 import { userLabel, userMessage } from "../utilities/common/user_label";
 import { NotFoundException } from "../exceptions";
@@ -45,7 +45,7 @@ class UserService {
         throw new Error(
           JSON.stringify({
             status: 512,
-            messages: `${userLabel["email"]} ${commonLabel["NOT_VALID"]}.`,
+            messages: `${userLabel["email"]} ${CommonLabel["NOT_VALID"]}.`,
           })
         );
       }

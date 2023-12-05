@@ -17,11 +17,11 @@ class FollowFavouriteService {
     try {
       const { query, userId, advertisement_id } = advertisementData;
       let { is_follow } = query;
-      is_follow = typeof is_follow === 'boolean' ? is_follow : true;
+      // is_follow = typeof is_follow === 'boolean' ? is_follow : true;
+      is_follow = typeof is_follow === 'boolean' ? is_follow : is_follow === 'true' ? true : is_follow === 'false' ? false : undefined;
+      console.log(typeof(is_follow));
       let followerDetail: any;
-
       await advertisementService.validateAdvertisement(advertisement_id, userId);
-
       let existingFollowAdvertisement: any =
         await advertisementFavouritesFollowersModel
           .findOne({ advertisement_id })
@@ -62,7 +62,7 @@ class FollowFavouriteService {
         }
       }
       //UnFollow is_follow === "false"
-      else if (is_follow) {
+      else if (!is_follow) {
         if (!alreadyFollowedUserIds.includes(userId.toString())) throw new NotFoundException(userId.toString(), "User ID");
 
         followerDetail = await advertisementFavouritesFollowersModel.findOneAndUpdate(
@@ -97,14 +97,15 @@ class FollowFavouriteService {
   }
 
   async setFavouritesAdvertisementById(advertisementData: {
-    query: { is_favourite?: string };
+    query: { is_favourite?: boolean };
     userId: Types.ObjectId;
     advertisement_id: Types.ObjectId;
   }) {
     try {
       const { query, userId, advertisement_id } = advertisementData;
       let { is_favourite } = query;
-      is_favourite = is_favourite ? is_favourite : "true";
+      is_favourite = typeof is_favourite === 'boolean' ? is_favourite : is_favourite === 'true' ? true : is_favourite === 'false' ? false : true;
+      console.log(typeof is_favourite);
       let favouritesDetail: any;
 
       await advertisementService.validateAdvertisement(advertisement_id, userId);
@@ -121,7 +122,7 @@ class FollowFavouriteService {
         );
       }
       //FAVOURITE
-      if (is_favourite === "true") {
+      if (is_favourite) {
         // ADD the new Advertisement Favourite Count
         if (!existingFavouriteAdvertisement) {
           let advertisementFavourite =
@@ -147,7 +148,7 @@ class FollowFavouriteService {
         }
       }
       //UN-FAVOURITE
-      else if (is_favourite === "false") {
+      else if (!is_favourite) {
         if (!alreadyFavouriteUserIds.includes(userId.toString())) throw new NotAcceptedException("ADVERTISEMENT_ALREADY_REMOVED_FAVOURITE");
 
         favouritesDetail = await advertisementFavouritesFollowersModel.findOneAndUpdate(
@@ -168,10 +169,10 @@ class FollowFavouriteService {
       } else throw new BadRequestException("Invalid value for is_favourite parameter");
 
       return {
-        message: is_favourite === "true" ? "ADVERTISEMENT_ADD_FAVOURITE" : "ADVERTISEMENT_REMOVED_FAVOURITE",
+        message: is_favourite  ? "ADVERTISEMENT_ADD_FAVOURITE" : "ADVERTISEMENT_REMOVED_FAVOURITE",
         body: {
           favourites_count: favouritesDetail.favourites_count,
-          is_favourites: is_favourite === "true",
+          is_favourites: is_favourite,
         }
       };
     } catch (error) {
@@ -181,12 +182,14 @@ class FollowFavouriteService {
 
   async getAdvertisementFollowFavoriteList(advertisementData: {
     userId: Types.ObjectId;
-    query: { is_pagination: string; page_index: number; page_size: number };
+    query: { is_pagination: boolean; page_index: number; page_size: number };
     type: "favourite_list" | "follow_list";
   }) {
     try {
       const { userId, query, type } = advertisementData;
-      const { is_pagination, page_index, page_size } = query;
+      let { is_pagination, page_index, page_size } = query;
+      is_pagination = typeof is_pagination === 'boolean' ? is_pagination : is_pagination === 'true' ? true : is_pagination === 'false' ? false : true;
+
 
       let match: any = [];
       let filter: any = [];
@@ -199,7 +202,7 @@ class FollowFavouriteService {
 
         match.push({ $match: matchCondition });
 
-        if (is_pagination === "true") {
+        if (is_pagination) {
           dataCount = await advertisementFavouritesFollowersModel
             .find(matchCondition)
             .count();
@@ -221,7 +224,7 @@ class FollowFavouriteService {
         userId,
       });
 
-      return is_pagination === "true" ? { ...paginationObject, data } : data;
+      return is_pagination? { ...paginationObject, data } : data;
     } catch (error) {
       throw error;
     }
